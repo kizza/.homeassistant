@@ -1,0 +1,51 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+frontend:
+  themes: !include themes.yaml
+  
+# http:
+#   server_port: 8123
+#   base_url: !secret base_url
+#   ip_ban_enabled: true
+#   login_attempts_threshold: 10
+#   ssl_certificate: /home/homeassistant/.homeassistant/fullchain.pem
+#   ssl_key: /home/homeassistant/.homeassistant/privkey.pem
+
+# google_assistant:
+#   project_id: home-assistant-c6eef
+#   api_key: !secret google_app_key
+#   service_account: !include google-service-account.json
+#   exposed_domains:
+#     - sensor
+#     - light
+#   entity_config:
+#     light.television_lighting:
+#       expose: true
+#       room: LIVING_ROOM
+
+
+# ssl_profile: intermediate
+# cors_allowed_origins:
+#   - https://google.com
+#   - https://www.home-assistant.io
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+light:
+  - platform: magicbluelight
+    name: "Television Lighting"
+    address: ff:ff:bc:00:2b:09
+    version: 9
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

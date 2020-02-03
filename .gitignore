@@ -1,0 +1,7 @@
+*.pyc
+.storage
+fullchain.pem
+google-service-account.json
+home-assistant.log
+privkey.pem
+secrets.yaml
