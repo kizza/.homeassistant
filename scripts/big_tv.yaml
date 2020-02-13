@@ -1,0 +1,35 @@
+turn_big_tv_on_off:
+  alias: Turn Big TV On or Off
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: power
+  - service: script.turn_on_tv_backlight
+turn_big_tv_off:
+  alias: Turn Big TV Off
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: power
+turn_big_tv_volume_up:
+  alias: Turn Big TV Volumn Up
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_up
+      num_repeats: 5
+turn_big_tv_volume_down:
+  alias: Turn Big TV Volume Down
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_down
+      num_repeats: 5

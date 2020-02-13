@@ -1,0 +1,28 @@
+turn_tv_on_off:
+  alias: Turn TV On or Off
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: power
+  - service: script.turn_on_tv_backlight
+turn_tv_volume_up:
+  alias: Turn TV Volumn Up
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_up
+      num_repeats: 20
+turn_tv_volume_down:
+  alias: Turn TV Volume Down
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_down
+      num_repeats: 20
+

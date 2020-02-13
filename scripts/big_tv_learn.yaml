@@ -1,0 +1,25 @@
+learn_big_tv_power:
+  alias: Learn Big TV Power
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: power
+      alternative: true
+learn_big_tv_volume_up:
+  alias: Learn Big TV Volume Up
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_up
+learn_big_tv_volume_down:
+  alias: Learn Big TV Volume Down
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_down

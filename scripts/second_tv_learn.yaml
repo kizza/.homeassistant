@@ -1,0 +1,22 @@
+learn_tv_power:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: power
+      alternative: true
+learn_tv_volume_up:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_up
+learn_tv_volume_down:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_down
