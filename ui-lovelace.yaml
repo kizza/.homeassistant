@@ -1,0 +1,82 @@
+title: Home
+views:
+  - path: default_view
+    title: Home
+    badges:
+      - entity: binary_sensor.updater
+      - entity: person.keiran
+      - entity: sun.sun
+    cards:
+      - type: entities
+        entities:
+          - light.tv_backlight
+          - light.demo_light
+        title: Light
+      - type: horizontal-stack
+        title: Big TV
+        cards:
+        - type: entity-button
+          entity: script.turn_big_tv_on_off
+          show_name: false
+          icon: mdi:power
+          icon_height: 32px
+          tap_action:
+              action: call-service
+              service: script.turn_big_tv_on_off
+        - type: entity-button
+          entity: script.turn_big_tv_volume_up
+          show_name: false
+          icon: mdi:volume-plus
+          icon_height: 32px
+          tap_action:
+              action: call-service
+              service: script.turn_big_tv_volume_up
+        - type: entity-button
+          entity: script.turn_big_tv_volume_down
+          show_name: false
+          icon: mdi:volume-minus
+          icon_height: 32px
+          tap_action:
+              action: call-service,
+              service: script.turn_big_tv_volume_down
+      - type: entity-button
+        entity: script.go_to_bed
+        name: Bedtime
+        icon: mdi:sleep
+        icon_height: 32px
+        tap_action:
+            action: call-service
+            service: script.go_to_bed
+      - type: weather-forecast
+        entity: weather.home
+      - type: entities
+        entities:
+          - automation.motion_sensor
+        title: Automation
+  - path: other_view
+    title: Other
+    badges:
+    cards:
+      - type: entities
+        title: Scripts
+        show_header_toggle: false
+        entities:
+          - script.turn_on_tv_backlight
+          - script.turn_off_tv_backlight
+          - script.go_to_bed
+          - script.turn_big_tv_on_off
+          - script.turn_big_tv_volume_up
+          - script.turn_big_tv_volume_down
+          # - script.turn_tv_on_off
+          # - script.turn_tv_volume_up
+          # - script.turn_tv_volume_down
+      - type: entities
+        title: Learn Remote
+        show_header_toggle: false
+        entities:
+          - script.learn_big_tv_power
+          - script.learn_big_tv_volume_up
+          - script.learn_big_tv_volume_down
+          # - script.learn_tv_power
+          # - script.learn_tv_volume_up
+          # - script.learn_tv_volume_down
