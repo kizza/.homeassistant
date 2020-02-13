@@ -1,0 +1,158 @@
+{
+    "data": {
+        "config": {
+            "title": "Home",
+            "views": [
+                {
+                    "badges": [
+                        {
+                            "entity": "person.keiran"
+                        },
+                        {
+                            "entity": "person.susanna"
+                        },
+                        {
+                            "entity": "device_tracker.keirans_phone"
+                        },
+                        {
+                            "entity": "device_tracker.pixel_4_xl"
+                        },
+                        {
+                            "entity": "device_tracker.cph1831"
+                        },
+                        {
+                            "entity": "sun.sun"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "entity": "media_player.big_tv",
+                            "type": "media-control"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "entity": "remote.broadlink",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "icon": "mdi:power",
+                                    "icon_height": "32px",
+                                    "name": "Power",
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "tap_action": {
+                                        "action": "call-service",
+                                        "service": "script.turn_tv_on_off"
+                                    },
+                                    "type": "entity-button"
+                                },
+                                {
+                                    "entity": "remote.broadlink",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "icon": "mdi:volume-plus",
+                                    "icon_height": "32px",
+                                    "name": "Volume Up",
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "tap_action": {
+                                        "action": "call-service",
+                                        "service": "script.turn_tv_volume_up"
+                                    },
+                                    "type": "entity-button"
+                                },
+                                {
+                                    "entity": "remote.broadlink",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "icon": "mdi:volume-minus",
+                                    "icon_height": "32px",
+                                    "name": "Volume Down",
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "tap_action": {
+                                        "action": "call-service",
+                                        "service": "script.turn_tv_volume_down"
+                                    },
+                                    "type": "entity-button"
+                                }
+                            ],
+                            "title": "TV",
+                            "type": "horizontal-stack"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.hard_coded_name"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "LED Lights",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "script.go_to_bed",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "icon": "mdi:sleep",
+                            "icon_height": "32px",
+                            "name": "Bedtime",
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "script.go_to_bed"
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "entity": "weather.home",
+                            "type": "weather-forecast"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.keirans_phone"
+                                }
+                            ],
+                            "title": "Devices",
+                            "type": "entities"
+                        }
+                    ],
+                    "path": "default_view",
+                    "title": "Home"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "media_player.all_speakers",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.family_room_speaker",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.downstairs_speaker",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.family_room_tv",
+                            "type": "media-control"
+                        }
+                    ],
+                    "panel": false,
+                    "path": "groups",
+                    "title": "Speakers"
+                }
+            ]
+        }
+    },
+    "key": "lovelace",
+    "version": 1
+}

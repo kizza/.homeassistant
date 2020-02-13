@@ -1,0 +1,116 @@
+go_to_bed:
+  alias: Go to bed
+  description: Turn off tv and lights
+  sequence:
+  - service: script.turn_tv_on_off
+  - service: script.turn_off_tv_strip
+turn_big_tv_on_off:
+  alias: Turn Big TV On or Off
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: power
+  - service: script.turn_on_tv_strip
+turn_big_tv_volume_up:
+  alias: Turn Big TV Volumn Up
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_up
+      num_repeats: 5
+turn_big_tv_volume_down:
+  alias: Turn Big TV Volume Down
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_down
+      num_repeats: 5
+turn_tv_on_off:
+  alias: Turn TV On or Off
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: power
+  - service: script.turn_on_tv_strip
+turn_tv_volume_up:
+  alias: Turn TV Volumn Up
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_up
+      num_repeats: 20
+turn_tv_volume_down:
+  alias: Turn TV Volume Down
+  sequence:
+  - service: remote.send_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_down
+      num_repeats: 20
+learn_big_tv_power:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: power
+      alternative: true
+learn_big_tv_volume_up:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_up
+learn_big_tv_volume_down:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.living_room_remote
+      device: big_tv
+      command: volume_down
+learn_tv_power:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: power
+      alternative: true
+learn_tv_volume_up:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_up
+learn_tv_volume_down:
+  sequence:
+  - service: remote.learn_command
+    data:
+      entity_id: remote.second_tv
+      device: television
+      command: volume_down
+turn_on_tv_strip:
+  alias: Turn TV Strip On
+  sequence:
+  - service: light.turn_on
+    entity_id: light.tv_backlight
+    data: {}
+turn_off_tv_strip:
+  alias: Turn TV Strip Off
+  sequence:
+  - service: light.turn_off
+    entity_id: light.tv_backlight
+    data: {}

@@ -1,0 +1,20 @@
+{
+    "config": {
+        "title": "This is my thing",
+        "step": {
+            "user": {
+                "title": "Location via strings",
+                "description": "Meteorologisk institutt",
+                "data": {
+                    "name": "Name",
+                    "latitude": "Latitude",
+                    "longitude": "Longitude",
+                    "elevation": "Elevation"
+                }
+            }
+        },
+        "error": {
+            "name_exists": "Location already exists"
+        }
+    }
+}

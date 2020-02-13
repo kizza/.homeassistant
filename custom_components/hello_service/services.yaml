@@ -1,0 +1,6 @@
+hello:
+  description: Just trying out services
+  fields:
+    name:
+      description: The name for the hello services
+      example: World :)

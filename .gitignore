@@ -1,7 +1,10 @@
 *.pyc
+*.swp
 .storage
+__pycache__/
 fullchain.pem
 google-service-account.json
 home-assistant.log
+home-assistant_v2.db
 privkey.pem
 secrets.yaml
