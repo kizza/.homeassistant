@@ -10,6 +10,7 @@ views:
       - type: entities
         entities:
           - light.tv_backlight
+          - light.other_strip
           - light.demo_light
         title: Light
       - type: horizontal-stack
@@ -37,8 +38,10 @@ views:
           icon: mdi:volume-minus
           icon_height: 48px
           tap_action:
-              action: call-service,
+              action: call-service
               service: script.turn_big_tv_volume_down
+      - type: media-control
+        entity: media_player.big_tv
       - type: entity-button
         entity: script.go_to_bed
         name: Bedtime
@@ -51,7 +54,9 @@ views:
         entity: weather.home
       - type: entities
         entities:
-          - automation.motion_sensor
+          - automation.turn_on_after_motion
+          - automation.turn_off_after_no_motion
+          - automation.flash_on_motion
         title: Automation
   - path: other_view
     title: Other
