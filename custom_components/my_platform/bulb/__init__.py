@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from homeassistant.const import ( STATE_ON, STATE_OFF )
@@ -60,16 +61,21 @@ class Base(Light):
         self._state = STATE_OFF
         self.schedule_update_ha_state()
 
-    async def wrap_and_catch(self, fun, description):
+    async def wrap_and_catch(self, fun, description, attempts=1):
         """Catch any connection errors and set unavailable."""
+        print("Doing a wrap_and_catch for "+ description)
         try:
-            await fun
+            await fun()
         except Exception as ex:
         # except ConnectionError as ex:
-            _LOGGER.error(f'ERROR: Could not {description} {self.name}\n{ex}')
-            self.failed_action(description)
+            _LOGGER.error(f'ERROR: Could not {description} {self.name}\n{ex} after {attempts} attempts')
+            self.failed_action(description, attempts)
+            if attempts <= 5:
+                print("Running attempt again")
+                await asyncio.sleep(10)
+                await self.wrap_and_catch(fun, description, attempts + 1)
         else:
-            self.successful_action(description)
+            self.successful_action(description, attempts)
 
     #async def async_added_to_hass(self):
     #    debug("Added to hass!")

@@ -2,6 +2,7 @@ import colorsys
 import logging
 import math
 from bluepy import btle
+from enum import Enum
 # from ..test import FakeBtle as btle
 
 from . import Base
@@ -29,6 +30,31 @@ def map_tuple(func, tup):
         new_tuple += (func(each),)
     return new_tuple
 
+class Effect(Enum):
+    """
+    An enum of all the possible effects the bulb can accept
+    """
+    seven_color_cross_fade = 0x25       #:
+    red_gradual_change = 0x26           #:
+    green_gradual_change = 0x27         #:
+    blue_gradual_change = 0x28          #:
+    yellow_gradual_change = 0x29        #:
+    cyan_gradual_change = 0x2a          #:
+    purple_gradual_change = 0x2b        #:
+    white_gradual_change = 0x2c         #:
+    red_green_cross_fade = 0x2d         #:
+    red_blue_cross_fade = 0x2e          #:
+    green_blue_cross_fade = 0x2f        #:
+    seven_color_stobe_flash = 0x30      #:
+    red_strobe_flash = 0x31             #:
+    green_strobe_flash = 0x32           #:
+    blue_strobe_flash = 0x33            #:
+    yellow_strobe_flash = 0x34          #:
+    cyan_strobe_flash = 0x35            #:
+    purple_strobe_flash = 0x36          #:
+    white_strobe_flash = 0x37           #:
+    seven_color_jumping_change = 0x38   #:
+
 class Triones(Base):
 
     def __init__(self, hass, config_entry, config):
@@ -36,6 +62,7 @@ class Triones(Base):
         self._name = config.get(CONF_NAME)
         self._mac = config.get(CONF_MAC)
         self._characteristic = None
+        self._effects = [e for e in Effect.__members__.keys()]
 
     @property
     def unique_id(self):
@@ -57,16 +84,21 @@ class Triones(Base):
             "via_device": (DOMAIN, self._device_id)
         }
 
-    async def async_added_to_hass(self):
-        debug("Added to hass!")
-        self.connect()
+    @property
+    def effect_list(self):
+        return self._effects
 
-    def successful_action(self, description):
-        _LOGGER.debug(f'Was able to {description} {self.name}')
+    async def async_added_to_hass(self):
+        _LOGGER.debug(f'Added {self} to hass')
+        self.connect()
+        # await self.wrap_and_catch(lambda: self.connect(), 'initialise connect')
+
+    def successful_action(self, description, attempts):
+        _LOGGER.debug(f'Was able to {description} {self.name} after {attempts} attempts')
         self._available = True
 
-    def failed_action(self, description):
-        _LOGGER.warning(f'Was unable to {description} {self.name}')
+    def failed_action(self, description, attempts):
+        _LOGGER.warning(f'Was unable to {description} {self.name} ({attempts} attempts)')
         self._characteristic = None
 
     def connect(self):
@@ -75,22 +107,21 @@ class Triones(Base):
             print("Alread connected :)")
             return
 
-        try:
-            _LOGGER.debug(f'Connecting to {self.name} at {self._mac}...')
-            device = btle.Peripheral(self._mac)
-            # dev = btle.Peripheral("ff:ff:bc:00:2b:09")
-            # for svc in device.services:
-            #     print(str(svc))
+        # try:
 
-            print("Got device, getting service")
-            service = device.getServiceByUUID(btle.UUID("ffd5"))
-            print("Got service getting characteristic")
-            self._characteristic = service.getCharacteristics()[0]
-            print("Connected!")
-        except Exception as ex:
-            print("Could not get connect to device");
-            self.failed_action('connect');
-            _LOGGER.error("%s.connect(): Exception during connection: %s", self, ex)
+        _LOGGER.debug(f'Connecting to {self.name} at {self._mac}...')
+        device = btle.Peripheral(self._mac)
+        # dev = btle.Peripheral("ff:ff:bc:00:2b:09")
+        # for svc in device.services:
+        #     print(str(svc))
+        service = device.getServiceByUUID(btle.UUID("ffd5"))
+        self._characteristic = service.getCharacteristics()[0]
+        _LOGGER.debug(f'Connected to {self} at {self._mac}!')
+
+        # except Exception as ex:
+        #     print("Could not get connect to device");
+        #     self.failed_action('connect', 1);
+        #     _LOGGER.error("%s.connect(): Exception during connection: %s", self, ex)
 
     # async def async_update(self):
         # print(f'Async update for {self.name}')
@@ -102,28 +133,28 @@ class Triones(Base):
 
         if ATTR_EFFECT in kwargs:
             # self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10)
-            await self.wrap_and_catch(
-                self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10),
-                'set effect'
+            await self.wrap_and_catch(lambda: {
+                self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10)
+                }, 'set effect'
             )
 
-        if ATTR_BRIGHTNESS in kwargs:
+        elif ATTR_BRIGHTNESS in kwargs:
             self._brightness = kwargs[ATTR_BRIGHTNESS]
-            await self.wrap_and_catch(self._set_color(), 'set colour')
+            await self.wrap_and_catch(lambda: self._set_color(), 'set colour')
 
         elif ATTR_HS_COLOR in kwargs:
             hue, saturation = kwargs[ATTR_HS_COLOR]
             self._rgb = color_hsv_to_rgb(hue, saturation, 100)
-            await self.wrap_and_catch(self._set_color(), 'set colour')
+            await self.wrap_and_catch(lambda: self._set_color(), 'set colour')
 
         else:
-            await self.wrap_and_catch(self._set_on(), 'turn on')
+            await self.wrap_and_catch(lambda: self._set_on(), 'turn on')
 
         self.schedule_update_ha_state()
 
     async def turn_off(self):
         _LOGGER.debug("%s.turn_off()", self)
-        await self.wrap_and_catch(self._set_off(), 'turn off')
+        await self.wrap_and_catch(lambda: self._set_off(), 'turn off')
         self.schedule_update_ha_state()
 
     # def set_random_color(self):
@@ -162,10 +193,6 @@ class Triones(Base):
         print("_write finished")
 
     def _encode_color(self, red, green, blue):
-        print("Creating a rgb here")
-        print(red)
-        print(green)
-        print(blue)
         return [86, red, green, blue, 100, -16, -86]
 
     def _encode_effect(self, effect):
@@ -173,6 +200,10 @@ class Triones(Base):
         return [-69, effect, 10, 68]
 
     def _write(self, message):
-        data = bytearray([x % 256 for x in message])
-        self._characteristic.write(data, False)
-        _LOGGER.debug(f'Writing to characteristic {data}')
+        if self._characteristic:
+            data = bytearray([x % 256 for x in message])
+            self._characteristic.write(data, False)
+            _LOGGER.debug(f'Writing to characteristic {data}')
+        else:
+            _LOGGER.debug(f'No characteristic for write :(')
+
