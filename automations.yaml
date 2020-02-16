@@ -61,3 +61,14 @@
     domain: light
     entity_id: light.tv_backlight
     type: turn_on
+- id: '1581755155463'
+  alias: When i'm home
+  description: ''
+  trigger:
+  - entity_id: person.keiran
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data: {}
+    service: script.turn_on_tv_backlight
