@@ -11,6 +11,7 @@ views:
         entities:
           - light.tv_backlight
           - light.other_strip
+          - group.all_leds
           - light.demo_light
         title: Light
       - type: horizontal-stack

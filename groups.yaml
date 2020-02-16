@@ -1,0 +1,6 @@
+all_leds:
+  name: All LED Strips
+  entities:
+  - light.tv_backlight
+  - light.other_strip
+
