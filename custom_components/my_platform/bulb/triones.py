@@ -1,6 +1,7 @@
 import colorsys
 import logging
 import math
+import time
 from bluepy import btle
 from enum import Enum
 # from ..test import FakeBtle as btle
@@ -90,7 +91,10 @@ class Triones(Base):
 
     async def async_added_to_hass(self):
         _LOGGER.debug(f'Added {self} to hass')
-        self.connect()
+        try:
+            self.connect()
+        except Exception as ex:
+            pass
         # await self.wrap_and_catch(lambda: self.connect(), 'initialise connect')
 
     def successful_action(self, description, attempts):
@@ -125,6 +129,9 @@ class Triones(Base):
 
     # async def async_update(self):
         # print(f'Async update for {self.name}')
+
+    async def do_custom_thing(self):
+        await self.wrap_and_catch(lambda: self._flash(), 'flash')
 
     async def turn_on(self, **kwargs):
         print("\nAsked light to turn on by homeassistant")
@@ -171,6 +178,29 @@ class Triones(Base):
         self.connect()
         self._write([-52, 36, 51])
         self._state = STATE_OFF
+
+    async def _flash(self):
+        print("\nASKED: To flash")
+        delay = 0.3
+        self.connect()
+        if self.is_on():
+            print("Doing the on version")
+            self._write([-52, 36, 51]) # off first
+            time.sleep(delay)
+            self._write([-52, 35, 51])
+            time.sleep(delay)
+            self._write([-52, 36, 51])
+            time.sleep(delay)
+            self._write([-52, 35, 51])
+        else:
+            print("Doing the off version")
+            self._write([-52, 35, 51])
+            time.sleep(delay)
+            self._write([-52, 36, 51])
+            time.sleep(delay)
+            self._write([-52, 35, 51])
+            time.sleep(delay)
+            self._write([-52, 35, 51])
 
     async def _set_color(self):
         print("\nASKED: To set color")
