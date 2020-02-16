@@ -12,7 +12,7 @@ class Base(Light):
         self._device_id = None
         self._state = STATE_OFF
         self._rgb = (255, 255, 255)
-        self._brightness = 100
+        self._brightness = 255
         self._available = True
         self._effects = []
         # self.lock = asyncio.Lock()

@@ -1,5 +1,6 @@
 import colorsys
 import logging
+import math
 from bluepy import btle
 # from ..test import FakeBtle as btle
 
@@ -21,6 +22,12 @@ def color_hsv_to_rgb(iH, iS, iV):
     """
     fRGB = colorsys.hsv_to_rgb(iH / 360, iS / 100, iV / 100)
     return (int(fRGB[0] * 255), int(fRGB[1] * 255), int(fRGB[2] * 255))
+
+def map_tuple(func, tup):
+    new_tuple = ()
+    for each in tup:
+        new_tuple += (func(each),)
+    return new_tuple
 
 class Triones(Base):
 
@@ -93,10 +100,6 @@ class Triones(Base):
         print(kwargs)
         _LOGGER.debug("%s.turn_on()", self)
 
-        if ATTR_BRIGHTNESS in kwargs:
-            print("Set brightness ")
-            self._brightness = kwargs[ATTR_BRIGHTNESS]
-
         if ATTR_EFFECT in kwargs:
             # self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10)
             await self.wrap_and_catch(
@@ -104,15 +107,18 @@ class Triones(Base):
                 'set effect'
             )
 
-        if ATTR_HS_COLOR in kwargs:
-            print("Color property in turn on args")
-            hue, saturation = kwargs[ATTR_HS_COLOR]
-            rgb = color_hsv_to_rgb(hue, saturation, self._brightness)
-            # self._brightness = 100
-            # self._set_color(rgb)
-            await self.wrap_and_catch(self._set_color(rgb), 'set colour')
+        if ATTR_BRIGHTNESS in kwargs:
+            self._brightness = kwargs[ATTR_BRIGHTNESS]
+            await self.wrap_and_catch(self._set_color(), 'set colour')
 
-        await self.wrap_and_catch(self._set_on(), 'turn on')
+        elif ATTR_HS_COLOR in kwargs:
+            hue, saturation = kwargs[ATTR_HS_COLOR]
+            self._rgb = color_hsv_to_rgb(hue, saturation, 100)
+            await self.wrap_and_catch(self._set_color(), 'set colour')
+
+        else:
+            await self.wrap_and_catch(self._set_on(), 'turn on')
+
         self.schedule_update_ha_state()
 
     async def turn_off(self):
@@ -135,12 +141,16 @@ class Triones(Base):
         self._write([-52, 36, 51])
         self._state = STATE_OFF
 
-    async def _set_color(self, rgb):
+    async def _set_color(self):
         print("\nASKED: To set color")
         self.connect()
+        ratio = self._brightness / 255
+        percentage = ratio * 0.5 # Bulb has no effect after 50%
+        rgb = map_tuple(lambda x: math.ceil(x * percentage), self._rgb)
+
         data = self._encode_color(*rgb)
         self._write(data)
-        self._rgb = rgb
+        self._state = STATE_ON
 
     async def _set_effect(self, effect, effect_speed):
         print("\nASKED: To set effect")
