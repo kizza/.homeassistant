@@ -2,5 +2,10 @@ go_to_bed:
   alias: Go to bed
   description: Turn off tv and lights
   sequence:
-  - service: script.turn_off_tv_backlight
   - service: script.turn_big_tv_off
+  - service: light.turn_off
+    entity_id: light.tv_backlight
+    data: {}
+  - service: light.turn_off
+    entity_id: light.other_strip
+    data: {}
