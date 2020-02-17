@@ -20,6 +20,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up entry."""
     config = hass.data[DOMAIN]
 
+    # Add entities
     entities = []
     for each in config:
         entities.append(
@@ -32,16 +33,15 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     async_add_entities(entities)
 
-
+    # Add "flash" service
     async def async_handle_light_flash_service(service):
         params = service.data.copy()
         data_ent_id = service.data.get(ATTR_ENTITY_ID)
         for entity in entities:
             entity_name = f'{LIGHT_DOMAIN}.{slugify(entity.name)}'
             if entity_name == data_ent_id:
-                await entity.do_custom_thing()
+                await entity.flash()
 
-    # Listen for light on and light off service calls.
     hass.services.async_register(
         DOMAIN,
         "flash",

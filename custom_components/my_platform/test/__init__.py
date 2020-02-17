@@ -1,10 +1,9 @@
 class FakeBtle:
     def Peripheral(uuid):
-        print("Fake "+uuid)
         return FakeBtlePeripheral()
 
     def UUID(uuid):
-        print("Fake "+uuid)
+        pass
 
 class FakeBtlePeripheral:
     @property
@@ -20,7 +19,4 @@ class FakeBtleService:
 
 class FakeBtleCharacteristic:
     def write(self, value, require_response):
-        print("MOCK: Writing to characteristic")
-        print(value)
-
-
+        pass

@@ -1,7 +1,8 @@
 *.pyc
-*.swp
 *.swn
 *.swo
+*.swp
+.DS_Store
 .storage
 __pycache__/
 fullchain.pem

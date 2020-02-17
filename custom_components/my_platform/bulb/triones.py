@@ -5,11 +5,11 @@ import random
 import time
 from bluepy import btle
 # from ..test import FakeBtle as btle
-from enum import Enum
 
 from . import Base
 from ..const import ( debug, DOMAIN )
 from ..util import ( map_tuple )
+from ..util.effects import ( Effect, fade )
 
 from homeassistant.const import (CONF_NAME, CONF_MAC, STATE_ON, STATE_OFF)
 from homeassistant.util.color import color_hsv_to_RGB
@@ -21,58 +21,9 @@ from homeassistant.components.light import (
 _LOGGER = logging.getLogger(__name__)
 NEXT_MESSAGE_DELAY = 0
 ERRORED_MESSAGE_DELAY = 0.3
-FADE_STEPS = 20
-
-class Protocol():
-    TURN_ON = [-52, 35, 51]
-    TURN_OFF = [-52, 36, 51]
-    NO_COLOUR = [86, 0, 0, 0, 100, -16, -86]
-
-    def encode_rgb(red, green, blue):
-        return [86, red, green, blue, 100, -16, -86]
-
-def fade(fade_from, fade_to, steps = 40):
-    from_r, from_g, from_b = fade_from
-    to_r, to_g, to_b = fade_to
-    red_delta = to_r - from_r
-    green_delta = to_g - from_g
-    blue_delta = to_b - from_b
-
-    colours = []
-    for i in range(steps):
-        ratio = i / steps
-        r = from_r + round(ratio * red_delta)
-        g = from_g + round(ratio * green_delta)
-        b = from_b + round(ratio * blue_delta)
-        colours.append((r, g, b))
-
-    colours.append(fade_to)
-    return colours
-
-class Effect(Enum):
-    """
-    An enum of all the possible effects the bulb can accept
-    """
-    seven_color_cross_fade = 0x25       #:
-    red_gradual_change = 0x26           #:
-    green_gradual_change = 0x27         #:
-    blue_gradual_change = 0x28          #:
-    yellow_gradual_change = 0x29        #:
-    cyan_gradual_change = 0x2a          #:
-    purple_gradual_change = 0x2b        #:
-    white_gradual_change = 0x2c         #:
-    red_green_cross_fade = 0x2d         #:
-    red_blue_cross_fade = 0x2e          #:
-    green_blue_cross_fade = 0x2f        #:
-    seven_color_stobe_flash = 0x30      #:
-    red_strobe_flash = 0x31             #:
-    green_strobe_flash = 0x32           #:
-    blue_strobe_flash = 0x33            #:
-    yellow_strobe_flash = 0x34          #:
-    cyan_strobe_flash = 0x35            #:
-    purple_strobe_flash = 0x36          #:
-    white_strobe_flash = 0x37           #:
-    seven_color_jumping_change = 0x38   #:
+TURN_ON = 'TURN_ON'
+TURN_OFF = 'TURN_OFF'
+NO_COLOUR = 'NO_COLOUR'
 
 class Triones(Base):
 
@@ -82,6 +33,9 @@ class Triones(Base):
         self._mac = config.get(CONF_MAC)
         self._characteristic = None
         self._effects = [e for e in Effect.__members__.keys()]
+        self._raw_rgb = (0, 255, 0)
+        self._brightness = 255
+        self._rgb = self._filter_colour_with_brightness()
 
     @property
     def unique_id(self):
@@ -126,59 +80,66 @@ class Triones(Base):
         if self._characteristic is not None:
             return
 
-        _LOGGER.debug(f'{self} connecting to {self._mac}...')
+        _LOGGER.debug(f'{self} Connecting to {self._mac}...')
         device = btle.Peripheral(self._mac)
         # dev = btle.Peripheral("ff:ff:bc:00:2b:09")
         # for svc in device.services:
         #     print(str(svc))
         service = device.getServiceByUUID(btle.UUID("ffd5"))
         self._characteristic = service.getCharacteristics()[0]
-        _LOGGER.debug(f'{self} connected')
+        _LOGGER.debug(f'{self} Connected')
 
     # async def async_update(self):
         # print(f'Async update for {self.name}')
 
-    async def do_custom_thing(self):
+    async def flash(self):
+        self._clear_enqueue()
         self._flash()
         self.process_message_queue()
 
     async def turn_on(self, **kwargs):
-        print("\nAsked light to turn on by homeassistant")
-        print(kwargs)
         _LOGGER.debug("%s.turn_on()", self)
-
         self._clear_enqueue()  # Remove any messages
 
         if ATTR_EFFECT in kwargs:
-            # self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10)
-            await self.wrap_and_catch(lambda: {
-                self._set_effect(Effect[kwargs[ATTR_EFFECT]].value, 10)
-                }, 'set effect'
-            )
+            self._effect = kwargs[ATTR_EFFECT]
+            self._set_effect(Effect[self._effect].value, 10)
 
         elif ATTR_BRIGHTNESS in kwargs:
             self._brightness = kwargs[ATTR_BRIGHTNESS]
-            self._set_color()
+            to_rgb = self._filter_colour_with_brightness()
+            self._fade_colour(to_rgb)
 
         elif ATTR_HS_COLOR in kwargs:
             hue, saturation = kwargs[ATTR_HS_COLOR]
-            # self._rgb = color_hsv_to_RGB(hue, saturation, 100)
-            new_rgb = color_hsv_to_RGB(hue, saturation, 100)
-            self._fade_colour(new_rgb)
-            # self._set_color()
+            self._raw_rgb = color_hsv_to_RGB(hue, saturation, 100)
+            to_rgb = self._filter_colour_with_brightness()
+            self._fade_colour(to_rgb)
 
         else:
-            self._set_on()
+            self._fade_on()
 
         self.process_message_queue()
 
     async def turn_off(self):
         _LOGGER.debug("%s.turn_off()", self)
-        self._set_off()
+        self._clear_enqueue()
+        self._fade_off()
         self.process_message_queue()
 
     # def set_random_color(self):
     #     self.set_color([random.randint(1, 255) for i in range(3)])
+
+    def _format_enqueued_message(self, message):
+        """Messages are enqueued in human readable form, format them here"""
+        if message == TURN_ON:
+            return Protocol.TURN_ON, 'turn on'
+        elif message == TURN_OFF:
+            return Protocol.TURN_OFF, 'turn off'
+        elif message == NO_COLOUR:
+            return Protocol.NO_COLOUR, 'blank colour'
+        else:
+            return Protocol.encode_rgb(*message), str(message)
 
     def process_message_queue(self):
         """Process the queue, update ha state if complete"""
@@ -192,21 +153,20 @@ class Triones(Base):
     def process_message(self, item, attempts = 1):
         """Process a single provided message"""
         (message, description, callback) = item
-        # _LOGGER.debug("Processing message %s...", description)
         try:
             self.connect()
-            self._write(message)
+            self._write_to_characteristic(message)
             if callback:
                 callback()
             # self.successful_action(description, attempts)
             self.process_next_message()
         except Exception as ex:
-            _LOGGER.warning("%s failed %s", self.name, ex)
             if attempts < 5:
+                _LOGGER.warning("%s failed %s, retrying...", self.name, ex)
                 time.sleep(ERRORED_MESSAGE_DELAY)
                 self.hass.async_add_job(self.process_message, item, attempts + 1)
             else:
-                print("Checking queue")
+                _LOGGER.warning("%s failed after too many attempts %s", self.name, ex)
                 self.failed_action(description, attempts)
                 self.hass.async_add_job(self.process_message_queue)
 
@@ -220,58 +180,50 @@ class Triones(Base):
     #
 
     def _set_on(self):
-        self._fade_on()
-        # print("\nASKED: To set on")
-        # def callback():
-        #     self._state = STATE_ON
-        # self._enqueue(Protocol.TURN_ON, 'turn on', callback)
+        _LOGGER.debug("%s set_on", self)
+        def callback():
+            self._state = STATE_ON
+        self._enqueue(TURN_ON, callback)
+
+    def _set_off(self):
+        _LOGGER.debug("%s turn_on", self)
+        def callback():
+            self._state = STATE_OFF
+        self._enqueue(TURN_OFF, callback)
 
     def _fade_on(self):
-        print("\nASKED: To fade on")
+        _LOGGER.debug("%s fade_on", self)
         def callback():
             self._state = STATE_ON
 
         # Initial
-        self._enqueue(Protocol.NO_COLOUR, 'blank colour')
-        self._enqueue(Protocol.TURN_ON, 'turn on')
+        self._enqueue(NO_COLOUR)
+        self._enqueue(TURN_ON)
 
         # Fade
-        colours = fade((0, 0, 0), self._rgb)
-        for rgb in colours:
-            self._enqueue(Protocol.encode_rgb(*rgb), f'increment')
+        for rgb in fade((0, 0, 0), self._rgb):
+            self._enqueue(rgb)
 
         # Final
-        self._enqueue(Protocol.encode_rgb(*self._rgb), 'final', callback)
-
-        # Fade back
-        fade_out = fade(self._rgb, (0, 0, 0))
-        colours.extend(fade_out)
-
-    def _set_off(self):
-        self._fade_off()
-        # print("\nASKED: To turn off")
-        # def callback():
-        #     self._state = STATE_OFF
-        # self._enqueue(Protocol.TURN_OFF, 'turn off', callback)
+        self._enqueue(self._rgb, callback)
 
     def _fade_off(self):
-        print("\nASKED: To fade off")
+        _LOGGER.debug("%s fade_off", self)
         def callback():
             self._state = STATE_OFF
 
         # Fade
-        colours = fade(self._rgb, (0, 0, 0))
-        for rgb in colours:
-            self._enqueue(Protocol.encode_rgb(*rgb), f'increment')
+        for rgb in fade(self._rgb, (0, 0, 0)):
+            self._enqueue(rgb)
 
         # Final
-        self._enqueue(Protocol.NO_COLOUR, 'blank colour')
-        self._enqueue(Protocol.TURN_OFF, 'turn off', callback)
+        self._enqueue(NO_COLOUR)
+        self._enqueue(TURN_OFF, callback)
 
     def _flash(self):
-        print("\nASKED: To flash")
-        fade_out = fade(self._rgb, (0, 0, 0))
-        fade_in = fade((0, 0, 0), self._rgb)
+        _LOGGER.debug("%s flash", self)
+        fade_out = fade(self._rgb, (0, 0, 0), 12)
+        fade_in = fade((0, 0, 0), self._rgb, 12)
 
         # Create colours
         colours = []
@@ -280,59 +232,61 @@ class Triones(Base):
             colours.extend(fade_out)
             colours.extend(fade_in)
             for rgb in colours:
-                self._enqueue(Protocol.encode_rgb(*rgb), f'flash when on')
+                self._enqueue(rgb)
         else:
             print("Doing the off version")
-            self._enqueue(Protocol.NO_COLOUR, 'blank colour')
-            self._enqueue(Protocol.TURN_ON, 'turn on')
+            self._enqueue(NO_COLOUR)
+            self._enqueue(TURN_ON)
             colours.extend(fade_in)
             colours.extend(fade_out)
             for rgb in colours:
-                self._enqueue(Protocol.encode_rgb(*rgb), f'flash when off')
-            self._enqueue(Protocol.TURN_OFF, 'turn off')
+                self._enqueue(rgb)
+            self._enqueue(TURN_OFF)
 
-    def _set_color(self):
-        print("\nASKED: To set color")
+    def _filter_colour_with_brightness(self):
+        """Apply the brightness level to the rgb level"""
         ratio = self._brightness / 255
         percentage = ratio * 0.5   # Bulb has no effect after 50%
-        rgb = map_tuple(lambda x: math.ceil(x * percentage), self._rgb)
+        return map_tuple(lambda x: math.ceil(x * percentage), self._raw_rgb)
 
+    def _set_colour(self):
+        _LOGGER.debug("%s set_colour", self)
         def callback():
             self._state = STATE_ON
-        self._enqueue(Protocol.encode_rgb(*rgb), 'set colour')
+
+        self._enqueue(self._rgb)
 
     def _fade_colour(self, to_rgb):
-        print("\nASKED: To fade colour")
+        _LOGGER.debug("%s fade_colour", self)
         def callback():
-            self._rgb = to_rgb
+            self._rgb = to_rgb  # Set the "go to" colour when complete
 
         # Fade
         colours = fade(self._rgb, to_rgb)
         for rgb in colours:
-            self._enqueue(Protocol.encode_rgb(*rgb), f'increment')
-            print(f'Faded replayed {rgb}')
+            self._enqueue(rgb)
 
         # Final
-        self._enqueue(Protocol.encode_rgb(*to_rgb), 'set colour', callback)
+        self._enqueue(to_rgb, callback)
 
-    async def _set_effect(self, effect, effect_speed):
-        print("\nASKED: To set effect")
-        print(effect)
-        self.connect()
-        data = self._encode_effect(effect)
-        self._write(data)
-        self._effect = effect
-        print("_write finished")
+    def _set_effect(self, effect, effect_speed):
+        _LOGGER.debug("%s set_effect", self)
+        data = Protocol.encode_effect(effect, effect_speed)
+        self._enqueue_effect(data)
 
-    def _encode_effect(self, effect):
-        print("Creating a effect here")
-        return [-69, effect, 10, 68]
-
-    def _write(self, message):
+    def _write_to_characteristic(self, message):
         if self._characteristic:
             data = bytearray([x % 256 for x in message])
             self._characteristic.write(data, False)
-            _LOGGER.debug(f'Writing to characteristic {data}')
-        else:
-            _LOGGER.debug(f'No characteristic for write :(')
+
+class Protocol():
+    TURN_ON = [-52, 35, 51]
+    TURN_OFF = [-52, 36, 51]
+    NO_COLOUR = [86, 0, 0, 0, 100, -16, -86]
+
+    def encode_rgb(red, green, blue):
+        return [86, red, green, blue, 100, -16, -86]
+
+    def encode_effect(effect, effect_speed):
+        return [-69, effect, effect_speed, 68]
 

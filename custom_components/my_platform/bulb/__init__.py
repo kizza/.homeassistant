@@ -10,8 +10,12 @@ class Queue(Light):
     def __init__(self):
         self._queue = []
 
-    def _enqueue(self, message, description, callback=None):
-        self._queue.append((message, description, callback))
+    def _enqueue(self, message, callback=None):
+        data, description = self._format_enqueued_message(message)
+        self._queue.append((data, description, callback))
+
+    def _enqueue_effect(self, data, callback=None):
+        self._queue.append((data, 'Effect', callback))
 
     def _clear_enqueue(self):
         self._queue = []
@@ -23,8 +27,6 @@ class Base(Queue):
         self._config_entry = config_entry
         self._device_id = None
         self._state = STATE_OFF
-        self._rgb = (0, 255, 0)
-        self._brightness = 255
         self._available = True
         self._effects = []
         # self.lock = asyncio.Lock()
@@ -39,7 +41,7 @@ class Base(Queue):
 
     @property
     def rgb_color(self):
-        return self._rgb
+        return self._raw_rgb
 
     @property
     def brightness(self):
