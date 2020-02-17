@@ -6,13 +6,24 @@ from homeassistant.components.light import ( Light )
 
 _LOGGER = logging.getLogger(__name__)
 
-class Base(Light):
+class Queue(Light):
+    def __init__(self):
+        self._queue = []
+
+    def _enqueue(self, message, description, callback=None):
+        self._queue.append((message, description, callback))
+
+    def _clear_enqueue(self):
+        self._queue = []
+
+class Base(Queue):
     def __init__(self, hass, config_entry):
+        super().__init__()
         self._hass = hass
         self._config_entry = config_entry
         self._device_id = None
         self._state = STATE_OFF
-        self._rgb = (255, 255, 255)
+        self._rgb = (0, 255, 0)
         self._brightness = 255
         self._available = True
         self._effects = []
@@ -60,6 +71,12 @@ class Base(Light):
     def turn_off(self):
         self._state = STATE_OFF
         self.schedule_update_ha_state()
+
+    def safe(self, fun, description):
+        try:
+            fun()
+        except Exception as ex:
+            _LOGGER.warning(f'Safe {description} failed')
 
     async def wrap_and_catch(self, fun, description, attempts=1):
         """Catch any connection errors and set unavailable."""

@@ -57,7 +57,8 @@ views:
         entities:
           - automation.turn_on_after_motion
           - automation.turn_off_after_no_motion
-          - automation.flash_on_motion
+          - automation.tv_flash
+          - automation.piano_flash
         title: Automation
   - path: other_view
     title: Other
