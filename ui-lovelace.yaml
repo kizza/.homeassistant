@@ -51,6 +51,17 @@ views:
         tap_action:
             action: call-service
             service: script.go_to_bed
+      - type: horizontal-stack
+        title: Climate
+        cards:
+        - type: sensor
+          entity: sensor.lumi_temperature
+          name: Temperature
+          graph: line
+        - type: sensor
+          entity: sensor.lumi_humidity
+          name: Humidity
+          graph: line
       - type: weather-forecast
         entity: weather.home
       - type: entities
