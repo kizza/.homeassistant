@@ -33,14 +33,25 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     async_add_entities(entities)
 
-    # Add "flash" service
+    register_flash_service(hass, entities)
+    register_theme_service(hass, entities)
+
+    return True
+
+def find_entity(entities, entity_id):
+    for entity in entities:
+        if entity_id == f'{LIGHT_DOMAIN}.{slugify(entity.name)}':
+            return entity
+    return None
+
+def register_flash_service(hass, entities):
+    """Add "flash" service"""
+
     async def async_handle_light_flash_service(service):
         params = service.data.copy()
-        data_ent_id = service.data.get(ATTR_ENTITY_ID)
-        for entity in entities:
-            entity_name = f'{LIGHT_DOMAIN}.{slugify(entity.name)}'
-            if entity_name == data_ent_id:
-                await entity.flash()
+        entity_id = service.data.get(ATTR_ENTITY_ID)
+        entity = find_entity(entities, entity_id)
+        await entity.flash()
 
     hass.services.async_register(
         DOMAIN,
@@ -49,4 +60,19 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         # schema=cv.make_entity_service_schema(LIGHT_TURN_ON_SCHEMA),
     )
 
-    return True
+def register_theme_service(hass, entities):
+    """Add "theme" service"""
+
+    async def async_handle_light_theme_service(service):
+        params = service.data.copy()
+        entity_id = service.data.get(ATTR_ENTITY_ID)
+        rgb = service.data.get(ATTR_RGB_COLOR)
+        for entity in entities:
+            await entity.theme(tuple(rgb))
+
+    hass.services.async_register(
+        DOMAIN,
+        "theme",
+        async_handle_light_theme_service,
+        # schema=cv.make_entity_service_schema(LIGHT_TURN_ON_SCHEMA),
+    )

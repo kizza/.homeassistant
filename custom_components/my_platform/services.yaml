@@ -4,4 +4,9 @@ flash:
     name:
       description: The name for the hello services
       example: World :)
-
+theme:
+  description: A theme for the lights
+  fields:
+    name:
+      description: The name for the hello services
+      example: World :)

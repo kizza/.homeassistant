@@ -97,6 +97,18 @@ class Triones(Base):
         self._flash()
         self.process_message_queue()
 
+    async def theme(self, rgb):
+        self._clear_enqueue()
+        self._raw_rgb = rgb
+
+        if not self.is_on():
+            self._rgb = (0, 0, 0)
+            self._set_on(True)
+
+        to_rgb = self._filter_colour_with_brightness()
+        self._fade_colour(to_rgb)
+        self.process_message_queue()
+
     async def turn_on(self, **kwargs):
         _LOGGER.debug("%s.turn_on()", self)
         self._clear_enqueue()  # Remove any messages
@@ -113,6 +125,7 @@ class Triones(Base):
         elif ATTR_HS_COLOR in kwargs:
             hue, saturation = kwargs[ATTR_HS_COLOR]
             self._raw_rgb = color_hsv_to_RGB(hue, saturation, 100)
+            _LOGGER.debug("%s set rgb to %s", self, self._raw_rgb)
             to_rgb = self._filter_colour_with_brightness()
             self._fade_colour(to_rgb)
 
@@ -179,10 +192,12 @@ class Triones(Base):
     # _set_*
     #
 
-    def _set_on(self):
+    def _set_on(self, silently = False):
         _LOGGER.debug("%s set_on", self)
         def callback():
             self._state = STATE_ON
+        if silently:
+            self._enqueue(NO_COLOUR)
         self._enqueue(TURN_ON, callback)
 
     def _set_off(self):

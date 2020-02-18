@@ -13,7 +13,7 @@ views:
           - light.other_strip
           - group.all_leds
           - light.demo_light
-        title: Light
+        title: Lights
       - type: horizontal-stack
         title: Big TV
         cards:
@@ -43,14 +43,70 @@ views:
               service: script.turn_big_tv_volume_down
       - type: media-control
         entity: media_player.big_tv
-      - type: entity-button
-        entity: script.go_to_bed
-        name: Bedtime
-        icon: mdi:sleep
-        icon_height: 32px
-        tap_action:
-            action: call-service
-            service: script.go_to_bed
+      - type: horizontal-stack
+        title: Mood
+        cards:
+        - type: entity-button
+          entity: script.theme_red
+          name: Red
+          icon: mdi:heart
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_red
+        - type: entity-button
+          entity: script.theme_green
+          name: Green
+          icon: mdi:leaf
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_green
+        - type: entity-button
+          entity: script.theme_blue
+          name: Blue
+          icon: mdi:water
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_blue
+      - type: horizontal-stack
+        cards:
+        - type: entity-button
+          entity: script.theme_purple
+          name: Purple
+          icon: mdi:auto-fix
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_purple
+        - type: entity-button
+          entity: script.theme_sky
+          name: Sky
+          icon: mdi:apple-icloud
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_sky
+        - type: entity-button
+          entity: script.theme_sun
+          name: Sun
+          icon: mdi:white-balance-sunny
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.theme_sun
+      - type: horizontal-stack
+        title: Bedtime
+        cards:
+        - type: entity-button
+          entity: script.go_to_bed
+          name: Sleep
+          icon: mdi:sleep
+          icon_height: 48px
+          tap_action:
+              action: call-service
+              service: script.go_to_bed
       - type: horizontal-stack
         title: Climate
         cards:
