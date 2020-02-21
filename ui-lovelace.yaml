@@ -1,7 +1,7 @@
 title: Home
 resources:
-  - url: /local/theme.js?v=0.0.3
-    type: js
+  - url: /local/button-card.js
+    type: module
 views:
   - path: default_view
     title: Home
@@ -49,53 +49,71 @@ views:
       - type: horizontal-stack
         title: Mood
         cards:
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_red
           name: Red
           icon: mdi:heart
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "var(--gruvbox-red)"
           tap_action:
               action: call-service
               service: script.theme_red
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_green
           name: Green
           icon: mdi:leaf
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "var(--gruvbox-green)"
           tap_action:
               action: call-service
               service: script.theme_green
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_blue
           name: Blue
           icon: mdi:water
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "var(--gruvbox-blue)"
           tap_action:
               action: call-service
               service: script.theme_blue
       - type: horizontal-stack
         cards:
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_purple
           name: Purple
           icon: mdi:auto-fix
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "var(--gruvbox-purple)"
           tap_action:
               action: call-service
               service: script.theme_purple
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_sky
           name: Sky
           icon: mdi:apple-icloud
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "#83a598"
           tap_action:
               action: call-service
               service: script.theme_sky
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.theme_sun
           name: Sun
           icon: mdi:white-balance-sunny
           icon_height: 48px
+          state:
+            - value: "off"
+              color: "var(--gruvbox-yellow)"
           tap_action:
               action: call-service
               service: script.theme_sun
