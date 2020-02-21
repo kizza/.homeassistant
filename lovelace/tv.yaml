@@ -1,0 +1,27 @@
+- type: "custom:button-card"
+  entity: script.turn_big_tv_on_off
+  show_name: false
+  icon: mdi:power
+  icon_height: 48px
+  aspect_ratio: 1/0.7
+  tap_action:
+      action: call-service
+      service: script.turn_big_tv_on_off
+- type: "custom:button-card"
+  entity: script.turn_big_tv_volume_up
+  show_name: false
+  icon: mdi:volume-plus
+  icon_height: 48px
+  aspect_ratio: 1/0.7
+  tap_action:
+      action: call-service
+      service: script.turn_big_tv_volume_up
+- type: "custom:button-card"
+  entity: script.turn_big_tv_volume_down
+  show_name: false
+  icon: mdi:volume-minus
+  icon_height: 48px
+  aspect_ratio: 1/0.7
+  tap_action:
+      action: call-service
+      service: script.turn_big_tv_volume_down

@@ -19,112 +19,22 @@ views:
         title: Lights
       - type: horizontal-stack
         title: Big TV
-        cards:
-        - type: entity-button
-          entity: script.turn_big_tv_on_off
-          show_name: false
-          icon: mdi:power
-          icon_height: 48px
-          tap_action:
-              action: call-service
-              service: script.turn_big_tv_on_off
-        - type: entity-button
-          entity: script.turn_big_tv_volume_up
-          show_name: false
-          icon: mdi:volume-plus
-          icon_height: 48px
-          tap_action:
-              action: call-service
-              service: script.turn_big_tv_volume_up
-        - type: entity-button
-          entity: script.turn_big_tv_volume_down
-          show_name: false
-          icon: mdi:volume-minus
-          icon_height: 48px
-          tap_action:
-              action: call-service
-              service: script.turn_big_tv_volume_down
+        cards: !include lovelace/tv.yaml
       - type: media-control
         entity: media_player.big_tv
-      - type: horizontal-stack
+      - type: vertical-stack
         title: Mood
-        cards:
-        - type: "custom:button-card"
-          entity: script.theme_red
-          name: Red
-          icon: mdi:heart
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "var(--gruvbox-red)"
-          tap_action:
-              action: call-service
-              service: script.theme_red
-        - type: "custom:button-card"
-          entity: script.theme_green
-          name: Green
-          icon: mdi:leaf
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "var(--gruvbox-green)"
-          tap_action:
-              action: call-service
-              service: script.theme_green
-        - type: "custom:button-card"
-          entity: script.theme_blue
-          name: Blue
-          icon: mdi:water
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "var(--gruvbox-blue)"
-          tap_action:
-              action: call-service
-              service: script.theme_blue
-      - type: horizontal-stack
-        cards:
-        - type: "custom:button-card"
-          entity: script.theme_purple
-          name: Purple
-          icon: mdi:auto-fix
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "var(--gruvbox-purple)"
-          tap_action:
-              action: call-service
-              service: script.theme_purple
-        - type: "custom:button-card"
-          entity: script.theme_sky
-          name: Sky
-          icon: mdi:apple-icloud
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "#83a598"
-          tap_action:
-              action: call-service
-              service: script.theme_sky
-        - type: "custom:button-card"
-          entity: script.theme_sun
-          name: Sun
-          icon: mdi:white-balance-sunny
-          icon_height: 48px
-          state:
-            - value: "off"
-              color: "var(--gruvbox-yellow)"
-          tap_action:
-              action: call-service
-              service: script.theme_sun
+        cards: !include lovelace/moods.yaml
       - type: horizontal-stack
         title: Bedtime
         cards:
-        - type: entity-button
+        - type: "custom:button-card"
           entity: script.go_to_bed
           name: Sleep
+          show_name: false
           icon: mdi:sleep
           icon_height: 48px
+          aspect_ratio: 1/0.24
           tap_action:
               action: call-service
               service: script.go_to_bed

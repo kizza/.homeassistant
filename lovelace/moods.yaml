@@ -1,0 +1,76 @@
+- type: horizontal-stack
+  cards:
+  - type: "custom:button-card"
+    entity: script.theme_red
+    icon: mdi:heart
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "var(--gruvbox-red)"
+    tap_action:
+        action: call-service
+        service: script.theme_red
+  - type: "custom:button-card"
+    entity: script.theme_green
+    icon: mdi:leaf
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "var(--gruvbox-green)"
+    tap_action:
+        action: call-service
+        service: script.theme_green
+  - type: "custom:button-card"
+    entity: script.theme_blue
+    icon: mdi:water
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "var(--gruvbox-blue)"
+    tap_action:
+        action: call-service
+        service: script.theme_blue
+- type: horizontal-stack
+  cards:
+  - type: "custom:button-card"
+    entity: script.theme_purple
+    icon: mdi:auto-fix
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "var(--gruvbox-purple)"
+    tap_action:
+        action: call-service
+        service: script.theme_purple
+  - type: "custom:button-card"
+    entity: script.theme_sky
+    icon: mdi:apple-icloud
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "#83a598"
+    tap_action:
+        action: call-service
+        service: script.theme_sky
+  - type: "custom:button-card"
+    entity: script.theme_sun
+    icon: mdi:white-balance-sunny
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    state:
+      - value: "off"
+        color: "var(--gruvbox-yellow)"
+    tap_action:
+        action: call-service
+        service: script.theme_sun
