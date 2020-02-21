@@ -1,0 +1,172 @@
+Gruvbox Dark:
+  # Background
+  gruvbox-bg-0h: "hsl(200, 5%, 12%)"
+  gruvbox-bg-0s: "hsl(20, 3%, 16%)"
+  gruvbox-bg-0: "hsl(0, 0%, 16%)"
+  gruvbox-bg-1: "hsl(17, 6%, 23%)"
+  gruvbox-bg-2: "hsl(16, 7%, 29%)"
+  gruvbox-bg-3: "hsl(23, 10%, 36%)"
+  gruvbox-bg-4: "hsl(29, 10%, 44%)"
+  gruvbox-bg-5: "hsl(30, 12%, 51%)"
+
+  # Foreground
+  gruvbox-fg-4: "hsl(33, 17%, 59%)"
+  gruvbox-fg-3: "hsl(38, 25%, 66%)"
+  gruvbox-fg-2: "hsl(40, 38%, 73%)"
+  gruvbox-fg-1: "hsl(42, 60%, 81%)"
+  gruvbox-fg-0: "hsl(48, 90%, 88%)"
+
+  # Colours
+  gruvbox-red: "hsl(2, 74%, 46%)"
+  gruvbox-green: "hsl(59, 72%, 35%)"
+  gruvbox-yellow: "hsl(40, 74%, 48%)"
+  gruvbox-blue: "hsl(182, 32%, 40%)"
+  gruvbox-purple: "hsl(333, 34%, 54%)"
+  gruvbox-aqua: "hsl(122, 21%, 51%)"
+  gruvbox-orange: "hsl(24, 89%, 45%)"
+
+  # Bright
+  gruvbox-green-bright: "hsl(104, 35%, 62%)"
+  gruvbox-yellow-bright: "hsl(42, 95%, 58%)"
+  gruvbox-blue-bright: "hsl(157, 16%, 58%)"
+  gruvbox-purple-bright: "hsl(344, 47%, 68%)"
+  gruvbox-aqua-bright: "hsl(105, 35%, 62%)"
+  gruvbox-orange-bright: "hsl(27, 99%, 55%)"
+
+  # Custom per lightness
+  header-colour: "var(--gruvbox-bg-0h)"
+  header-text-colour: "var(--text-colour)"
+  divider-colour: "var(--header-colour)"
+
+  #
+  # VARIABLES
+  #
+
+  background-colour: "var(--gruvbox-bg-0)"
+  card-background-colour: "var(--gruvbox-bg-1)"
+  text-colour: "var(--gruvbox-fg-2)"
+  secondary-text-colour: "var(--gruvbox-bg-5)"
+  disabled-text-colour: "var(--gruvbox-fg-3)"
+  icon-colour: "var(--gruvbox-blue-bright)"
+  icon-colour-on: "var(--gruvbox-yellow-bright)"
+  icon-colour-disabled: "#beae93"                                     # "var(--gruvbox-fg-3)"
+
+  #
+  # IMPLEMENTATION
+  #
+
+  # Hardcoded */
+  primary-color: "hsl(27, 99%, 55%)"                                  # Used for links var(--gruvbox-organge-bright)
+
+  # Header */
+  app-header-text-color: "var(--header-text-colour)"
+  app-header-background-color: "var(--header-colour)"
+  text-primary-color: var(--gruvbox-purple)                           # Header tab border
+
+  # Base */
+  primary-text-color: "var(--text-colour)"
+  secondary-text-color: "var(--secondary-text-colour)"
+  primary-background-color: "var(--background-colour)"
+  light-primary-color: "var(--gruvbox-blue)"                          # Profile icon background
+  dark-primary-color: "var(--gruvbox-orange-bright)"                  # Used for "dev info" links
+  accent-color: "var(--gruvbox-bg-2)"                                 # Notification badge background
+  divider-color: "var(--divider-colour)"
+
+  # Badges */
+  label-badge-text-color: "var(--icon-colour)"                        # Badge icon colour
+  label-badge-background-color: "var(--background-colour)"
+  label-badge-red: "var(--gruvbox-aqua)"
+  label-badge-blue: "var(--gruvbox-yellow)"
+  label-badge-green: "var(--gruvbox-green)"
+  label-badge-yellow: "var(--gruvbox-yellow)"
+  label-badge-grey: "var(--gruvbox-fg-3)"
+
+  # Cards */
+  paper-card-background-color: "var(--card-background-colour)"
+  card-background-color: "var(--card-background-colour)"
+  table-row-background-color: "var(--gruvbox-bg-0)"
+  table-row-alternative-background-color: "var(--gruvbox-bg-1)"
+
+  # Icons */
+  paper-item-icon-color: "var(--icon-colour)"
+  paper-item-icon-active-color: "var(--icon-colour-on)"
+  state-icon-unavailable-color: var(--gruvbox-bg-3)
+
+  # Popup */
+  paper-dialog-background-color: "var(--background-colour)"
+  paper-dialog-color: "var(--text-colour)"
+  iron-overlay-backdrop-background-color: "hsl(29, 10%, 44%, 0.6)"      # Cover for popup
+  secondary-background-color: "var(--background-colour)"                # Popup header
+  more-info-header-color: "var(--primary-colour)"                       # Configure/Submit buttons
+  more-info-header-background: "blue"
+
+  # Colours */
+  google-red-500: "var(--gruvbox-red)"                                  # Logout button
+  google-blue-500: "var(--gruvbox-blue)"
+  google-green-500: "var(--gruvbox-green)"
+  google-yellow-500: "var(--gruvbox-yellow)"
+  paper-green-400: "var(--gruvbox-green)"
+  paper-blue-400: "var(--gruvbox-blue)"
+  paper-orange-400: "var(--gruvbox-orange)"
+  paper-spinner-color: "var(--gruvbox-purple)"
+
+  # Toggles */
+  switch-unchecked-button-color: "var(--gruvbox-bg-4)"
+  switch-unchecked-track-color: "var(--gruvbox-bg-4)"
+  switch-checked-button-color: "var(--gruvbox-purple-bright)"
+  switch-checked-track-color: "var(--gruvbox-purple, gruvbox-bg-5)"
+
+  # Sidebar */
+  cch-all-tabs-color: "yellow"
+  sidebar-icon-color: "var(--icon-colour2, gruvbox-bg-2)"
+  sidebar-background-color: "var(--background-colour)"
+  paper-listbox-background-color: "var(--background-colour)"            # Sidebar inner background
+  sidebar-text-color: "var(--text-colour)"
+  sidebar-selected-text-color: "var(--gruvbox-orange-bright)"
+  sidebar-selected-icon-color: "var(--gruvbox-orange-bright)"
+
+  # Slider */
+  paper-slider-knob-color: "var(--gruvbox-purple-bright)"               # What you'd expect
+  paper-slider-knob-start-color: "var(--gruvbox-fg-3)"                  # When at 0
+  paper-slider-pin-color: "green"
+  paper-slider-active-color: "var(--gruvbox-purple)"
+  paper-slider-container-color: "var(--gruvbox-bg-2)"
+  paper-slider-secondary-color: "var(--secondary-background-color)"
+  paper-slider-disabled-active-color: "var(--disabled-text-color)"
+  paper-slider-disabled-secondary-color: "var(--disabled-text-color)"
+
+  # Popup menu */
+  paper-listbox-color: "var(--text-color)"
+
+  # mdc */
+  mdc-theme-primary: "var(--gruvbox-purple-bright)"                     # Execute button ("Set state" button)
+  mdc-theme-on-primary: "var(--background-colour)"
+  mdc-theme-secondary: "var(--gruvbox-orange-bright)"                   # FAB button
+  mdc-theme-on-secondary: "var(--background-colour)"
+  paper-tabs-selection-bar-color: "yellow"
+  material-primary-color: "blue"
+  mdc-theme-background: "blue"
+  mdc-theme-surface: "green"
+  mdc-theme-on-surface: "var(--gruvbox-orange-bright)"                  # Device automation chips label hover
+
+  # Uncategorized/testing */
+  light-accent-color: black
+  dark-accent-color: black
+  light-theme-background-color: black
+  light-theme-base-color: black
+  light-theme-text-color: black
+  light-theme-secondary-color: black
+  light-theme-disabled-color: black
+  light-theme-divider-color: black
+  dark-theme-background-color: black
+  dark-theme-base-color: black
+  dark-theme-text-color: black
+  dark-theme-secondary-color: black
+  dark-theme-disabled-color: black
+  dark-theme-divider-color: black
+  # default-primary-color: var(--primary-color);
+  # gb-primary-color: 3, 169, 244
+  # gb-accent-color: 255, 152, 0
+  # rgb-primary-text-color: 33, 33, 33
+  # rgb-secondary-text-color: 114, 114, 114
+  # rgb-text-primary-color
