@@ -23,11 +23,18 @@ views:
       - type: media-control
         entity: media_player.big_tv
       - type: vertical-stack
-        title: Mood
-        cards: !include lovelace/moods.yaml
-      - type: horizontal-stack
-        title: Bedtime
+        title: Actions
         cards:
+        - type: "custom:button-card"
+          entity: script.turn_big_tv_on_off
+          name: TV
+          show_name: false
+          icon: mdi:television-classic
+          icon_height: 48px
+          aspect_ratio: 1/0.24
+          tap_action:
+              action: call-service
+              service: script.turn_big_tv_on
         - type: "custom:button-card"
           entity: script.go_to_bed
           name: Sleep
@@ -38,6 +45,9 @@ views:
           tap_action:
               action: call-service
               service: script.go_to_bed
+      - type: vertical-stack
+        title: Mood
+        cards: !include lovelace/moods.yaml
       - type: horizontal-stack
         title: Climate
         cards:
