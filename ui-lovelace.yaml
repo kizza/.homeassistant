@@ -75,6 +75,25 @@ views:
   - path: other_view
     title: Other
     badges:
+      - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+      - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+    cards:
+      - type: entities
+        title: Motion
+        show_header_toggle: false
+        entities:
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+      - type: entities
+        title: Speakers
+        show_header_toggle: false
+        entities:
+          - media_player.family_room_speaker
+          - media_player.downstairs_speaker
+          - media_player.all_speakers
+  - path: scripts_view
+    title: Scripts
+    badges:
     cards:
       - type: entities
         title: Scripts
