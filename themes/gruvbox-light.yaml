@@ -56,12 +56,16 @@ Gruvbox Light:
   #
 
   # Hardcoded */
-  primary-color: "hsl(27, 99%, 55%)"                                  # Used for links var(--gruvbox-organge-bright)
+  #primary-color: "hsl(27, 99%, 55%)"                                  # Used for links var(--gruvbox-organge-bright)
+  #primary-color: "hsl(105, 35%, 62%)"                                  # Used for links var(--gruvbox-aqua-bright)
+  # primary-color: "hsl(344, 47%, 68%)"         # Used for links var(--gruvbox-purple-bright)
+  primary-color: "hsl(333, 34%, 54%)"         # Used for links var(--gruvbox-purple)
+
 
   # Header */
   app-header-text-color: "var(--header-text-colour)"
   app-header-background-color: "var(--header-colour)"
-  text-primary-color: var(--gruvbox-purple)                           # Header tab border
+  text-primary-color: var(--background-colour)                              # Header tab border, mobile popup text
 
   # Base */
   primary-text-color: "var(--text-colour)"
@@ -69,7 +73,7 @@ Gruvbox Light:
   primary-background-color: "var(--background-colour)"
   light-primary-color: "var(--gruvbox-blue)"                          # Profile icon background
   dark-primary-color: "var(--gruvbox-orange-bright)"                  # Used for "dev info" links
-  accent-color: "var(--gruvbox-bg-2)"                                 # Notification badge background
+  accent-color: "var(--gruvbox-purple-bright)"                        # Graph color, Notification badge background
   divider-color: "var(--divider-colour)"
 
   # Badges */
@@ -88,7 +92,7 @@ Gruvbox Light:
   table-row-alternative-background-color: "var(--gruvbox-bg-1)"
 
   # Icons */
-  paper-item-icon-color: "var(--icon-colour)"
+  paper-item-icon-color: var(--icon-colour) # Used by sensor graph
   paper-item-icon-active-color: "var(--icon-colour-on)"
   state-icon-unavailable-color: var(--gruvbox-bg-3)
 
@@ -98,7 +102,7 @@ Gruvbox Light:
   iron-overlay-backdrop-background-color: "hsl(29, 10%, 44%, 0.6)"      # Cover for popup
   secondary-background-color: "var(--background-colour)"                # Popup header
   more-info-header-color: "var(--primary-colour)"                       # Configure/Submit buttons
-  more-info-header-background: "blue"
+  more-info-header-background: "pink"
 
   # Colours */
   google-red-500: "var(--gruvbox-red)"                                  # Logout button
@@ -108,7 +112,7 @@ Gruvbox Light:
   paper-green-400: "var(--gruvbox-green)"
   paper-blue-400: "var(--gruvbox-blue)"
   paper-orange-400: "var(--gruvbox-orange)"
-  paper-spinner-color: "var(--primary-color)"
+  paper-spinner-color: "var(--gruvbox-purple)"
 
   # Toggles */
   switch-unchecked-button-color: "var(--gruvbox-bg-4)"
@@ -150,20 +154,20 @@ Gruvbox Light:
   mdc-theme-on-surface: "var(--gruvbox-orange-bright)"                  # Device automation chips label hover
 
   # Uncategorized/testing */
-  light-accent-color: black
-  dark-accent-color: black
-  light-theme-background-color: black
-  light-theme-base-color: black
-  light-theme-text-color: black
-  light-theme-secondary-color: black
-  light-theme-disabled-color: black
-  light-theme-divider-color: black
-  dark-theme-background-color: black
-  dark-theme-base-color: black
-  dark-theme-text-color: black
-  dark-theme-secondary-color: black
-  dark-theme-disabled-color: black
-  dark-theme-divider-color: black
+  light-accent-color: "var(--accent-color)"
+  dark-accent-color: "var(--accent-color)"
+  light-theme-background-color: red
+  light-theme-base-color: green
+  light-theme-text-color: blue
+  light-theme-secondary-color: orange
+  light-theme-disabled-color: purple
+  light-theme-divider-color: red
+  dark-theme-background-color: green
+  dark-theme-base-color: blue
+  dark-theme-text-color: orange
+  dark-theme-secondary-color: pink
+  dark-theme-disabled-color: blue
+  dark-theme-divider-color: orange
   # default-primary-color: var(--primary-color);
   # gb-primary-color: 3, 169, 244
   # gb-accent-color: 255, 152, 0

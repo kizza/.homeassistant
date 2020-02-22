@@ -2,6 +2,8 @@ title: Home
 resources:
   - url: /local/button-card.js
     type: module
+  - url: /local/mini-graph-card.js
+    type: module
 views:
   - path: default_view
     title: Home
@@ -51,14 +53,16 @@ views:
       - type: horizontal-stack
         title: Climate
         cards:
-        - type: sensor
-          entity: sensor.lumi_temperature
-          name: Temperature
-          graph: line
-        - type: sensor
-          entity: sensor.lumi_humidity
-          name: Humidity
-          graph: line
+        - type: custom:mini-graph-card
+          line_color: "var(--accent-color)"
+          entities:
+            - entity: sensor.lumi_temperature
+              name: Temperature
+        - type: custom:mini-graph-card
+          line_color: "var(--accent-color)"
+          entities:
+            - entity: sensor.lumi_humidity
+              name: Humidity
       - type: weather-forecast
         entity: weather.home
       - type: entities
