@@ -1,17 +1,33 @@
-*.db-shm
-*.db-wal
+# Example .gitignore file for your config dir.
+# An * ensures that everything will be ignored.
+/*
+
+# Whitelist
+!*.yaml
+!.gitignore
+!*.md
+
+# Whitelist directories
+!custom_components/
+!lovelace/
+!scripts/
+
+#
+!*www/
+*www/*
+!*www/*.css
+!*www/*.js
+
+# Blacklist
+*__pycache__
 *.pyc
-*.swn
-*.swo
-*.swp
-.DS_Store
+*.DS_Store
+
+# Ignore folders.
 .storage
-__pycache__/
-fullchain.pem
-google-service-account.json
-home-assistant.log
-home-assistant_v2.db
-zigbee.db
-privkey.pem
+.cloud
+.google.token
+
+# Specific yamls to ignore
+ip_bans.yaml
 secrets.yaml
-tts/
