@@ -46,7 +46,8 @@
     platform: device
     type: motion
   action:
-  - data: { entity_id: "light.tv_backlight" }
+  - data:
+      entity_id: light.tv_backlight
     service: my_platform.flash
 - id: '1581755155463'
   alias: When i'm home
@@ -58,7 +59,7 @@
   condition: []
   action:
   - data: {}
-    service: script.turn_on_tv_backlight
+    service: script.theme_green
 - id: piano_flash
   alias: Piano flash
   description: ''
@@ -69,5 +70,6 @@
     platform: device
     type: motion
   action:
-  - data: { entity_id: "light.other_strip" }
+  - data:
+      entity_id: light.other_strip
     service: my_platform.flash
