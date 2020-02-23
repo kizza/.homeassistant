@@ -12,35 +12,34 @@ lovelace:
 #     person.keiran:
 #       entity_picture: /local/person.png
 
-# http:
-#   server_port: 8123
-#   base_url: !secret base_url
-#   ip_ban_enabled: true
-#   login_attempts_threshold: 10
-#   ssl_certificate: /home/homeassistant/.homeassistant/fullchain.pem
-#   ssl_key: /home/homeassistant/.homeassistant/privkey.pem
-
-# google_assistant:
-#   project_id: home-assistant-c6eef
-#   api_key: !secret google_app_key
-#   service_account: !include google-service-account.json
-#   exposed_domains:
-#     - sensor
-#     - light
-#   entity_config:
-#     light.television_lighting:
-#       expose: true
-#       room: LIVING_ROOM
+#
+# SSL
+#
+http:
+  server_port: !secret server_port
+  base_url: !secret base_url
+  ip_ban_enabled: true
+  login_attempts_threshold: 10
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
 
 # ssl_profile: intermediate
+
+#
+# Google assistant
+#
+google_assistant:
+  project_id: !secret google_assistant_project_id
+  service_account: !include google-service-account.json
+  exposed_domains:
+    - sensor
+    - light
+    - script
+    - scene
+
 # cors_allowed_origins:
 #   - https://google.com
 #   - https://www.home-assistant.io
-
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
 
 #
 # Living room remote
