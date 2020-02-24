@@ -122,6 +122,7 @@ Gruvbox Light:
   google-blue-500: "var(--gruvbox-blue)"
   google-green-500: "var(--gruvbox-green)"
   google-yellow-500: "var(--gruvbox-yellow)"
+  google-purple-500: "var(--gruvbox-purple)"
   paper-green-400: "var(--gruvbox-green)"
   paper-blue-400: "var(--gruvbox-blue)"
   paper-orange-400: "var(--gruvbox-orange)"

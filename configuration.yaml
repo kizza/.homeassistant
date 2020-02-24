@@ -93,6 +93,17 @@ homeassistant:
     #   entity_picture: /local/person.png
 
 #
+# Speedtest.net
+#
+speedtestdotnet:
+  scan_interval:
+    minutes: 5
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+#
 # Logging configuration
 #
 logger:
