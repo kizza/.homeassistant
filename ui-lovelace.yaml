@@ -10,6 +10,7 @@ views:
     badges:
       - entity: binary_sensor.updater
       - entity: person.keiran
+      - entity: binary_sensor.big_tv
       - entity: sun.sun
     cards:
       - type: entities
@@ -28,12 +29,15 @@ views:
         title: Actions
         cards:
         - type: "custom:button-card"
-          entity: script.turn_big_tv_on_off
+          entity: binary_sensor.big_tv
           name: TV
           show_name: false
           icon: mdi:television-classic
           icon_height: 48px
           aspect_ratio: 1/0.24
+          state:
+            - value: "on"
+              color: "var(--gruvbox-green)"
           tap_action:
               action: call-service
               service: script.turn_big_tv_on

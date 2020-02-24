@@ -7,11 +7,6 @@ frontend:
 lovelace:
   mode: yaml
 
-# homeassistant:
-#   customize:
-#     person.keiran:
-#       entity_picture: /local/person.png
-
 #
 # SSL
 #
@@ -64,6 +59,8 @@ my_platform:
     #    type: triones
     #    mac: 88:ff:bc:00:2b:09
 
+tv_service:
+
 device_tracker:
   - platform: ping
     interval_seconds: 30
@@ -74,12 +71,35 @@ device_tracker:
       keirans_phone: 10.0.0.30
 
 #
+# Binary sensors
+#
+binary_sensor:
+  - platform: ping
+    name: Big TV
+    scan_interval: 30
+    count: 2
+    host: 10.0.0.43
+
+#
+# Customize
+#
+homeassistant:
+  customize:
+    binary_sensor.big_tv:
+      icon: mdi:television-classic
+      friendly_name: Big TV
+      device_class: power
+    # person.keiran:
+    #   entity_picture: /local/person.png
+
+#
 # Logging configuration
 #
 logger:
   default: info
   logs:
     custom_components.my_platform: debug
+    custom_components.tv_service: debug
 
 # Text to speech
 tts:

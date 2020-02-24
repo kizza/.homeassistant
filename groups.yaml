@@ -1,5 +1,6 @@
 all_leds:
   name: All LED Strips
+  icon: mdi:lightbulb-group-outline
   entities:
   - light.tv_backlight
   - light.other_strip
