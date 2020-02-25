@@ -2,6 +2,38 @@ from enum import Enum
 
 FADE_STEPS = 30
 
+COLOURS = {
+    'red': (255, 0, 0),
+    'green': (0, 255, 0),
+    'blue': (0, 63, 255),
+    'purple': (255, 0, 255),
+    'sky': (36, 255, 255),
+    'sun': (255, 63, 0)
+}
+
+def colour(value):
+    """Return a colour value as an rgb tuple"""
+    if isinstance(value, str):     # Passing in string
+        return COLOURS[value]
+    elif isinstance(value, list):  # Passing in array
+        return tuple(value)
+    elif isinstance(value, tuple): # Passing in rgb tuple
+        return value
+
+def configured_colours(hass):
+    """Return an array of colours that are "on" with state"""
+    colours = []
+    for each in COLOURS.keys():
+        state = hass.states.get(f'input_boolean.colour_{each}')
+        if state is not None:
+            if state.state == 'on':
+                colours.append(each)
+
+    if len(colours) == 0:
+        colours = list(COLOURS.keys())
+
+    return colours
+
 def fade(fade_from, fade_to, steps = FADE_STEPS):
     from_r, from_g, from_b = fade_from
     to_r, to_g, to_b = fade_to

@@ -113,6 +113,20 @@ views:
           - media_player.family_room_speaker
           - media_player.downstairs_speaker
           - media_player.all_speakers
+
+  - path: effects_view
+    title: Effects
+    badges:
+    cards:
+      - type: entities
+        entities:
+          - input_boolean.colour_red
+          - input_boolean.colour_green
+          - input_boolean.colour_blue
+          - input_boolean.colour_purple
+          - input_boolean.colour_sky
+          - input_boolean.colour_sun
+        title: Effect Colours
   - path: scripts_view
     title: Scripts
     badges:

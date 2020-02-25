@@ -61,6 +61,38 @@ my_platform:
 
 tv_service:
 
+#
+# Effect colours
+#
+input_boolean:
+   effect_running:
+     name: Effect running
+     initial: off
+   colour_red:
+     name: Red
+     icon: mdi:invert-colors
+     initial: off
+   colour_green:
+     name: Green
+     icon: mdi:invert-colors
+     initial: off
+   colour_blue:
+     name: Blue
+     icon: mdi:invert-colors
+     initial: on
+   colour_purple:
+     name: Purple
+     icon: mdi:invert-colors
+     initial: on
+   colour_sky:
+     name: Sky
+     icon: mdi:invert-colors
+     initial: on
+   colour_sun:
+     name: Sun
+     icon: mdi:invert-colors
+     initial: off
+
 device_tracker:
   - platform: ping
     interval_seconds: 30

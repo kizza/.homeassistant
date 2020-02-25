@@ -9,7 +9,7 @@ from bluepy import btle
 from . import Base
 from ..const import ( debug, DOMAIN )
 from ..util import ( map_tuple )
-from ..util.effects import ( Effect, fade )
+from ..util.effects import ( colour, Effect, fade )
 
 from homeassistant.const import (CONF_NAME, CONF_MAC, STATE_ON, STATE_OFF)
 from homeassistant.util.color import color_hsv_to_RGB
@@ -99,7 +99,7 @@ class Triones(Base):
 
     async def theme(self, rgb):
         self._clear_enqueue()
-        self._raw_rgb = rgb
+        self._raw_rgb = colour(rgb)
 
         if not self.is_on():
             self._rgb = (0, 0, 0)
@@ -237,8 +237,10 @@ class Triones(Base):
 
     def _flash(self):
         _LOGGER.debug("%s flash", self)
-        fade_out = fade(self._rgb, (0, 0, 0), 12)
-        fade_in = fade((0, 0, 0), self._rgb, 12)
+        # fade_out = fade(self._rgb, (0, 0, 0), 12)
+        # fade_in = fade((0, 0, 0), self._rgb, 12)
+        fade_out = fade(self._rgb, (255, 0, 0), 12)
+        fade_in = fade((255, 0, 0), self._rgb, 12)
 
         # Create colours
         colours = []

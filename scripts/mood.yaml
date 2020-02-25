@@ -18,21 +18,21 @@ theme_blue:
   sequence:
   - service: my_platform.theme
     data:
-      rgb_color: [0, 63, 255]
+      rgb_color: 'blue'
 theme_purple:
   alias: Theme purple
   description: ''
   sequence:
   - service: my_platform.theme
     data:
-      rgb_color: [255, 0, 255]
+      rgb_color: 'purple'
 theme_sky:
   alias: Theme sky
   description: ''
   sequence:
   - service: my_platform.theme
     data:
-      rgb_color: [36, 255, 255]
+      rgb_color: 'sky'
 theme_sun:
   alias: Theme sun
   description: ''
