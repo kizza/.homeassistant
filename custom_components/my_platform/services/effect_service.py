@@ -2,7 +2,7 @@ import logging
 
 from ..const import ( debug, DOMAIN )
 from ..util.hass import ( find_entity )
-from ..util.effects import ( configured_colours )
+from ..util.effects import ( configured_colours, spectrum )
 from homeassistant.helpers.event import async_call_later
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,12 +28,10 @@ def register_effect_service(hass, entities):
         params = service.data.copy()
         colours = service.data.get("colours")
         delay = service.data.get("delay")
-
-        # if colours == 'auto':
-        #     colours = configured_colours(hass)
+        fade_steps = service.data.get("fade_steps")
 
         stop_effect()
-        hass.data[EFFECT_KEY] = FadeEffect(hass, entities, colours, delay)
+        hass.data[EFFECT_KEY] = FadeEffect(hass, entities, colours, fade_steps, delay)
         await start_effect()
         schedule_update_effect_running_state()
 
@@ -56,10 +54,11 @@ def register_effect_service(hass, entities):
     )
 
 class FadeEffect():
-    def __init__(self, hass, entities, colours, delay):
+    def __init__(self, hass, entities, colours, fade_steps, delay):
         self.hass = hass
         self.entities = entities
         self._colours = colours
+        self.fade_steps = fade_steps
         self.delay = delay
         self.index = 0
         self._cancel_next = None
@@ -81,15 +80,23 @@ class FadeEffect():
     @property
     def colours(self):
         if self._colours:
-            return self._colours
+            output = self._colours
         else:
-            return configured_colours(self.hass)
+            output = configured_colours(self.hass)
+        return self._apply_colour_fades(output)
+
+    def _apply_colour_fades(self, colours):
+        if self.fade_steps is not None:
+            colours = spectrum(colours, self.fade_steps)
+            return colours
+        else:
+            return colours
 
     def _get_next_colour(self):
-        colours = self.colours
-        if self.index >= len(self.colours):
+        all_colours = self.colours
+        if self.index >= len(all_colours):
             self.index = 0
-        rgb = self.colours[self.index]
+        rgb = all_colours[self.index]
         self.index += 1
         return rgb
 

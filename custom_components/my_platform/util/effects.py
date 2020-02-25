@@ -20,6 +20,9 @@ def colour(value):
     elif isinstance(value, tuple): # Passing in rgb tuple
         return value
 
+def map_to_colour(colours):
+    return list(map(lambda each: colour(each), colours))
+
 def configured_colours(hass):
     """Return an array of colours that are "on" with state"""
     colours = []
@@ -51,6 +54,18 @@ def fade(fade_from, fade_to, steps = FADE_STEPS):
 
     colours.append(fade_to)
     return colours
+
+def spectrum(colours, steps = FADE_STEPS):
+    """Take a list of colours, and fan it out with fade steps between each"""
+    output = []
+    colours = map_to_colour(colours)
+    for i in range(len(colours)):
+        start = colours[i]
+        end = colours[i+1] if i + 1 < len(colours) else colours[0]
+        next_fade = fade(start, end, steps)
+        next_fade_without_final_colour = next_fade[:-1]
+        output.extend(next_fade_without_final_colour)
+    return output
 
 class Effect(Enum):
     """
