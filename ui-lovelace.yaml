@@ -29,31 +29,7 @@ views:
         entity: media_player.big_tv
       - type: vertical-stack
         title: Actions
-        cards:
-        - type: "custom:button-card"
-          entity: media_player.big_tv_android
-          name: TV
-          show_name: false
-          icon: mdi:television-classic
-          icon_height: 48px
-          aspect_ratio: 1/0.24
-          state:
-            - value: "(standby|paused|playing)"
-              operator: regex
-              color: "var(--gruvbox-green)"
-          tap_action:
-              action: call-service
-              service: script.turn_big_tv_on
-        - type: "custom:button-card"
-          entity: script.go_to_bed
-          name: Sleep
-          show_name: false
-          icon: mdi:sleep
-          icon_height: 48px
-          aspect_ratio: 1/0.24
-          tap_action:
-              action: call-service
-              service: script.go_to_bed
+        cards: !include lovelace/actions.yaml
       - type: vertical-stack
         title: Mood
         cards: !include lovelace/moods.yaml
