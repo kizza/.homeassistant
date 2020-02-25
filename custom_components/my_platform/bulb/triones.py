@@ -20,7 +20,7 @@ from homeassistant.components.light import (
 
 _LOGGER = logging.getLogger(__name__)
 NEXT_MESSAGE_DELAY = 0
-ERRORED_MESSAGE_DELAY = 0.3
+ERRORED_MESSAGE_DELAY = 0.8
 TURN_ON = 'TURN_ON'
 TURN_OFF = 'TURN_OFF'
 NO_COLOUR = 'NO_COLOUR'
