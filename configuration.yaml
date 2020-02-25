@@ -62,6 +62,14 @@ my_platform:
 tv_service:
 
 #
+# TV Android ADB
+#
+media_player:
+  - platform: androidtv
+    name: Big TV (Android)
+    host: 10.0.0.43
+
+#
 # Effect colours
 #
 input_boolean:
@@ -105,24 +113,24 @@ device_tracker:
 #
 # Binary sensors
 #
-binary_sensor:
-  - platform: ping
-    name: Big TV
-    scan_interval: 30
-    count: 2
-    host: 10.0.0.43
+# binary_sensor:
+#   - platform: ping
+#     name: Big TV
+#     scan_interval: 30
+#     count: 2
+#     host: 10.0.0.43
 
 #
 # Customize
 #
-homeassistant:
-  customize:
-    binary_sensor.big_tv:
-      icon: mdi:television-classic
-      friendly_name: Big TV
-      device_class: power
-    # person.keiran:
-    #   entity_picture: /local/person.png
+# homeassistant:
+#   customize:
+#     binary_sensor.big_tv:
+#       icon: mdi:television-classic
+#       friendly_name: Big TV
+#       device_class: power
+#     # person.keiran:
+#     #   entity_picture: /local/person.png
 
 #
 # Speedtest.net

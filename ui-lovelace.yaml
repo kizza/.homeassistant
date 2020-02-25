@@ -10,7 +10,7 @@ views:
     badges:
       - entity: binary_sensor.updater
       - entity: person.keiran
-      - entity: binary_sensor.big_tv
+      - entity: media_player.big_tv_android
       - entity: sun.sun
     cards:
       - type: entities
@@ -24,19 +24,22 @@ views:
         title: Big TV
         cards: !include lovelace/tv.yaml
       - type: media-control
+        entity: media_player.big_tv_android
+      - type: media-control
         entity: media_player.big_tv
       - type: vertical-stack
         title: Actions
         cards:
         - type: "custom:button-card"
-          entity: binary_sensor.big_tv
+          entity: media_player.big_tv_android
           name: TV
           show_name: false
           icon: mdi:television-classic
           icon_height: 48px
           aspect_ratio: 1/0.24
           state:
-            - value: "on"
+            - value: "(standby|paused|playing)"
+              operator: regex
               color: "var(--gruvbox-green)"
           tap_action:
               action: call-service
