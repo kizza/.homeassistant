@@ -74,3 +74,26 @@
     tap_action:
         action: call-service
         service: script.theme_sun
+- type: horizontal-stack
+  cards:
+  - type: "custom:button-card"
+    entity: script.theme_red
+    icon: mdi:heart
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    tap_action:
+        action: call-service
+        service: my_platform.start_effect
+        service_data:
+          colours: [[0, 255, 0], [0, 63, 255], [255, 0, 255]]
+          delay: 60
+  - type: "custom:button-card"
+    entity: script.theme_red
+    icon: mdi:heart
+    icon_height: 48px
+    show_name: false
+    aspect_ratio: 1/0.7
+    tap_action:
+        action: call-service
+        service: my_platform.stop_effect

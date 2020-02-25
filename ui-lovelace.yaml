@@ -54,6 +54,9 @@ views:
       - type: vertical-stack
         title: Mood
         cards: !include lovelace/moods.yaml
+      - type: vertical-stack
+        title: Effects
+        cards: !include lovelace/effects.yaml
       - type: horizontal-stack
         title: Climate
         cards:
