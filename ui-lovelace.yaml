@@ -97,18 +97,32 @@ views:
           - automation.tv_flash
           - automation.piano_flash
         title: Automation
-  - path: other_view
-    title: Other
+  - path: more_view
+    title: More
     badges:
       - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
       - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+      - entity: binary_sensor.lumi_extra_motion
+        name: Second Motion
+      - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_caab1f04_occupancy
+        name: Second Occupancy
     cards:
       - type: entities
         title: Motion
         show_header_toggle: false
         entities:
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+            name: Motion
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+            name: Occupancy
+      - type: entities
+        title: Second Motion
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.lumi_extra_motion
+            name: Second Motion
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_caab1f04_occupancy
+            name: Second Occupancy
       - type: entities
         title: Speakers
         show_header_toggle: false
@@ -119,6 +133,7 @@ views:
 
   - path: effects_view
     title: Effects
+    icon: mdi:palette
     badges:
     cards:
       - type: entities
@@ -132,6 +147,7 @@ views:
         title: Effect Colours
   - path: scripts_view
     title: Scripts
+    icon: mdi:script-text
     badges:
     cards:
       - type: entities
