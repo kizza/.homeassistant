@@ -1,0 +1,15 @@
+#
+# TV backlight
+#
+turn_on_tv_backlight:
+  alias: Turn TV Backlight On
+  sequence:
+  - service: light.turn_on
+    entity_id: light.tv_backlight
+    data: {}
+turn_off_tv_backlight:
+  alias: Turn TV Backlight Off
+  sequence:
+  - service: light.turn_off
+    entity_id: light.tv_backlight
+    data: {}

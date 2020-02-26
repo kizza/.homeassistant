@@ -2,6 +2,7 @@ default_config:
 
 homeassistant:
   packages:
+    deck: !include packages/deck/fairy_lights.yaml
     default: !include packages/default.yaml
     device_tracker: !include packages/device_tracker.yaml
     home: !include packages/home.yaml

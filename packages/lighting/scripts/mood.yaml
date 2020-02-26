@@ -1,3 +1,6 @@
+#
+# Simple scripts to set light mood
+#
 theme_red:
   alias: Theme red
   description: ''

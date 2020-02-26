@@ -7,13 +7,13 @@ badges:
   - entity: sun.sun
 cards:
   - type: entities
+    title: Lights
     entities:
       - light.tv_backlight
       - light.other_strip
       - group.all_leds
-      - input_boolean.deck_lights
+      - switch.deck_lights
       - light.demo_light
-    title: Lights
   - type: horizontal-stack
     title: Big TV
     cards: !include home/tv.yaml

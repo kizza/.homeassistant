@@ -1,0 +1,61 @@
+#
+# Input boolean to hold the state
+#
+input_boolean:
+   deck_lights:
+     name: Deck lights
+     initial: off
+
+#
+# Template switch to represent the state
+#
+switch:
+  - platform: template
+    switches:
+      deck_lights:
+        friendly_name: Deck lights
+        icon_template: mdi:string-lights
+        value_template: >
+          {{ is_state('input_boolean.deck_lights', 'on') }}
+        turn_on:
+          - service: input_boolean.turn_on
+            entity_id: input_boolean.deck_lights
+        turn_off:
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.deck_lights
+
+#
+# Connect deck light input_boolean to iftt
+#
+automation:
+  - alias: Turn on deck lights
+    trigger:
+      - platform: state
+        entity_id: input_boolean.deck_lights
+        to: 'on'
+    action:
+      - service: ifttt.trigger
+        data: {"event":"turn_deck_on"}
+  - alias: Turn off deck lights
+    trigger:
+      - platform: state
+        entity_id: input_boolean.deck_lights
+        to: 'off'
+    action:
+      - service: ifttt.trigger
+        data: {"event":"turn_deck_off"}
+
+#
+# Simple script to provide access
+#
+script:
+  turn_on_deck_lights:
+    alias: Turn on deck lights
+    sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.deck_lights
+  turn_off_deck_lights:
+    alias: Turn off deck lights
+    sequence:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.deck_lights
