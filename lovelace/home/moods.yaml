@@ -74,3 +74,5 @@
     tap_action:
         action: call-service
         service: script.theme_sun
+- type: custom:mood-card
+  entity: input_text.mood_rgb
