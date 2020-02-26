@@ -12,4 +12,3 @@ def find_entity(entities, entity_id):
         if entity_id == f'{LIGHT_DOMAIN}.{slugify(entity.name)}':
             return entity
     return None
-

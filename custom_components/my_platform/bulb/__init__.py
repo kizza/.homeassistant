@@ -20,7 +20,7 @@ class Queue(Light):
     def _clear_enqueue(self):
         self._queue = []
 
-class Base(Queue):
+class Bulb(Queue):
     def __init__(self, hass, config_entry):
         super().__init__()
         self._hass = hass

@@ -6,7 +6,7 @@ import time
 from bluepy import btle
 # from ..test import FakeBtle as btle
 
-from . import Base
+from . import Bulb
 from ..const import ( debug, DOMAIN )
 from ..util import ( map_tuple )
 from ..util.effects import ( colour, Effect, fade )
@@ -25,7 +25,7 @@ TURN_ON = 'TURN_ON'
 TURN_OFF = 'TURN_OFF'
 NO_COLOUR = 'NO_COLOUR'
 
-class Triones(Base):
+class Triones(Bulb):
 
     def __init__(self, hass, config_entry, config):
         super().__init__(hass, config_entry)
@@ -82,15 +82,9 @@ class Triones(Base):
 
         _LOGGER.debug(f'{self} Connecting to {self._mac}...')
         device = btle.Peripheral(self._mac)
-        # dev = btle.Peripheral("ff:ff:bc:00:2b:09")
-        # for svc in device.services:
-        #     print(str(svc))
         service = device.getServiceByUUID(btle.UUID("ffd5"))
         self._characteristic = service.getCharacteristics()[0]
         _LOGGER.debug(f'{self} Connected')
-
-    # async def async_update(self):
-        # print(f'Async update for {self.name}')
 
     async def flash(self):
         self._clear_enqueue()
@@ -306,4 +300,3 @@ class Protocol():
 
     def encode_effect(effect, effect_speed):
         return [-69, effect, effect_speed, 68]
-

@@ -21,6 +21,7 @@ def colour(value):
         return value
 
 def map_to_colour(colours):
+    """Call 'colour' on all items within list"""
     return list(map(lambda each: colour(each), colours))
 
 def configured_colours(hass):
@@ -38,6 +39,7 @@ def configured_colours(hass):
     return colours
 
 def fade(fade_from, fade_to, steps = FADE_STEPS):
+    """Transition an rgb tuple to another in x many steps"""
     from_r, from_g, from_b = fade_from
     to_r, to_g, to_b = fade_to
     red_delta = to_r - from_r
@@ -56,7 +58,7 @@ def fade(fade_from, fade_to, steps = FADE_STEPS):
     return colours
 
 def spectrum(colours, steps = FADE_STEPS):
-    """Take a list of colours, and fan it out with fade steps between each"""
+    """Take a list of colours, and accordian it out with "fade" steps between each"""
     output = []
     colours = map_to_colour(colours)
     for i in range(len(colours)):
@@ -68,9 +70,7 @@ def spectrum(colours, steps = FADE_STEPS):
     return output
 
 class Effect(Enum):
-    """
-    An enum of all the possible effects the bulb can accept
-    """
+    """An enum of all the possible effects the bulb can accept"""
     seven_color_cross_fade = 0x25       #:
     red_gradual_change = 0x26           #:
     green_gradual_change = 0x27         #:
@@ -91,5 +91,3 @@ class Effect(Enum):
     purple_strobe_flash = 0x36          #:
     white_strobe_flash = 0x37           #:
     seven_color_jumping_change = 0x38   #:
-
-

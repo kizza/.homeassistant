@@ -30,4 +30,3 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     register_effect_service(hass, entities)
 
     return True
-
