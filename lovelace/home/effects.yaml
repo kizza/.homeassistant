@@ -24,7 +24,7 @@
         service: my_platform.start_effect
         service_data:
           delay: 30
-          fade_steps: 5
+          fade_steps: 3
 - type: horizontal-stack
   cards:
   - type: "custom:button-card"

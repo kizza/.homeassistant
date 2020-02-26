@@ -9,3 +9,4 @@ go_to_bed:
   - service: light.turn_off
     entity_id: light.other_strip
     data: {}
+  - service: script.turn_off_deck_lights

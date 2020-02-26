@@ -11,6 +11,7 @@ cards:
       - light.tv_backlight
       - light.other_strip
       - group.all_leds
+      - input_boolean.deck_lights
       - light.demo_light
     title: Lights
   - type: horizontal-stack

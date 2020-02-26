@@ -9,6 +9,8 @@ cards:
     entities:
       - script.turn_on_tv_backlight
       - script.turn_off_tv_backlight
+      - script.turn_on_deck_lights
+      - script.turn_off_deck_lights
       - script.go_to_bed
       - script.turn_big_tv_on_off
       - script.turn_big_tv_volume_up
