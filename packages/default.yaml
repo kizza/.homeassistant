@@ -1,0 +1,17 @@
+#
+# Logging configuration
+#
+logger:
+  default: info
+  logs:
+    custom_components.my_platform: debug
+    custom_components.tv_service: debug
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include ../groups.yaml
+automation: !include ../automations.yaml
+script: !include_dir_merge_named ../scripts
+scene: !include ../scenes.yaml

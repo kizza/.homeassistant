@@ -1,0 +1,26 @@
+#
+# Living room remote
+#
+remote:
+  - platform: broadlink
+    name: Living Room Remote
+    mac: !secret living_room_remote_mac
+    host: !secret living_room_remote_host
+
+#
+# TV Android (ADB)
+#
+media_player:
+  - platform: androidtv
+    name: Big TV (Android)
+    host: !secret android_tv_host
+
+#
+# Custom tv service
+#
+tv_service:
+
+#
+# TV scripts
+#
+script: !include_dir_merge_named scripts

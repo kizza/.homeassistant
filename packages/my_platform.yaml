@@ -1,0 +1,14 @@
+#
+# Triones LED strips (my custom platform)
+#
+my_platform:
+  - name: "TV Backlight"
+    type: triones
+    mac: !secret tv_backlight_mac
+  - name: "Other strip"
+    type: triones
+    mac: !secret other_strip_mac
+    #  - name: "Demo Light"
+    #    type: triones
+    #    mac: 88:ff:bc:00:2b:09
+

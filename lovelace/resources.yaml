@@ -1,0 +1,4 @@
+- url: /local/button-card.js
+  type: module
+- url: /local/mini-graph-card.js
+  type: module

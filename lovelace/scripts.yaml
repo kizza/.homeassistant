@@ -1,0 +1,29 @@
+path: scripts_view
+title: Scripts
+icon: mdi:script-text
+badges:
+cards:
+  - type: entities
+    title: Scripts
+    show_header_toggle: false
+    entities:
+      - script.turn_on_tv_backlight
+      - script.turn_off_tv_backlight
+      - script.go_to_bed
+      - script.turn_big_tv_on_off
+      - script.turn_big_tv_volume_up
+      - script.turn_big_tv_volume_down
+      # - script.turn_tv_on_off
+      # - script.turn_tv_volume_up
+      # - script.turn_tv_volume_down
+  - type: entities
+    title: Learn Remote
+    show_header_toggle: false
+    entities:
+      - script.learn_big_tv_power
+      - script.learn_big_tv_volume_up
+      - script.learn_big_tv_volume_down
+      # - script.learn_tv_power
+      # - script.learn_tv_volume_up
+      # - script.learn_tv_volume_down
+

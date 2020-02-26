@@ -11,6 +11,7 @@
 !custom_components/
 !lovelace/
 !scripts/
+!packages/
 
 #
 !*www/

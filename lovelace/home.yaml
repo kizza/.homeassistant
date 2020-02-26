@@ -1,0 +1,68 @@
+path: default_view
+title: Home
+badges:
+  - entity: binary_sensor.updater
+  - entity: person.keiran
+  - entity: media_player.big_tv_android
+  - entity: sun.sun
+cards:
+  - type: entities
+    entities:
+      - light.tv_backlight
+      - light.other_strip
+      - group.all_leds
+      - light.demo_light
+    title: Lights
+  - type: horizontal-stack
+    title: Big TV
+    cards: !include home/tv.yaml
+  - type: media-control
+    entity: media_player.big_tv_android
+  - type: media-control
+    entity: media_player.big_tv
+  - type: vertical-stack
+    title: Actions
+    cards: !include home/actions.yaml
+  - type: vertical-stack
+    title: Mood
+    cards: !include home/moods.yaml
+  - type: vertical-stack
+    title: Effects
+    cards: !include home/effects.yaml
+  - type: horizontal-stack
+    title: Climate
+    cards:
+    - type: custom:mini-graph-card
+      line_color: "var(--accent-color)"
+      entities:
+        - entity: sensor.lumi_temperature
+          name: Temperature
+    - type: custom:mini-graph-card
+      line_color: "var(--accent-color)"
+      entities:
+        - entity: sensor.lumi_humidity
+          name: Humidity
+  - type: horizontal-stack
+    title: Internet
+    cards:
+    - type: custom:mini-graph-card
+      line_color:
+        - "var(--google-green-500)"
+        - "var(--google-purple-500)"
+        - "var(--google-yellow-500)"
+      entities:
+        - entity: sensor.speedtest_download
+          name: Download
+        - entity: sensor.speedtest_upload
+          name: Upload
+        - entity: sensor.speedtest_ping
+          name: Ping
+  - type: weather-forecast
+    entity: weather.home
+  - type: entities
+    entities:
+      - automation.turn_on_after_motion
+      - automation.turn_off_after_no_motion
+      - automation.tv_flash
+      - automation.piano_flash
+    title: Automation
