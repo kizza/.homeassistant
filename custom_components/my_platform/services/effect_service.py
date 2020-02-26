@@ -2,7 +2,8 @@ import logging
 
 from ..const import ( debug, DOMAIN )
 from ..util.hass import ( find_entity )
-from ..util.effects import ( configured_colours, spectrum )
+from ..util.effects import ( configured_colours, spectrum, update_mood_state )
+from homeassistant.components.light import ( ATTR_RGB_COLOR )
 from homeassistant.helpers.event import async_call_later
 
 _LOGGER = logging.getLogger(__name__)
@@ -67,8 +68,7 @@ class FadeEffect():
     async def run(self, now = None):
         rgb = self._get_next_colour()
         _LOGGER.debug("Running effect %s", rgb)
-        for entity in self.entities:
-            await entity.theme(rgb)
+        self._call_theme_service(rgb)
         self._schedule_next()
 
     def stop(self):
@@ -84,6 +84,13 @@ class FadeEffect():
         else:
             output = configured_colours(self.hass)
         return self._apply_colour_fades(output)
+
+    def _call_theme_service(self, rgb):
+        """Call 'theme' service to update the colour"""
+        def _call_theme_service_job(hass):
+            service_data = { ATTR_RGB_COLOR: rgb }
+            hass.services.call(DOMAIN, 'theme', service_data, False)
+        self.hass.add_job(_call_theme_service_job, self.hass)
 
     def _apply_colour_fades(self, colours):
         if self.fade_steps is not None:

@@ -30,6 +30,11 @@ input_boolean:
      icon: mdi:invert-colors
      initial: off
 
+input_text:
+  mood_rgb:
+    name: Mood (rgb)
+    initial: Unknown
+
 #
 # Lighting scripts
 #

@@ -38,6 +38,11 @@ def configured_colours(hass):
 
     return colours
 
+def update_mood_state(hass, rgb):
+    def _update_mood_state():
+        hass.states.set('input_text.mood_rgb', str(colour(rgb)))
+    hass.add_job(_update_mood_state)
+
 def fade(fade_from, fade_to, steps = FADE_STEPS):
     """Transition an rgb tuple to another in x many steps"""
     from_r, from_g, from_b = fade_from
