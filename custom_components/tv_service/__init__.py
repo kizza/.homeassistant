@@ -30,7 +30,7 @@ def setup(hass, config):
     def is_on():
         state = hass.states.get(f'{MEDIA_PLAYER_DOMAIN}.{TV_ENTITY_ID}')
         if state is not None:
-            return state.state != 'off'
+            return state not in ['off', 'unavailable']
         return False
 
     def handle_turn_on(call):
