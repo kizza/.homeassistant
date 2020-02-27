@@ -36,13 +36,19 @@ def setup(hass, config):
     def handle_turn_on(call):
         """If currently off, turn on"""
         if not is_on():
+            _LOGGER.debug("Turning on TV (and backlight)")
             hass.services.call("script", "turn_big_tv_on_off", None, False)
             hass.services.call("script", "turn_on_tv_backlight", None, False)
+        else:
+            _LOGGER.debug("TV is already on")
 
     def handle_turn_off(call):
         """If currently on, turn off, and set state"""
         if is_on():
+            _LOGGER.debug("Turning off TV")
             hass.services.call("script", "turn_big_tv_on_off", None, False)
+        else:
+            _LOGGER.debug("TV is already off")
 
     def handle_toggle(call):
         """Will immediately send a toggle, then become consistent"""
