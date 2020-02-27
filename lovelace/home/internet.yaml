@@ -1,0 +1,16 @@
+type: horizontal-stack
+title: Internet
+cards:
+- type: custom:mini-graph-card
+  line_color:
+    - "var(--google-green-500)"
+    - "var(--google-purple-500)"
+    - "var(--google-yellow-500)"
+  entities:
+    - entity: sensor.speedtest_download
+      name: Download
+    - entity: sensor.speedtest_upload
+      name: Upload
+    - entity: sensor.speedtest_ping
+      name: Ping
+

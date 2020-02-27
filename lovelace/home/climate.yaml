@@ -1,0 +1,14 @@
+type: horizontal-stack
+title: Climate
+cards:
+- type: custom:mini-graph-card
+  line_color: "var(--accent-color)"
+  entities:
+    - entity: sensor.lumi_temperature
+      name: Temperature
+- type: custom:mini-graph-card
+  line_color: "var(--accent-color)"
+  entities:
+    - entity: sensor.lumi_humidity
+      name: Humidity
+

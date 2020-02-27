@@ -1,4 +1,4 @@
-- url: /local/mood-card.js
+- url: /local/mood-card.js?v=0.0.2
   type: js
 - url: /local/button-card.js
   type: module

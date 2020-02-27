@@ -1,43 +1,46 @@
-- type: "custom:button-card"
-  entity: media_player.big_tv_android
-  show_name: false
-  icon: mdi:power
-  icon_height: 48px
-  aspect_ratio: 1/0.7
-  tap_action:
-      action: call-service
-      service: script.turn_big_tv_on_off
-  state:
-    - value: "(standby|paused|playing)"
-      operator: regex
-      color: "var(--gruvbox-green)"
-- type: "custom:button-card"
-  entity: media_player.big_tv_android
-  show_name: false
-  icon: mdi:volume-plus
-  icon_height: 48px
-  aspect_ratio: 1/0.7
-  tap_action:
-      action: call-service
-      service: script.turn_big_tv_volume_up
-  state:
-    - value: "(standby|paused|playing)"
-      operator: regex
-      color: "var(--paper-item-icon-color)"
-    - value: "off"
-      color: "var(--state-icon-unavailable-color)"
-- type: "custom:button-card"
-  entity: media_player.big_tv_android
-  show_name: false
-  icon: mdi:volume-minus
-  icon_height: 48px
-  aspect_ratio: 1/0.7
-  tap_action:
-      action: call-service
-      service: script.turn_big_tv_volume_down
-  state:
-    - value: "(standby|paused|playing)"
-      operator: regex
-      color: "var(--paper-item-icon-color)"
-    - value: "off"
-      color: "var(--state-icon-unavailable-color)"
+type: horizontal-stack
+title: Big TV
+cards:
+  - type: "custom:button-card"
+    entity: media_player.big_tv_android
+    show_name: false
+    icon: mdi:power
+    icon_height: 48px
+    aspect_ratio: 1/0.7
+    tap_action:
+        action: call-service
+        service: script.turn_big_tv_on_off
+    state:
+      - value: "(standby|paused|playing)"
+        operator: regex
+        color: "var(--gruvbox-green)"
+  - type: "custom:button-card"
+    entity: media_player.big_tv_android
+    show_name: false
+    icon: mdi:volume-plus
+    icon_height: 48px
+    aspect_ratio: 1/0.7
+    tap_action:
+        action: call-service
+        service: script.turn_big_tv_volume_up
+    state:
+      - value: "(standby|paused|playing)"
+        operator: regex
+        color: "var(--paper-item-icon-color)"
+      - value: "off"
+        color: "var(--state-icon-unavailable-color)"
+  - type: "custom:button-card"
+    entity: media_player.big_tv_android
+    show_name: false
+    icon: mdi:volume-minus
+    icon_height: 48px
+    aspect_ratio: 1/0.7
+    tap_action:
+        action: call-service
+        service: script.turn_big_tv_volume_down
+    state:
+      - value: "(standby|paused|playing)"
+        operator: regex
+        color: "var(--paper-item-icon-color)"
+      - value: "off"
+        color: "var(--state-icon-unavailable-color)"
