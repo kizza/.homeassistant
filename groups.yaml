@@ -1,6 +1,10 @@
+#
+# Represent all led strips (has template switch to surface state)
+#
 all_leds:
   name: All LED Strips
   icon: mdi:lightbulb-group-outline
+  all: true
   entities:
   - light.tv_backlight
   - light.other_strip

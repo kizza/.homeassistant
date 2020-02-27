@@ -3,7 +3,7 @@ title: Lights
 entities:
   - light.tv_backlight
   - light.other_strip
-  - group.all_leds
+  - switch.all_leds
   - switch.deck_lights
   - light.demo_light
 
