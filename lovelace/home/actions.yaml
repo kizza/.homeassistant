@@ -12,6 +12,9 @@ cards:
       - value: "(standby|paused|playing)"
         operator: regex
         color: "var(--gruvbox-green)"
+      - value: "(idle|off|unavailable)"
+        operator: regex
+        color: "var(--paper-item-icon-color)"
     tap_action:
         action: call-service
         service: script.turn_big_tv_on

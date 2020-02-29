@@ -27,7 +27,8 @@ cards:
       - value: "(standby|paused|playing)"
         operator: regex
         color: "var(--paper-item-icon-color)"
-      - value: "off"
+      - value: "(off|unavailable|idle)"
+        operator: regex
         color: "var(--state-icon-unavailable-color)"
   - type: "custom:button-card"
     entity: media_player.big_tv_android
@@ -42,5 +43,6 @@ cards:
       - value: "(standby|paused|playing)"
         operator: regex
         color: "var(--paper-item-icon-color)"
-      - value: "off"
+      - value: "(off|unavailable|idle)"
+        operator: regex
         color: "var(--state-icon-unavailable-color)"
