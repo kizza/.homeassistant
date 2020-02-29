@@ -73,3 +73,43 @@
   - data:
       entity_id: light.other_strip
     service: my_platform.flash
+- id: '1582716021098'
+  alias: Piano flash 2
+  description: ''
+  trigger:
+  - device_id: 092b05bd1a724ad89655b58e59165506
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_extra_motion
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data:
+      entity_id: light.other_strip
+    service: my_platform.flash
+- id: '1582716177875'
+  alias: TV Flash 2
+  description: ''
+  trigger:
+  - device_id: 092b05bd1a724ad89655b58e59165506
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_extra_motion
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data:
+      entity_id: light.tv_backlight
+    service: my_platform.flash
+- id: '1582889484595'
+  alias: On Boot
+  description: ''
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data:
+      entity_id: media_player.family_room_speaker
+      message: Assistant on
+    service: tts.google_translate_say
