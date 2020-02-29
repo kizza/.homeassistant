@@ -10,11 +10,13 @@ turn_big_tv_on_off:
 turn_big_tv_on:
   alias: Turn Big TV On
   sequence:
-  - service: tv_service.turn_on
+  - service: media_player.turn_on
+    entity_id: media_player.big_tv_android
 turn_big_tv_off:
   alias: Turn Big TV Off
   sequence:
-  - service: tv_service.turn_off
+  - service: media_player.turn_off
+    entity_id: media_player.big_tv_android
 turn_big_tv_volume_up:
   alias: Turn Big TV Volumn Up
   sequence:
