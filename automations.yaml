@@ -101,19 +101,6 @@
   - data:
       entity_id: light.tv_backlight
     service: my_platform.flash
-- id: '1582889484595'
-  alias: On Boot
-  description: ''
-  trigger:
-  - event: start
-    platform: homeassistant
-  condition: []
-  action:
-  - data:
-      entity_id: media_player.family_room_speaker
-      media_content_id: !secret startup_mp3_path
-      media_content_type: audio/mp3
-    service: media_player.play_media
 - id: '1582965436301'
   alias: Vocalise motion (stairs)
   description: ''

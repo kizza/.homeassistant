@@ -31,3 +31,21 @@ speedtestdotnet:
     - ping
     - download
     - upload
+
+#
+# Sound on boot
+#
+automation:
+  - id: '1582889484595'
+    alias: On Boot
+    description: ''
+    trigger:
+    - event: start
+      platform: homeassistant
+    condition: []
+    action:
+    - data:
+        entity_id: media_player.family_room_speaker
+        media_content_id: !secret startup_mp3_path
+        media_content_type: audio/mp3
+      service: media_player.play_media
