@@ -111,5 +111,65 @@
   action:
   - data:
       entity_id: media_player.family_room_speaker
-      message: Assistant on
+      media_content_id: !secret startup_mp3_path
+      media_content_type: audio/mp3
+    service: media_player.play_media
+- id: '1582965436301'
+  alias: Vocalise motion (stairs)
+  description: ''
+  trigger:
+  - device_id: f13a4550b1fd40ab88980ac5a502ef43
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data:
+      entity_id: media_player.family_room_speaker
+      message: Stairwell motion
     service: tts.google_translate_say
+- id: '1582965581669'
+  alias: Vocalise motion (hallway)
+  description: ''
+  trigger:
+  - device_id: 092b05bd1a724ad89655b58e59165506
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_extra_motion
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data:
+      entity_id: media_player.family_room_speaker
+      message: Hallway motion
+    service: tts.google_translate_say
+- id: '1583041142241'
+  alias: Notify motion
+  description: ''
+  trigger:
+  - device_id: f13a4550b1fd40ab88980ac5a502ef43
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    platform: device
+    type: motion
+  condition:
+  - after: sunset
+    condition: sun
+  action:
+  - data:
+      message: Detected motion
+    service: notify.notify
+- id: '1583043761474'
+  alias: Sunset
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data:
+      message: The sun has set
+    service: notify.notify
+  - data: {}
+    service: script.turn_on_deck_lights
