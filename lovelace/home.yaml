@@ -8,10 +8,6 @@ badges:
 cards:
   - !include home/lights.yaml
   - !include home/tv.yaml
-  - type: media-control
-    entity: media_player.big_tv_android
-  - type: media-control
-    entity: media_player.big_tv
   - !include home/actions.yaml
   - !include home/moods.yaml
   - !include home/effects.yaml
