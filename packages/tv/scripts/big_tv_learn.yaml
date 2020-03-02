@@ -1,5 +1,5 @@
 learn_big_tv_power:
-  alias: Learn Big TV Power
+  alias: Learn big TV power
   sequence:
   - service: remote.learn_command
     data:
@@ -8,7 +8,7 @@ learn_big_tv_power:
       command: power
       alternative: true
 learn_big_tv_volume_up:
-  alias: Learn Big TV Volume Up
+  alias: Learn big TV volume up
   sequence:
   - service: remote.learn_command
     data:
@@ -16,7 +16,7 @@ learn_big_tv_volume_up:
       device: big_tv
       command: volume_up
 learn_big_tv_volume_down:
-  alias: Learn Big TV Volume Down
+  alias: Learn big TV volume down
   sequence:
   - service: remote.learn_command
     data:

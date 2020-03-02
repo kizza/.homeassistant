@@ -3,7 +3,7 @@
 #
 input_boolean:
    deck_lights:
-     name: Deck lights
+     name: Deck lights (state)
      initial: off
 
 #
@@ -50,12 +50,12 @@ automation:
 #
 script:
   turn_on_deck_lights:
-    alias: Turn on deck lights
+    alias: Turn deck lights on
     sequence:
     - service: input_boolean.turn_on
       entity_id: input_boolean.deck_lights
   turn_off_deck_lights:
-    alias: Turn off deck lights
+    alias: Turn deck lights off
     sequence:
     - service: input_boolean.turn_off
       entity_id: input_boolean.deck_lights

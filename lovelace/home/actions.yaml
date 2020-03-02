@@ -19,7 +19,7 @@ cards:
         action: call-service
         service: script.turn_big_tv_on
   - type: "custom:button-card"
-    entity: script.go_to_bed
+    entity: script.shut_it_down
     name: Sleep
     show_name: false
     icon: mdi:sleep
@@ -27,5 +27,5 @@ cards:
     aspect_ratio: 1/0.24
     tap_action:
         action: call-service
-        service: script.go_to_bed
+        service: script.shut_it_down
 

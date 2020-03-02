@@ -1,5 +1,5 @@
-go_to_bed:
-  alias: Go to bed
+shut_it_down:
+  alias: Shut it down
   description: Turn off tv and lights
   sequence:
   - service: script.turn_big_tv_off

@@ -1,6 +1,6 @@
 turn_big_tv_on_off:
   # Pure remote command
-  alias: Turn Big TV On or Off
+  alias: Turn big TV on or off
   sequence:
   - service: remote.send_command
     data:
@@ -8,17 +8,17 @@ turn_big_tv_on_off:
       device: big_tv
       command: power
 turn_big_tv_on:
-  alias: Turn Big TV On
+  alias: Turn big TV on
   sequence:
   - service: media_player.turn_on
     entity_id: media_player.big_tv_android
 turn_big_tv_off:
-  alias: Turn Big TV Off
+  alias: Turn big TV off
   sequence:
   - service: media_player.turn_off
     entity_id: media_player.big_tv_android
 turn_big_tv_volume_up:
-  alias: Turn Big TV Volumn Up
+  alias: Turn big TV volume up
   sequence:
   - service: remote.send_command
     data:
@@ -27,7 +27,7 @@ turn_big_tv_volume_up:
       command: volume_up
       num_repeats: 5
 turn_big_tv_volume_down:
-  alias: Turn Big TV Volume Down
+  alias: Turn big TV volume down
   sequence:
   - service: remote.send_command
     data:
