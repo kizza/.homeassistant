@@ -1,9 +1,9 @@
 device_tracker:
   - platform: ping
     interval_seconds: 30
-    consider_home: 30
+    consider_home: 180
     new_device_defaults:
-      track_new_devices: false
+      track_new_devices: true
     hosts:
       keirans_phone: !secret keiran_phone_ip
 
