@@ -36,7 +36,7 @@ speedtestdotnet:
 # Sound on boot
 #
 automation:
-  - id: '1582889484595'
+  - id: on_hass_boot
     alias: On Boot
     description: ''
     trigger:
@@ -49,3 +49,14 @@ automation:
         media_content_id: !secret startup_mp3_path
         media_content_type: audio/mp3
       service: media_player.play_media
+  - id: notify_on_hass_update
+    alias: Notify on hass update
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.updater
+        from: 'off'
+        to: 'on'
+    action:
+      - service: notify.notify
+        data:
+          message: 'There is a new Home Assistant release available.'
