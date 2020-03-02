@@ -1,25 +1,25 @@
-learn_tv_power:
-  alias: Learn second TV power
-  sequence:
-  - service: remote.learn_command
-    data:
-      entity_id: remote.second_tv
-      device: television
-      command: power
-      alternative: true
-learn_tv_volume_up:
-  alias: Learn second TV volume up
-  sequence:
-  - service: remote.learn_command
-    data:
-      entity_id: remote.second_tv
-      device: television
-      command: volume_up
-learn_tv_volume_down:
-  alias: Learn second TV volume down
-  sequence:
-  - service: remote.learn_command
-    data:
-      entity_id: remote.second_tv
-      device: television
-      command: volume_down
+# learn_tv_power:
+#   alias: Learn second TV power
+#   sequence:
+#   - service: remote.learn_command
+#     data:
+#       entity_id: remote.second_tv
+#       device: television
+#       command: power
+#       alternative: true
+# learn_tv_volume_up:
+#   alias: Learn second TV volume up
+#   sequence:
+#   - service: remote.learn_command
+#     data:
+#       entity_id: remote.second_tv
+#       device: television
+#       command: volume_up
+# learn_tv_volume_down:
+#   alias: Learn second TV volume down
+#   sequence:
+#   - service: remote.learn_command
+#     data:
+#       entity_id: remote.second_tv
+#       device: television
+#       command: volume_down
