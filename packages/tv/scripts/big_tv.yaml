@@ -1,3 +1,11 @@
+test_android_tv_notification:
+  alias: Test the android notifications
+  sequence:
+  - service: notify.nfandroidtv
+    data:
+      entity_id: media_player.big_tv_android
+      title: This is the title
+      message: This is the message
 turn_big_tv_on_off:
   # Pure remote command
   alias: Turn big TV on or off

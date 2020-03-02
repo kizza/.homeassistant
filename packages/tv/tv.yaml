@@ -15,6 +15,11 @@ media_player:
     name: Big TV (Android)
     host: !secret android_tv_host
 
+notify:
+  - platform: nfandroidtv
+    name: Android TV (notify)
+    host: !secret android_tv_host
+
 #
 # Custom tv service
 #
