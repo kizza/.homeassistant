@@ -69,7 +69,7 @@ class Triones(Bulb):
         self._available = True
 
     def failed_action(self, description, attempts):
-        _LOGGER.warning(f'{self} Unable to {description} ({attempts} attempts)')
+        _LOGGER.error(f'{self} Unable to {description} ({attempts} attempts)')
         self._characteristic = None
 
     def connect(self):
