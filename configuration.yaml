@@ -9,4 +9,4 @@ homeassistant:
     lighting: !include packages/lighting/lighting.yaml
     my_platform: !include packages/my_platform.yaml
     tv: !include packages/tv/tv.yaml
-    ui: !include packages/ui.yaml
+    ui: !include packages/ui/ui.yaml
