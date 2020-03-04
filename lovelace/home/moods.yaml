@@ -77,5 +77,17 @@ cards:
       tap_action:
           action: call-service
           service: script.theme_sun
+    - type: "custom:button-card"
+      entity: script.theme_white
+      icon: mdi:snowflake
+      icon_height: 48px
+      show_name: false
+      aspect_ratio: 1/0.7
+      state:
+        - value: "off"
+          color: "#FFF"
+      tap_action:
+          action: call-service
+          service: script.theme_white
   - type: custom:mood-card
     entity: input_text.mood_rgb

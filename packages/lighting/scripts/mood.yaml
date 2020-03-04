@@ -43,3 +43,10 @@ theme_sun:
   - service: my_platform.theme
     data:
       rgb_color: [255, 63, 0]
+theme_white:
+  alias: Theme white
+  description: ''
+  sequence:
+  - service: my_platform.theme
+    data:
+      rgb_color: 'white'
