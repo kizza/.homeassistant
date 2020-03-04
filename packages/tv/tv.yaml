@@ -13,6 +13,7 @@ remote:
 media_player:
   - platform: androidtv
     name: Big TV (Android)
+    device_class: androidtv
     host: !secret android_tv_host
     adbkey: !secret android_tv_adbkey
 
