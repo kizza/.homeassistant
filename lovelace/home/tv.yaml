@@ -74,6 +74,8 @@ cards:
         state: "playing"
       - entity: media_player.big_tv
         state: "paused"
+      - entity: media_player.big_tv
+        state: "unknown"
     card:
       type: media-control
       entity: media_player.big_tv
