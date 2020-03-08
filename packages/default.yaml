@@ -1,3 +1,7 @@
+homeassistant:
+  auth_providers:
+    - type: homeassistant
+
 ifttt:
   key: !secret iftt_key
 
