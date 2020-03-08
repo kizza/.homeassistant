@@ -147,6 +147,10 @@
   - data:
       message: Detected hallway motion
     service: notify.notify
+  - data:
+      message: Detected hallway motion
+      title: Motion detected
+    service: notify.android_tv_notify
 - id: '1583043761474'
   alias: Sunset
   description: ''

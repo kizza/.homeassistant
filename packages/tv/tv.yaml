@@ -17,10 +17,16 @@ media_player:
     host: !secret android_tv_host
     adbkey: !secret android_tv_adbkey
 
+#
+# Notifications on tv
+#
 notify:
   - platform: nfandroidtv
     name: Android TV (notify)
     host: !secret android_tv_host
+    color: black
+    fontsize: medium
+    transparency: 50%
 
 #
 # Custom tv service
