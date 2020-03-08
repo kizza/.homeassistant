@@ -3,6 +3,7 @@ shut_it_down:
   description: Turn off tv and lights
   sequence:
   - service: script.turn_big_tv_off
+  - service: my_platform.stop_effect
   - service: light.turn_off
     entity_id: light.tv_backlight
     data: {}
