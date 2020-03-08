@@ -1,0 +1,20 @@
+start_animation:
+  alias: Start animation
+  description: ''
+  sequence:
+  - service: my_platform.start_effect
+    data:
+      delay: 60
+start_animation_with_fade:
+  alias: Start animation (with fading)
+  description: ''
+  sequence:
+  - service: my_platform.start_effect
+    data:
+      delay: 30
+      fade_steps: 4
+stop_animation:
+  alias: Stop animation (Fade)
+  description: ''
+  sequence:
+  - service: my_platform.stop_effect
