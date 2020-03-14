@@ -164,3 +164,27 @@
     service: notify.notify
   - data: {}
     service: script.turn_on_deck_lights
+- id: '1583666364573'
+  alias: Notify when home
+  description: ''
+  trigger:
+  - entity_id: person.keiran
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data:
+      message: You are home
+    service: notify.notify
+- id: '1583666494445'
+  alias: Notify when away
+  description: ''
+  trigger:
+  - entity_id: person.keiran
+    platform: state
+    to: away
+  condition: []
+  action:
+  - data:
+      message: You are away
+    service: notify.notify
