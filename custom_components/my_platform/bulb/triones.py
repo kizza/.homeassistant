@@ -236,12 +236,13 @@ class Triones(Bulb):
         # fade_in = fade((0, 0, 0), self._rgb, 12)
 
         # Create colours
+        flash_colour = (0, 255, 0)
         colours = []
         if self.is_on():
             print("Doing the on version")
-            fade_to_red = fade(self._rgb, (255, 0, 0), 20)
-            fade_back = fade((255, 0, 0), self._rgb, 20)
-            colours.extend(fade_to_red)
+            fade_to_colour= fade(self._rgb, flash_colour, 20)
+            fade_back = fade(flash_colour, self._rgb, 20)
+            colours.extend(fade_to_colour)
             colours.extend(fade_back)
             for rgb in colours:
                 self._enqueue(rgb)
@@ -250,9 +251,9 @@ class Triones(Bulb):
             self._enqueue(NO_COLOUR)
             self._enqueue(TURN_ON)
 
-            fade_to_red = fade((0, 0, 0), (255, 0, 0), 20)
-            fade_off = fade((255, 0, 0), (0, 0, 0), 20)
-            colours.extend(fade_to_red)
+            fade_to_colour = fade((0, 0, 0), flash_colour, 20)
+            fade_off = fade(flash_colour, (0, 0, 0), 20)
+            colours.extend(fade_to_colour)
             colours.extend(fade_off)
             for rgb in colours:
                 self._enqueue(rgb)
