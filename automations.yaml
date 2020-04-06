@@ -37,7 +37,7 @@
     entity_id: light.other_strip
     type: turn_off
 - id: tv_flash
-  alias: TV Flash
+  alias: TV Flash (Stairs)
   description: ''
   trigger:
   - device_id: f13a4550b1fd40ab88980ac5a502ef43
@@ -61,7 +61,7 @@
   - data: {}
     service: script.theme_green
 - id: piano_flash
-  alias: Piano flash
+  alias: Piano flash (Stairs)
   description: ''
   trigger:
   - device_id: f13a4550b1fd40ab88980ac5a502ef43
@@ -74,7 +74,7 @@
       entity_id: light.other_strip
     service: my_platform.flash
 - id: '1582716021098'
-  alias: Piano flash 2
+  alias: Piano flash (Hallway)
   description: ''
   trigger:
   - device_id: 092b05bd1a724ad89655b58e59165506
@@ -88,7 +88,7 @@
       entity_id: light.other_strip
     service: my_platform.flash
 - id: '1582716177875'
-  alias: TV Flash 2
+  alias: TV Flash (Hallway)
   description: ''
   trigger:
   - device_id: 092b05bd1a724ad89655b58e59165506

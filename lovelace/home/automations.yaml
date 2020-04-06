@@ -4,6 +4,8 @@ entities:
   - automation.notify_motion
   - automation.turn_on_after_motion
   - automation.turn_off_after_no_motion
-  - automation.tv_flash
-  - automation.piano_flash
+  - automation.tv_flash_stairs
+  - automation.piano_flash_stairs
+  - automation.tv_flash_hallway
+  - automation.piano_flash_hallway
 
