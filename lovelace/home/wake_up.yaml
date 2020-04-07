@@ -1,0 +1,6 @@
+title: Wake up
+type: vertical-stack
+cards:
+  - type: custom:wake-up-card
+    entity: binary_sensor.extra_motion
+    token: !secret local_bearer_token
