@@ -148,7 +148,7 @@
       message: Detected hallway motion
       title: Motion detected
     service: notify.android_tv_notify
-- id: '1583043761474'
+- id: sunset_deck
   alias: Sunset (Deck)
   description: 'Turn the deck lights on'
   trigger:
