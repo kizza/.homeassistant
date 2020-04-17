@@ -149,8 +149,8 @@
       title: Motion detected
     service: notify.android_tv_notify
 - id: '1583043761474'
-  alias: Sunset
-  description: ''
+  alias: Sunset (Deck)
+  description: 'Turn the deck lights on'
   trigger:
   - event: sunset
     platform: sun
@@ -161,6 +161,20 @@
     service: notify.notify
   - data: {}
     service: script.turn_on_deck_lights
+- id: sunset_inside
+  alias: Sunset (Inside)
+  description: 'Turn the inside lights on'
+  trigger:
+  - event: sunset
+    platform: sun
+    offset: 00:30:00
+  condition: []
+  action:
+  - data:
+      message: Inside lights on
+    service: notify.notify
+  - data: {}
+    service: script.start_animation_with_fade
 - id: '1583666364573'
   alias: Notify when home
   description: ''
