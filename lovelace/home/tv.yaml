@@ -91,3 +91,35 @@ cards:
     card:
       type: media-control
       entity: media_player.big_tv
+  #
+  # Show downstairs tv cast when playing or paused
+  #
+  - type: conditional
+    conditions:
+      - entity: media_player.downstairs_tv
+        state: "playing"
+    card:
+      type: media-control
+      entity: media_player.downstairs_tv
+  - type: conditional
+    conditions:
+      - entity: media_player.downstairs_tv
+        state: "paused"
+    card:
+      type: media-control
+      entity: media_player.downstairs_tv
+  - type: conditional
+    conditions:
+      - entity: media_player.downstairs_tv
+        state: "unknown"
+    card:
+      type: media-control
+      entity: media_player.downstairs_tv
+  - type: conditional
+    conditions:
+      - entity: media_player.downstairs_tv
+        state: "unavailable"
+    card:
+      type: media-control
+      entity: media_player.downstairs_tv
+      name: Downstairs TV
