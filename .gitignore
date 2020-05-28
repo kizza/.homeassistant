@@ -1,33 +1,22 @@
 # Example .gitignore file for your config dir.
 # An * ensures that everything will be ignored.
-/*
-
-# Whitelist
-!*.yaml
-!.gitignore
-!*.md
-
-# Whitelist directories
-!custom_components/
-!lovelace/
-!scripts/
-!packages/
-
-#
-!*www/
-*www/*
-!*www/*.css
-!*www/*.js
 
 # Blacklist
-*__pycache__
-*.pyc
+.gitignore
 *.DS_Store
+*.db
+*.json
+*.log
+*.pem
+*.pyc
+*.swp
+*__pycache__
 
 # Ignore folders.
 .storage
 .cloud
 .google.token
+tts/
 
 # Specific yamls to ignore
 ip_bans.yaml
