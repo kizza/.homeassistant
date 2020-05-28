@@ -1,0 +1,13 @@
+#!/bin/bash
+
+$DOMAIN=$1
+$HOMEASSISTANT=$2
+$USER=$3
+
+sudo certbot renew
+
+sudo cp "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" "$HOMEASSISTANT/fullchain.pem"
+sudo cp "/etc/letsencrypt/live/$DOMAIN/privkey.pem" "$HOMEASSISTANT/privkey.pem"
+
+sudo chown "$USER" "$HOMEASSISTANT/fullchain.pem"
+sudo chown "$USER" "$HOMEASSISTANT/privkey.pem"
