@@ -26,7 +26,7 @@ google_assistant:
 #
 speedtestdotnet:
   scan_interval:
-    minutes: 10
+    hours: 12
   monitored_conditions:
     - ping
     - download
