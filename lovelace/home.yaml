@@ -14,6 +14,6 @@ cards:
   - !include home/climate.yaml
   - type: weather-forecast
     entity: weather.home
-  - !include home/internet.yaml
+  # - !include home/internet.yaml
   - !include home/wake_up.yaml
   - !include home/automations.yaml
