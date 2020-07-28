@@ -2,7 +2,7 @@
   type: js
 - url: /local/mood-card.js?v=0.0.2
   type: js
-- url: /local/button-card.js
+- url: /local/button-card.js?v=0.11
   type: module
 - url: /local/mini-graph-card.js
   type: module

@@ -103,7 +103,7 @@ class Triones(Bulb):
         self._fade_colour(to_rgb)
         self.process_message_queue()
 
-    async def turn_on(self, **kwargs):
+    def turn_on(self, **kwargs):
         _LOGGER.debug("%s.turn_on()", self)
         self._clear_enqueue()  # Remove any messages
 
@@ -128,7 +128,7 @@ class Triones(Bulb):
 
         self.process_message_queue()
 
-    async def turn_off(self):
+    def turn_off(self):
         _LOGGER.debug("%s.turn_off()", self)
         self._clear_enqueue()
         self._fade_off()

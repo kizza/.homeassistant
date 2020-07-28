@@ -11,6 +11,7 @@ cards:
         show_name: false
         icon: mdi:power
         icon_height: 48px
+        size: 100%
         aspect_ratio: 1/0.7
         tap_action:
             action: call-service
