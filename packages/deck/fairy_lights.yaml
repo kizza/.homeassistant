@@ -28,7 +28,7 @@ switch:
 # Connect deck light input_boolean to iftt
 #
 automation:
-  - alias: Turn on deck lights
+  - alias: Turn on deck lights (from toggle)
     trigger:
       - platform: state
         entity_id: input_boolean.deck_lights
@@ -36,7 +36,7 @@ automation:
     action:
       - service: ifttt.trigger
         data: {"event":"turn_deck_on"}
-  - alias: Turn off deck lights
+  - alias: Turn off deck lights (from toggle)
     trigger:
       - platform: state
         entity_id: input_boolean.deck_lights
