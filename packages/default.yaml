@@ -17,6 +17,8 @@ logger:
   logs:
     custom_components.my_platform: debug
     custom_components.tv_service: debug
-    homeassistant.components.androidtv: debug
-    androidtv.adb_manager: debug
-    androidtv: debug
+    # homeassistant.components.androidtv: debug
+    homeassistant.components.flux_led: debug
+    flux_led: debug
+    # androidtv.adb_manager: debug
+    # androidtv: debug

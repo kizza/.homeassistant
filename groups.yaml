@@ -8,4 +8,5 @@ all_leds:
   entities:
   - light.tv_backlight
   - light.other_strip
+  - light.magicled
 
