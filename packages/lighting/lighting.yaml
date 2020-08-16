@@ -3,7 +3,7 @@ light:
      devices:
        10.0.0.45:
          name: MagicLED
-         mode: "rgbw"
+         mode: "rgb"
 
 #
 # Colours used in effects
