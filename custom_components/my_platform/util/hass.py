@@ -9,6 +9,8 @@ from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 
 def find_entity(entities, entity_id):
     for entity in entities:
-        if entity_id == f'{LIGHT_DOMAIN}.{slugify(entity.name)}':
-            return entity
+        # Only look for entities we've created
+        if hasattr(entity, 'name'):
+            if entity_id == f'{LIGHT_DOMAIN}.{slugify(entity.name)}':
+                return entity
     return None

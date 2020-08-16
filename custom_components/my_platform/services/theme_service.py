@@ -2,7 +2,7 @@ import logging
 
 from ..const import ( debug, DOMAIN )
 from ..util.hass import ( find_entity )
-from ..util.effects import ( update_mood_state )
+from ..util.effects import ( colour, update_mood_state )
 from homeassistant.const import ( ATTR_ENTITY_ID )
 from homeassistant.components.light import ( ATTR_RGB_COLOR )
 
@@ -18,7 +18,15 @@ def register_theme_service(hass, entities):
         _LOGGER.debug("Running theme %s", rgb)
         update_mood_state(hass, rgb)
         for entity in entities:
-            await entity.theme(rgb)
+            if hasattr(entity, 'theme'):
+                # Our own platform theme
+                await entity.theme(rgb)
+            else:
+                # Normal light domain
+                def _call_theme_service_job(hass):
+                    service_data = { ATTR_RGB_COLOR: colour(rgb), ATTR_ENTITY_ID: "light.magicled" }
+                    hass.services.call('light', 'turn_on', service_data, False)
+                await hass.async_add_job(_call_theme_service_job, hass)
 
     hass.services.async_register(
         DOMAIN,

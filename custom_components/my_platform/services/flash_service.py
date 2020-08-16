@@ -13,7 +13,10 @@ def register_flash_service(hass, entities):
         params = service.data.copy()
         entity_id = service.data.get(ATTR_ENTITY_ID)
         entity = find_entity(entities, entity_id)
-        await entity.flash()
+        if entity:
+            await entity.flash()
+        else:
+            print("No 'flash', just a string entity")
 
     hass.services.async_register(
         DOMAIN,

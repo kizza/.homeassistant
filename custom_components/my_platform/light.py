@@ -25,8 +25,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     async_add_entities(entities)
 
-    register_flash_service(hass, entities)
-    register_theme_service(hass, entities)
-    register_effect_service(hass, entities)
+    # Append MagicLED to service entities
+    service_entities = entities.copy()
+    service_entities.append('light.magicled')
+
+    register_flash_service(hass, service_entities)
+    register_theme_service(hass, service_entities)
+    register_effect_service(hass, service_entities)
 
     return True

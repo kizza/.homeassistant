@@ -10,4 +10,7 @@ shut_it_down:
   - service: light.turn_off
     entity_id: light.other_strip
     data: {}
+  - service: light.turn_off
+    entity_id: light.magicled
+    data: {}
   - service: script.turn_off_deck_lights
