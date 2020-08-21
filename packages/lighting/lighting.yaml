@@ -1,7 +1,7 @@
 light:
    - platform: flux_led
      devices:
-       10.0.0.45:
+       !secret magic_led:
          name: MagicLED
          mode: "rgb"
 
