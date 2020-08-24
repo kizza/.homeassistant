@@ -199,3 +199,38 @@
   - data:
       message: You are away
     service: notify.notify
+- id: magic_led_with_motion_on
+  alias: Magic LED (with motion)
+  description: ''
+  trigger:
+  - device_id: f13a4550b1fd40ab88980ac5a502ef43
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data:
+      brightness: 255
+      rgb_color:
+      - 255
+      - 10
+      - 100
+    entity_id: light.magicled
+    service: light.turn_on
+  mode: single
+- id: magic_led_no_more_motion
+  alias: Magic LED (no more motion)
+  description: ''
+  trigger:
+  - device_id: f13a4550b1fd40ab88980ac5a502ef43
+    domain: binary_sensor
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    platform: device
+    type: no_motion
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.magicled
+    service: light.turn_off
+  mode: single
