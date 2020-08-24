@@ -5,6 +5,12 @@ badges:
 cards:
   - type: entities
     entities:
+      - input_boolean.include_tv_backlight
+      - input_boolean.include_other_strip
+      - input_boolean.include_bedroom_backlight
+    title: Effect LEDs
+  - type: entities
+    entities:
       - input_boolean.colour_red
       - input_boolean.colour_green
       - input_boolean.colour_blue

@@ -37,6 +37,20 @@ input_boolean:
      icon: mdi:invert-colors
      initial: off
 
+   # Lights to include in effects cycle
+   include_tv_backlight:
+     name: TV Backlight
+     icon: mdi:lightbulb-outline
+     initial: on
+   include_other_strip:
+     name: Frame Backlight
+     icon: mdi:lightbulb-outline
+     initial: on
+   include_bedroom_backlight:
+     name: Bedroom Backlight
+     icon: mdi:lightbulb-outline
+     initial: off
+
 #
 # State to hold mood rgb string
 #

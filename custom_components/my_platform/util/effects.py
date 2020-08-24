@@ -1,4 +1,5 @@
 from enum import Enum
+from homeassistant.util import slugify
 
 FADE_STEPS = 30
 
@@ -24,6 +25,13 @@ def colour(value):
 def map_to_colour(colours):
     """Call 'colour' on all items within list"""
     return list(map(lambda each: colour(each), colours))
+
+def include_in_effects(hass, entity_name):
+    state = hass.states.get(f'input_boolean.include_{slugify(entity_name)}')
+    if state is not None:
+        if state.state == 'on':
+            return True
+    return False
 
 def configured_colours(hass):
     """Return an array of colours that are "on" with state"""
