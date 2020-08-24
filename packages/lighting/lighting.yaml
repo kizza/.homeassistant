@@ -23,7 +23,7 @@ input_boolean:
    colour_blue:
      name: Blue
      icon: mdi:invert-colors
-     initial: on
+     initial: off
    colour_purple:
      name: Purple
      icon: mdi:invert-colors
@@ -35,7 +35,7 @@ input_boolean:
    colour_sun:
      name: Sun
      icon: mdi:invert-colors
-     initial: off
+     initial: on
 
    # Lights to include in effects cycle
    include_tv_backlight:
