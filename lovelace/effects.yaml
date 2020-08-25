@@ -9,6 +9,7 @@ cards:
       - input_boolean.include_other_strip
       - input_boolean.include_deck_magic_led
       - input_boolean.include_bedroom_magic_led
+      - input_boolean.include_extra_magic_led
     title: Effect LEDs
   - type: entities
     entities:

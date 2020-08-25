@@ -5,7 +5,7 @@ entities:
   - light.other_strip
   - light.deck_magic_led
   - light.bedroom_magic_led
-  # - light.extra_magic_led
+  - light.extra_magic_led
   - switch.all_leds
   - switch.deck_lights
 

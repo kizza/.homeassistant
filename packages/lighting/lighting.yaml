@@ -7,9 +7,9 @@ light:
        !secret deck_magic_led:
          name: deck_magic_led
          mode: "rgb"
-       # !secret extra_magic_led:
-       #   name: bedroom_magic_led
-       #   mode: "rgb"
+       !secret extra_magic_led:
+         name: extra_magic_led
+         mode: "rgb"
 
 #
 # Colours used in effects
@@ -58,6 +58,10 @@ input_boolean:
      initial: on
    include_bedroom_magic_led:
      name: Bedroom Backlight
+     icon: mdi:lightbulb-outline
+     initial: off
+   include_extra_magic_led:
+     name: Extra Backlight
      icon: mdi:lightbulb-outline
      initial: off
 
