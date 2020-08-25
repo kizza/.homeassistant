@@ -1,9 +1,15 @@
 light:
    - platform: flux_led
      devices:
-       !secret magic_led:
-         name: MagicLED
+       !secret bedroom_magic_led:
+         name: bedroom_magic_led
          mode: "rgb"
+       !secret deck_magic_led:
+         name: deck_magic_led
+         mode: "rgb"
+       # !secret extra_magic_led:
+       #   name: bedroom_magic_led
+       #   mode: "rgb"
 
 #
 # Colours used in effects
@@ -46,7 +52,11 @@ input_boolean:
      name: Frame Backlight
      icon: mdi:lightbulb-outline
      initial: on
-   include_bedroom_backlight:
+   include_deck_magic_led:
+     name: Deck Backlight
+     icon: mdi:lightbulb-outline
+     initial: on
+   include_bedroom_magic_led:
      name: Bedroom Backlight
      icon: mdi:lightbulb-outline
      initial: off

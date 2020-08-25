@@ -25,10 +25,10 @@ def register_theme_service(hass, entities):
             else:
                 # Normal light domain
                 def _call_theme_service_job(hass):
-                    service_data = { ATTR_RGB_COLOR: colour(rgb), ATTR_ENTITY_ID: "light.magicled" }
+                    service_data = { ATTR_RGB_COLOR: colour(rgb), ATTR_ENTITY_ID: entity }
                     hass.services.call('light', 'turn_on', service_data, False)
 
-                if include_in_effects(hass, 'Bedroom Backlight'):
+                if include_in_effects(hass, entity.replace("light.", "")):
                     await hass.async_add_job(_call_theme_service_job, hass)
 
     hass.services.async_register(
