@@ -3,9 +3,9 @@ title: Lights
 entities:
   - light.tv_backlight
   - light.frame_backlight
-  - light.deck_magic_led
-  - light.bedroom_magic_led
-  - light.extra_magic_led
+  - light.deck_backlight
+  - light.bedroom_backlight
+  - light.extra_backlight
   - switch.all_leds
   - switch.deck_lights
 
