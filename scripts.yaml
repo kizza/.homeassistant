@@ -11,6 +11,12 @@ shut_it_down:
     entity_id: light.frame_backlight
     data: {}
   - service: light.turn_off
-    entity_id: light.magicled
+    entity_id: light.deck_backlight
+    data: {}
+  - service: light.turn_off
+    entity_id: light.bedroom_backlight
+    data: {}
+  - service: light.turn_off
+    entity_id: light.extra_backlight
     data: {}
   - service: script.turn_off_deck_lights
