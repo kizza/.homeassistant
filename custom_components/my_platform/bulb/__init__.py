@@ -3,6 +3,7 @@ import logging
 
 from homeassistant.const import ( STATE_ON, STATE_OFF )
 from homeassistant.components.light import ( Light )
+import homeassistant.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,6 +45,11 @@ class Bulb(Queue):
         return self._raw_rgb
 
     @property
+    def hs_color(self):
+        """This makes the bulb icon change :)"""
+        return color_util.color_RGB_to_hs(*self._raw_rgb)
+
+    @property
     def brightness(self):
         return self._brightness
 
@@ -55,12 +61,12 @@ class Bulb(Queue):
     def available(self):
         return self._available
 
-    @property
-    def icon(self):
-        if self._state == STATE_ON:
-            return "mdi:lightbulb-on-outline"
-        else:
-            return "mdi:lightbulb-outline"
+    # @property
+    # def icon(self):
+    #     if self._state == STATE_ON:
+    #         return "mdi:lightbulb-on-outline"
+    #     else:
+    #         return "mdi:lightbulb-outline"
 
     def is_on(self):
         return self._state == STATE_ON
