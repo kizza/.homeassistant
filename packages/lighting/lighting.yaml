@@ -48,7 +48,7 @@ input_boolean:
      name: TV Backlight
      icon: mdi:lightbulb-outline
      initial: on
-   include_other_strip:
+   include_frame_backlight:
      name: Frame Backlight
      icon: mdi:lightbulb-outline
      initial: on

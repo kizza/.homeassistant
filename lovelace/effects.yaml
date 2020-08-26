@@ -6,7 +6,7 @@ cards:
   - type: entities
     entities:
       - input_boolean.include_tv_backlight
-      - input_boolean.include_other_strip
+      - input_boolean.include_frame_backlight
       - input_boolean.include_deck_magic_led
       - input_boolean.include_bedroom_magic_led
       - input_boolean.include_extra_magic_led

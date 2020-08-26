@@ -2,7 +2,7 @@ type: entities
 title: Lights
 entities:
   - light.tv_backlight
-  - light.other_strip
+  - light.frame_backlight
   - light.deck_magic_led
   - light.bedroom_magic_led
   - light.extra_magic_led

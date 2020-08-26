@@ -15,7 +15,7 @@
   action:
   - device_id: 1c9ecc13f4de46e2b2b79b382a82cf45
     domain: light
-    entity_id: light.other_strip
+    entity_id: light.frame_backlight
     type: turn_on
 - id: on_no_motion
   alias: Turn off after no motion
@@ -34,7 +34,7 @@
   action:
   - device_id: 1c9ecc13f4de46e2b2b79b382a82cf45
     domain: light
-    entity_id: light.other_strip
+    entity_id: light.frame_backlight
     type: turn_off
 - id: tv_flash
   alias: TV Flash (Stairs)
@@ -71,7 +71,7 @@
     type: motion
   action:
   - data:
-      entity_id: light.other_strip
+      entity_id: light.frame_backlight
     service: my_platform.flash
 - id: '1582716021098'
   alias: Piano flash (Hallway)
@@ -85,7 +85,7 @@
   condition: []
   action:
   - data:
-      entity_id: light.other_strip
+      entity_id: light.frame_backlight
     service: my_platform.flash
 - id: '1582716177875'
   alias: TV Flash (Hallway)
