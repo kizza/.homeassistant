@@ -7,8 +7,8 @@ light:
        !secret deck_magic_led:
          name: Deck Backlight
          mode: "rgb"
-       !secret extra_magic_led:
-         name: Extra Backlight
+       !secret downstairs_magic_led:
+         name: Downstairs Backlight
          mode: "rgb"
 
 #
@@ -60,8 +60,8 @@ input_boolean:
      name: Bedroom Backlight
      icon: mdi:lightbulb-outline
      initial: off
-   include_extra_backlight:
-     name: Extra Backlight
+   include_downstairs_backlight:
+     name: Downstairs Backlight
      icon: mdi:lightbulb-outline
      initial: off
 

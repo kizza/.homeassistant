@@ -29,7 +29,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     service_entities = entities.copy()
     service_entities.append('light.deck_backlight')
     service_entities.append('light.bedroom_backlight')
-    service_entities.append('light.extra_backlight')
+    service_entities.append('light.downstairs_backlight')
 
     register_flash_service(hass, service_entities)
     register_theme_service(hass, service_entities)

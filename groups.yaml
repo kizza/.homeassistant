@@ -10,4 +10,4 @@ all_leds:
   - light.frame_backlight
   - light.deck_backlight
   - light.bedroom_backlight
-  - light.extra_backlight
+  - light.downstairs_backlight

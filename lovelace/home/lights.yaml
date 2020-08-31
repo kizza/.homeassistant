@@ -5,7 +5,7 @@ entities:
   - light.frame_backlight
   - light.deck_backlight
   - light.bedroom_backlight
-  - light.extra_backlight
+  - light.downstairs_backlight
   - switch.all_leds
   - switch.deck_lights
 
