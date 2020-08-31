@@ -48,7 +48,7 @@ Gruvbox Dark:
   x-secondary-text-colour: "var(--gruvbox-bg-5)"
   x-disabled-text-colour: "var(--gruvbox-fg-3)"
   x-icon-colour: "var(--gruvbox-blue-bright)"
-  x-icon-colour-on: "var(--gruvbox-yellow-bright)"
+  x-icon-colour-on: "var(--gruvbox-green-bright)"
   x-icon-colour-disabled: "#beae93"                                   # "var(--gruvbox-fg-3)"
 
   #
