@@ -8,16 +8,6 @@ remote:
     host: !secret living_room_remote_host
 
 #
-# TV Android (ADB)
-#
-media_player:
-  - platform: androidtv
-    name: Big TV (Android)
-    device_class: androidtv
-    host: !secret android_tv_host
-    adbkey: !secret android_tv_adbkey
-
-#
 # Notifications on tv
 #
 notify:
@@ -67,11 +57,6 @@ switch:
           {% else %}
             mdi:volume-high
           {% endif %}
-
-#
-# Custom tv service
-#
-tv_service:
 
 #
 # TV scripts
