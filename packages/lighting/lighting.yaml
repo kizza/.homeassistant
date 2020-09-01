@@ -50,10 +50,14 @@ input_boolean:
      name: Mint
      icon: mdi:invert-colors
      initial: on
+   colour_pink:
+     name: pink
+     icon: mdi:invert-colors
+     initial: off
    colour_new_colour:
      name: New Colour
      icon: mdi:invert-colors
-     initial: on
+     initial: off
 
    # Lights to include in effects cycle
    include_tv_backlight:
