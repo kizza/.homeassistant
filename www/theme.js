@@ -21,6 +21,7 @@ const labelToColour = label =>
     sun: "#fabe30",
     white: "rgb(255, 100, 109)",
     mint: "rgb(146, 159, 127)",
+    "new colour": "rgb(146, 159, 127)",
   }[label.toLowerCase()]);
 
 const applyStyle = (el, css) => {
