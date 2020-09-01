@@ -111,15 +111,15 @@ class Triones(Bulb):
             self._effect = kwargs[ATTR_EFFECT]
             self._set_effect(Effect[self._effect].value, 10)
 
-        elif ATTR_BRIGHTNESS in kwargs:
-            self._brightness = kwargs[ATTR_BRIGHTNESS]
-            to_rgb = self._filter_colour_with_brightness()
-            self._fade_colour(to_rgb)
-
         elif ATTR_HS_COLOR in kwargs:
             hue, saturation = kwargs[ATTR_HS_COLOR]
             self._raw_rgb = color_hsv_to_RGB(hue, saturation, 100)
             _LOGGER.debug("%s set rgb to %s", self, self._raw_rgb)
+            to_rgb = self._filter_colour_with_brightness()
+            self._fade_colour(to_rgb)
+
+        elif ATTR_BRIGHTNESS in kwargs:
+            self._brightness = kwargs[ATTR_BRIGHTNESS]
             to_rgb = self._filter_colour_with_brightness()
             self._fade_colour(to_rgb)
 
