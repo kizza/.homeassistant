@@ -59,6 +59,8 @@ cards:
   # Media players
   #
   # Show andorid tv when not off or unavailable (or casting)
+  - type: media-control
+    entity: media_player.sony_bravia_tv
   - type: conditional
     conditions:
       - entity: media_player.big_tv_android

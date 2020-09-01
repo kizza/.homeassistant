@@ -17,6 +17,8 @@ google_assistant:
   service_account: !include ../google-service-account.json
   exposed_domains:
     - sensor
+    - media_player
+    - group
     - light
     - script
     - scene
