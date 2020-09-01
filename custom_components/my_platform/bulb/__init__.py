@@ -2,12 +2,12 @@ import asyncio
 import logging
 
 from homeassistant.const import ( STATE_ON, STATE_OFF )
-from homeassistant.components.light import ( Light )
+from homeassistant.components.light import ( LightEntity )
 import homeassistant.util.color as color_util
 
 _LOGGER = logging.getLogger(__name__)
 
-class Queue(Light):
+class Queue(LightEntity):
     def __init__(self):
         self._queue = []
 
