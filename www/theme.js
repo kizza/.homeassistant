@@ -18,7 +18,9 @@ const labelToColour = label =>
     blue: "#458587",
     purple: "#b16286",
     sky: "#83a598",
-    sun: "#fabe30"
+    sun: "#fabe30",
+    white: "rgb(255, 100, 109)",
+    mint: "rgb(146, 159, 127)",
   }[label.toLowerCase()]);
 
 const applyStyle = (el, css) => {
