@@ -7,7 +7,7 @@ cards:
     title: Big TV
     cards:
       - type: "custom:button-card"
-        entity: media_player.big_tv_android
+        entity: media_player.sony_bravia_tv
         show_name: false
         icon: mdi:power
         icon_height: 48px
@@ -24,7 +24,7 @@ cards:
             operator: regex
             color: "var(--paper-item-icon-color)"
       - type: "custom:button-card"
-        entity: media_player.big_tv_android
+        entity: media_player.sony_bravia_tv
         show_name: false
         icon: mdi:volume-plus
         icon_height: 48px
@@ -40,7 +40,7 @@ cards:
             operator: regex
             color: "var(--state-icon-unavailable-color)"
       - type: "custom:button-card"
-        entity: media_player.big_tv_android
+        entity: media_player.sony_bravia_tv
         show_name: false
         icon: mdi:volume-minus
         icon_height: 48px

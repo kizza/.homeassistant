@@ -1,41 +1,3 @@
-- id: on_motion
-  alias: Turn on after motion
-  description: ''
-  trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-    platform: device
-    type: motion
-  condition: []
-  action:
-  - device_id: 1c9ecc13f4de46e2b2b79b382a82cf45
-    domain: light
-    entity_id: light.frame_backlight
-    type: turn_on
-- id: on_no_motion
-  alias: Turn off after no motion
-  description: ''
-  trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 2
-    platform: device
-    type: no_motion
-  condition: []
-  action:
-  - device_id: 1c9ecc13f4de46e2b2b79b382a82cf45
-    domain: light
-    entity_id: light.frame_backlight
-    type: turn_off
 - id: tv_flash
   alias: TV Flash (Stairs)
   description: ''
@@ -132,7 +94,7 @@
       message: Hallway motion
     service: tts.google_translate_say
 - id: '1583041142241'
-  alias: Notify motion
+  alias: Motion Hallway (Notify)
   description: Notify if the kids come out :)
   trigger:
   - device_id: 092b05bd1a724ad89655b58e59165506
@@ -148,6 +110,7 @@
       message: Detected hallway motion
       title: Motion detected
     service: notify.android_tv_notify
+  mode: single
 - id: sunset_deck
   alias: Sunset (Deck)
   description: Turn the deck lights on
@@ -199,8 +162,8 @@
   - data:
       message: You are away
     service: notify.notify
-- id: magic_led_with_motion_on
-  alias: Magic LED (with motion)
+- id: '1598343715757'
+  alias: Motion Downstairs (On)
   description: ''
   trigger:
   - device_id: f13a4550b1fd40ab88980ac5a502ef43
@@ -212,15 +175,11 @@
   action:
   - data:
       brightness: 255
-      rgb_color:
-      - 255
-      - 10
-      - 100
-    entity_id: light.magicled
+    entity_id: light.downstairs_backlight
     service: light.turn_on
   mode: single
-- id: magic_led_no_more_motion
-  alias: Magic LED (no more motion)
+- id: '1598343761383'
+  alias: Motion Downstairs (Off)
   description: ''
   trigger:
   - device_id: f13a4550b1fd40ab88980ac5a502ef43
@@ -231,6 +190,38 @@
   condition: []
   action:
   - data: {}
-    entity_id: light.magicled
+    entity_id: light.downstairs_backlight
     service: light.turn_off
+  mode: single
+- id: '1598876039789'
+  alias: Bedroom Off When Charging
+  description: ''
+  trigger:
+  - entity_id: sensor.pixel_4_xl_battery_state
+    platform: state
+    to: charging
+  condition:
+  - after: '20:00'
+    before: '1:00'
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.bedroom_backlight
+    service: light.turn_off
+  mode: single
+- id: '1598876541365'
+  alias: Bedroom On When Discharging
+  description: ''
+  trigger:
+  - entity_id: sensor.pixel_4_xl_battery_state
+    platform: state
+    to: discharging
+  condition:
+  - after: '20:00'
+    before: '1:00'
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.bedroom_backlight
+    service: light.turn_on
   mode: single
