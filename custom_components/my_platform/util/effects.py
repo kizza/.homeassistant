@@ -50,6 +50,34 @@ def configured_colours(hass):
 
     return colours
 
+def colour_from_index(hass, index):
+    all_colours = full_colour_spectrum(hass)
+
+    print("All colours")
+    print(all_colours)
+    print("Index is", index)
+    print(index)
+    if index >= len(all_colours):
+        index = 0
+    rgb = all_colours[index]
+
+    print("Returnig")
+    print(rgb)
+    # Increment index
+    # self.index += 1
+    return rgb
+
+
+def full_colour_spectrum(hass):
+    colours = configured_colours(hass)
+
+    fade_steps_state = hass.states.get('input_number.effect_transition_steps')
+    fade_steps = int(float(fade_steps_state.state))
+    if fade_steps > 0:
+        colours = spectrum(colours, fade_steps)
+
+    return colours
+
 def update_mood_state(hass, rgb):
     def _update_mood_state():
         hass.states.set('input_text.mood_rgb', str(colour(rgb)))

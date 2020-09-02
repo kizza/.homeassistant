@@ -1,0 +1,37 @@
+input_boolean:
+   effect_running:
+     name: Effect running
+     initial: off
+
+   effect_offset_colours:
+     name: Effect offset colours
+     initial: off
+
+input_number:
+  # Delay in between runs
+   effect_delay:
+     name: Effect delay
+     initial: 30
+     min: 0
+     max: 60
+     step: 1
+     mode: box
+
+   # Steps between discrete colours
+   effect_transition_steps:
+     name: Effect steps
+     initial: 4
+     min: 0
+     max: 60
+     step: 1
+     mode: box
+
+   # The running index through the spectrum
+   effect_index_key:
+     name: Effect index
+     initial: 0
+     min: 0
+     max: 1000
+     step: 1
+     mode: box
+

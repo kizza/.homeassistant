@@ -1,8 +1,10 @@
 import logging
+import math
 
 from ..const import ( debug, DOMAIN )
 from ..util.hass import ( find_entity )
-from ..util.effects import ( configured_colours, spectrum, update_mood_state )
+from ..util.effects import ( full_colour_spectrum, spectrum, update_mood_state )
+from .theme_service import ( ATTR_COLOUR_INDEX )
 from homeassistant.components.light import ( ATTR_RGB_COLOR )
 from homeassistant.helpers.event import async_call_later
 
@@ -30,6 +32,14 @@ def register_effect_service(hass, entities):
         colours = service.data.get("colours")
         delay = service.data.get("delay")
         fade_steps = service.data.get("fade_steps")
+
+        # Get delay from state field
+        delay_state = hass.states.get('input_number.effect_delay')
+        delay = int(float(delay_state.state))
+
+        # Get fade steps from state field
+        steps_state = hass.states.get('input_number.effect_transition_steps')
+        fade_steps = int(float(steps_state.state))
 
         stop_effect()
         hass.data[EFFECT_KEY] = FadeEffect(hass, entities, colours, fade_steps, delay)
@@ -63,12 +73,12 @@ class FadeEffect():
         self.delay = delay
         self.index = 0
         self._cancel_next = None
-        _LOGGER.debug("Started effect service with colours %s every %s", self.colours, self.delay)
+        _LOGGER.debug("Started effect service with colours %s faded at %s every %s", self.colours, self.fade_steps, self.delay)
 
     async def run(self, now = None):
-        rgb = self._get_next_colour()
-        _LOGGER.debug("Running effect %s", rgb)
-        self._call_theme_service(rgb)
+        # rgb = self._get_next_colour()
+        # _LOGGER.debug("Running effect %s", rgb)
+        self._call_theme_service()
         self._schedule_next()
 
     def stop(self):
@@ -82,14 +92,25 @@ class FadeEffect():
         if self._colours:
             output = self._colours
         else:
-            output = configured_colours(self.hass)
-        return self._apply_colour_fades(output)
+            # output = configured_colours(self.hass)
+            output = full_colour_spectrum(self.hass)
+        return output
+        # return self._apply_colour_fades(output)
 
-    def _call_theme_service(self, rgb):
-        """Call 'theme' service to update the colour"""
+    def _call_theme_service(self):
+        """Call 'theme' service and pass in current running index!"""
         def _call_theme_service_job(hass):
-            service_data = { ATTR_RGB_COLOR: rgb }
-            hass.services.call(DOMAIN, 'theme', service_data, False)
+            running_index = self.hass.states.get('input_number.effect_index_key')
+            if running_index:
+                # Run theme with this index
+                running_index_int = int(float(running_index.state))
+                service_data = { ATTR_COLOUR_INDEX: running_index_int }
+                hass.services.call(DOMAIN, 'theme', service_data, False)
+                # Update the index
+                self._set_new_global_effect_index(running_index_int)
+            else:
+                _LOGGER.error("No effect index key found")
+
         self.hass.add_job(_call_theme_service_job, self.hass)
 
     def _apply_colour_fades(self, colours):
@@ -99,13 +120,26 @@ class FadeEffect():
         else:
             return colours
 
-    def _get_next_colour(self):
+    def _set_new_global_effect_index(self, current_index):
         all_colours = self.colours
-        if self.index >= len(all_colours):
-            self.index = 0
-        rgb = all_colours[self.index]
-        self.index += 1
-        return rgb
+        print("Getting all colours", len(all_colours))
+        print(all_colours)
+        if current_index >= len(all_colours):
+            next_index = 0
+        else:
+            next_index = current_index + 1
+        self.hass.states.set('input_number.effect_index_key', next_index)
+
+
+    # def _get_next_colour(self):
+    #     all_colours = self.colours
+    #     print("Getting all colours")
+    #     print(all_colours)
+    #     if self.index >= len(all_colours):
+    #         self.index = 0
+    #     rgb = all_colours[self.index]
+    #     self.index += 1
+    #     return rgb
 
     def _schedule_next(self):
         self._cancel_next = async_call_later(

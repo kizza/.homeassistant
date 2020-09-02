@@ -15,9 +15,6 @@ light:
 # Colours used in effects
 #
 input_boolean:
-   effect_running:
-     name: Effect running
-     initial: off
    colour_red:
      name: Red
      icon: mdi:invert-colors
@@ -49,7 +46,7 @@ input_boolean:
    colour_mint:
      name: Mint
      icon: mdi:invert-colors
-     initial: on
+     initial: off
    colour_pink:
      name: pink
      icon: mdi:invert-colors
