@@ -104,10 +104,11 @@ class FadeEffect():
             if running_index:
                 # Run theme with this index
                 running_index_int = int(float(running_index.state))
-                service_data = { ATTR_COLOUR_INDEX: running_index_int }
-                hass.services.call(DOMAIN, 'theme', service_data, False)
                 # Update the index
-                self._set_new_global_effect_index(running_index_int)
+                next_index = self._set_new_global_effect_index(running_index_int)
+
+                service_data = { ATTR_COLOUR_INDEX: next_index }
+                hass.services.call(DOMAIN, 'theme', service_data, False)
             else:
                 _LOGGER.error("No effect index key found")
 
@@ -122,14 +123,12 @@ class FadeEffect():
 
     def _set_new_global_effect_index(self, current_index):
         all_colours = self.colours
-        print("Getting all colours", len(all_colours))
-        print(all_colours)
-        if current_index >= len(all_colours):
+        if current_index >= len(all_colours) - 1:
             next_index = 0
         else:
             next_index = current_index + 1
         self.hass.states.set('input_number.effect_index_key', next_index)
-
+        return next_index
 
     # def _get_next_colour(self):
     #     all_colours = self.colours

@@ -1,5 +1,7 @@
 - url: /local/wake-up-card.js?v=0.0.3
   type: js
+- url: /local/rainbow-card.js?v=0.0.3
+  type: js
 - url: /local/mood-card.js?v=0.0.2
   type: js
 - url: /local/button-card.js?v=0.11

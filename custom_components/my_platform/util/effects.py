@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 from homeassistant.util import slugify
 
@@ -53,10 +54,7 @@ def configured_colours(hass):
 def colour_from_index(hass, index):
     all_colours = full_colour_spectrum(hass)
 
-    print("All colours")
-    print(all_colours)
-    print("Index is", index)
-    print(index)
+    print("colour_from_index", index, all_colours)
     if index >= len(all_colours):
         index = 0
     rgb = all_colours[index]
@@ -82,6 +80,14 @@ def update_mood_state(hass, rgb):
     def _update_mood_state():
         hass.states.set('input_text.mood_rgb', str(colour(rgb)))
     hass.add_job(_update_mood_state)
+
+def update_colours_json(hass, colours):
+    def _update_colours_json():
+        mapped_colours = map_to_colour(colours)
+        print("\n\nDUMPING", json.dumps(mapped_colours))
+        hass.states.set('input_text.colours_json', json.dumps(mapped_colours).replace(" ", ""))
+    hass.add_job(_update_colours_json)
+
 
 def fade(fade_from, fade_to, steps = FADE_STEPS):
     """Transition an rgb tuple to another in x many steps"""

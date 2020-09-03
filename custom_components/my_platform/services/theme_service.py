@@ -4,7 +4,7 @@ from ..const import ( debug, DOMAIN )
 from ..util.hass import ( find_entity )
 from ..util.effects import ( colour, colour_from_index, include_in_effects, update_mood_state )
 from homeassistant.const import ( ATTR_ENTITY_ID )
-from homeassistant.components.light import ( ATTR_RGB_COLOR )
+from homeassistant.components.light import ( ATTR_BRIGHTNESS, ATTR_RGB_COLOR )
 
 _LOGGER = logging.getLogger(__name__)
 ATTR_COLOUR_INDEX = "colour_index"
@@ -20,7 +20,7 @@ def register_theme_service(hass, entities):
             await entity.theme(rgb)
         else:
             def _call_theme_service_job(hass):
-                service_data = { ATTR_RGB_COLOR: colour(rgb), ATTR_ENTITY_ID: entity }
+                service_data = { ATTR_RGB_COLOR: colour(rgb), ATTR_BRIGHTNESS: 255, ATTR_ENTITY_ID: entity }
                 hass.services.call('light', 'turn_on', service_data, False)
 
             await hass.async_add_job(_call_theme_service_job, hass)
@@ -38,11 +38,14 @@ def register_theme_service(hass, entities):
         rgb = params.get(ATTR_RGB_COLOR)
         _LOGGER.debug("Running theme rgb %s, index %s", rgb, colour_index)
 
-        update_mood_state(hass, rgb)
-
         # Number of steps
         steps_state = hass.states.get('input_number.effect_transition_steps')
         fade_steps = int(float(steps_state.state))
+
+        # Set a default rgb from index (if present) and update "mood" text
+        if not colour_index is None:
+            rgb = colour_from_index(hass, colour_index)
+        update_mood_state(hass, rgb)
 
         # Stagger the colours across lights? (offset on the colour index)
         offset_colours_state = hass.states.get('input_boolean.effect_offset_colours').state == 'on'
@@ -52,13 +55,13 @@ def register_theme_service(hass, entities):
             if not colour_index is None:
                 # fade_steps = int(float(steps_state.state))
                 each_colour_index = colour_index
-                if offset_colours_state:
-                    offset_band = index * (fade_steps + 1)
-                    each_colour_index = colour_index + offset_band
+                # if offset_colours_state:
+                #     offset_band = index * (fade_steps)
+                #     each_colour_index = colour_index + offset_band
 
                 rgb = colour_from_index(hass, each_colour_index)
 
-                _LOGGER.debug("Now the colour is! original:%s banded:%s rgb:%s", colour_index, each_colour_index, rgb)
+                # _LOGGER.debug("Now the colour is! original:%s banded:%s rgb:%s", colour_index, each_colour_index, rgb)
             await async_set_colour(entity, rgb)
 
 
