@@ -21,7 +21,7 @@ const labelToColour = label =>
     sun: "#fabe30",
     white: "rgb(255, 100, 109)",
     mint: "rgb(146, 159, 127)",
-    pink: "rgb(236, 71, 148)",
+    pink: "rgb(255, 20, 50)",
     "new colour": "rgb(146, 159, 127)",
   }[label.toLowerCase()]);
 
