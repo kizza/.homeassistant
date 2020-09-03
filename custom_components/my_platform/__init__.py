@@ -9,12 +9,7 @@ from homeassistant.config_entries import SOURCE_IMPORT
 from homeassistant.helpers import config_validation as cv
 from homeassistant.components.light import DOMAIN as LIGHT_DOMAIN
 
-from .util.effects import ( full_colour_spectrum, map_to_colour )
-# Websocket
-from homeassistant.components import websocket_api
-from homeassistant.exceptions import HomeAssistantError
-from homeassistant.core import callback
-
+from .websocket import websocket_effect_colours
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,51 +42,13 @@ async def async_setup(hass, hass_config):
             )
         )
 
-    # GET_SPECTRUM = 'lovelace/colours'
-    # GET_SPECTRUM_SCHEMA = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend({
-    #     vol.Required('type')
-    #     # vol.Any(WS_TYPE_GET_LOVELACE_UI, OLD_WS_TYPE_GET_LOVELACE_UI),
-    # })
-
-
+    # Setup webhook
     hass.components.websocket_api.async_register_command(
-        websocket_lovelace_config
+        websocket_effect_colours
     )
-        # GET_SPECTRUM, websocket_lovelace_config,
-        # GET_SPECTRUM_SCHEMA)
 
     return True
 
-# @websocket_api.async_response
-@callback
-@websocket_api.websocket_command({"type": "lovelace/colours"})
-def websocket_lovelace_config(hass, connection, msg):
-    """Send lovelace UI config over websocket config."""
-    mapped_colours = map_to_colour(full_colour_spectrum(hass))
-    message = websocket_api.result_message(
-        msg['id'], mapped_colours
-    )
-    connection.send_message(message)
-    # connection.send_message_outside(message)
-    # connection.send_message(websocket_api.result_message(msg["id"], panels))
-    return
-    # error = None
-    # try:
-    #     config = await hass.async_add_job(
-    #         load_yaml, hass.config.path('ui-lovelace.yaml'))
-    #     message = websocket_api.result_message(
-    #         msg['id'], config
-    #     )
-    # except FileNotFoundError:
-    #     error = ('file_not_found',
-    #                 'Could not find ui-lovelace.yaml in your config dir.')
-    # except HomeAssistantError as err:
-    #     error = 'load_error', str(err)
-
-    # if error is not None:
-    #     message = websocket_api.error_message(msg['id'], *error)
-
-    # connection.send_message_outside(message)
 
 async def async_setup_entry(hass, entry):
     """Set up a config entry"""

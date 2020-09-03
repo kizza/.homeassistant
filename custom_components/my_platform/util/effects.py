@@ -1,6 +1,10 @@
+import logging
 import json
 from enum import Enum
 from homeassistant.util import slugify
+from .colours import colours_from_lovelace
+
+_LOGGER = logging.getLogger(__name__)
 
 FADE_STEPS = 30
 
@@ -19,7 +23,7 @@ COLOURS = {
 
 def colour(value):
     """Return a colour value as an rgb tuple"""
-    if isinstance(value, str):     # Passing in string
+    if isinstance(value, str) and value in COLOURS:     # Passing in string
         return COLOURS[value]
     elif isinstance(value, list):  # Passing in array
         return tuple(value)
@@ -37,57 +41,69 @@ def include_in_effects(hass, entity_name):
             return True
     return False
 
-def configured_colours(hass):
+def configured_colours(hass, human_version = False):
     """Return an array of colours that are "on" with state"""
+    all_colours = colours_from_lovelace(hass)
+
+    # From input booleans
     colours = []
-    for each in COLOURS.keys():
+    for each in all_colours:
         state = hass.states.get(f'input_boolean.colour_{each}')
         if state is not None:
             if state.state == 'on':
                 colours.append(each)
 
     if len(colours) == 0:
-        colours = list(COLOURS.keys())
+        colours = all_colours
+
+    if human_version is True:
+        def human_viewable_colour(colour):
+            if (colour == 'white'):
+                return (255, 255, 255)
+            elif (colour == 'sun'):
+                return (216, 205, 44)
+            elif (colour == 'sky'):
+                return (124, 217, 255)
+            elif (colour == 'purple'):
+                return (134, 54, 191)
+            elif (colour == 'mint'):
+                return (38, 220, 130)
+            return colour
+        colours = list(map(human_viewable_colour, colours))
 
     return colours
 
-def colour_from_index(hass, index):
-    all_colours = full_colour_spectrum(hass)
-
-    print("colour_from_index", index, all_colours)
-    if index >= len(all_colours):
-        index = 0
+def colour_from_index(all_colours, index):
+    # if index >= len(all_colours):
+    #     index = 0
     rgb = all_colours[index]
-
-    print("Returnig")
-    print(rgb)
-    # Increment index
-    # self.index += 1
     return rgb
 
+def full_colour_spectrum(hass, human_version = False):
+    try:
+        colours = configured_colours(hass, human_version)
 
-def full_colour_spectrum(hass):
-    colours = configured_colours(hass)
+        fade_steps_state = hass.states.get('input_number.effect_transition_steps')
+        fade_steps = int(float(fade_steps_state.state))
+        if fade_steps > 0:
+            colours = spectrum(colours, fade_steps)
 
-    fade_steps_state = hass.states.get('input_number.effect_transition_steps')
-    fade_steps = int(float(fade_steps_state.state))
-    if fade_steps > 0:
-        colours = spectrum(colours, fade_steps)
-
-    return colours
+        return colours
+    except Exception as ex:
+        _LOGGER.warning("Error loading full_colour_spectrum %s", ex)
+        return []
 
 def update_mood_state(hass, rgb):
     def _update_mood_state():
         hass.states.set('input_text.mood_rgb', str(colour(rgb)))
     hass.add_job(_update_mood_state)
 
-def update_colours_json(hass, colours):
-    def _update_colours_json():
-        mapped_colours = map_to_colour(colours)
-        print("\n\nDUMPING", json.dumps(mapped_colours))
-        hass.states.set('input_text.colours_json', json.dumps(mapped_colours).replace(" ", ""))
-    hass.add_job(_update_colours_json)
-
+# def update_colours_json(hass, colours):
+#     def _update_colours_json():
+#         mapped_colours = map_to_colour(colours)
+#         print("\n\nDUMPING", json.dumps(mapped_colours))
+#         hass.states.set('input_text.colours_json', json.dumps(mapped_colours).replace(" ", ""))
+#     hass.add_job(_update_colours_json)
 
 def fade(fade_from, fade_to, steps = FADE_STEPS):
     """Transition an rgb tuple to another in x many steps"""

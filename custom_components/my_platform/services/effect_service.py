@@ -46,9 +46,15 @@ def register_effect_service(hass, entities):
         await start_effect()
         schedule_update_effect_running_state()
 
+    def reset_effect_index():
+        def _reset_effect_index():
+            hass.states.set('input_number.effect_index_key', -1)
+        hass.add_job(_reset_effect_index)
+
     async def async_handle_light_effect_stop_service(service):
         stop_effect()
         schedule_update_effect_running_state()
+        reset_effect_index()
 
     hass.services.async_register(
         DOMAIN,

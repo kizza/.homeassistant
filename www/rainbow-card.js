@@ -1,6 +1,14 @@
 console.log("IN HERE");
 class RainbowCard extends HTMLElement {
   set hass(hass) {
+    if (!this.rainbow) {
+      this.rainbow = document.createElement("div");
+      this.rainbow.style.display = "flex";
+      this.rainbow.style.flexWrap = "wrap";
+      this.rainbow.style.justifyContent = "space-evenly";
+      this.appendChild(this.rainbow);
+    }
+
     if (!this.card) {
       const card = document.createElement("ha-card");
       card.shadowRoot.host.style.color = "#000";
@@ -17,6 +25,20 @@ class RainbowCard extends HTMLElement {
       };
     }
 
+    const displayMoodColour = () => {
+      const entityId = this.config.entity;
+      const state = hass.states[entityId];
+      const stateStr = state ? state.state : "unavailable";
+      if (stateStr.indexOf("(") === 0) {
+        const rgb = stateStr;
+        this.setBackground(`rgb${rgb}`);
+        this.setTitle(rgb.replace("(", "").replace(")", ""));
+      } else {
+        this.setTitle("");
+        this.setBackground("transparent");
+      }
+    }
+
     console.log("New hass", hass);
     console.log("Connecting");
     hass
@@ -26,16 +48,8 @@ class RainbowCard extends HTMLElement {
       .then(response => {
         console.log("Got response", response);
         this.setRainbows(response);
+        displayMoodColour();
       });
-
-    if (!this.rainbow) {
-      // card.shadowRoot.host.style.color = "#000";
-      this.rainbow = document.createElement("div");
-      this.rainbow.style.display = "flex";
-      this.rainbow.style.flexWrap = "wrap";
-      this.rainbow.style.justifyContent = "space-evenly";
-      this.appendChild(this.rainbow);
-    }
 
     const currentIndex = hass.states["input_number.effect_index_key"].state;
 
@@ -46,34 +60,37 @@ class RainbowCard extends HTMLElement {
       return colour;
     };
 
-    this.setRainbows = colours => {
+    this.setRainbows = state => {
+      const { colours, states } = state
+      const lights = Object.keys(states)
+
       this.rainbow.innerHTML = colours
         .map(function (each, index) {
           let style = `background: ${formatColour(
             each
-          )}; display: inline-block; flex-grow: 4; min-width: 20px; height: 80px; `;
+          )};
+            display: inline-block;
+            position: relative; text-align: center;
+            flex-grow: 4; min-width: 20px; height: 80px; `;
           if (currentIndex === index.toString()) {
-            style += "; border: solid 2px white;";
+            style += "; box-shadow: 0em 0em 1em var(--card-background-color); z-index: 9999;";
           }
-          return `<div style="${style}"></div>`;
+
+          let content = []
+          lights.forEach(light => {
+            if (states[light] === index) {
+              const [first, ...xs] = light.replace("tv", "TV").split("")
+              const name = first.toUpperCase() + xs.join("")
+              // const icon =
+              content.push(`<span style="padding: 0.4em 1.2em; margin: 4px; display: inline-block; background: var(--card-background-color); color: var(--primary-text-color);">${name}</span>`)
+            }
+          })
+
+          return `<div style="${style}">${content.join(' ')}</div>`;
         })
         .join("");
     };
 
-    const entityId = this.config.entity;
-    const state = hass.states[entityId];
-    const stateStr = state ? state.state : "unavailable";
-    if (stateStr.indexOf("(") === 0) {
-      const rgb = stateStr;
-      this.setBackground(`rgb${rgb}`);
-      this.setTitle(rgb.replace("(", "").replace(")", ""));
-    } else {
-      this.setTitle("");
-      this.setBackground("transparent");
-    }
-
-    console.log("New hass", hass);
-    // const colours = JSON.parse(hass.states["input_text.colours_json"].state);
   }
 
   setConfig(config) {
