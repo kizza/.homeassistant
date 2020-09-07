@@ -7,6 +7,7 @@ homeassistant:
     home: !include packages/home.yaml
     lighting: !include packages/lighting/lighting.yaml
     effects: !include packages/lighting/effects.yaml
+    motion: !include packages/lighting/motion.yaml
     my_platform: !include packages/my_platform.yaml
     presence: !include packages/presence.yaml
     tv: !include packages/tv/tv.yaml
