@@ -22,33 +22,6 @@
   action:
   - data: {}
     service: script.theme_green
-- id: piano_flash
-  alias: Piano flash (Stairs)
-  description: ''
-  trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
-    platform: device
-    type: motion
-  action:
-  - data:
-      entity_id: light.frame_backlight
-    service: my_platform.flash
-- id: '1582716021098'
-  alias: Piano flash (Hallway)
-  description: ''
-  trigger:
-  - device_id: 092b05bd1a724ad89655b58e59165506
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_extra_motion
-    platform: device
-    type: motion
-  condition: []
-  action:
-  - data:
-      entity_id: light.frame_backlight
-    service: my_platform.flash
 - id: '1582716177875'
   alias: TV Flash (Hallway)
   description: ''
@@ -125,6 +98,7 @@
     service: notify.notify
   - data: {}
     service: script.turn_on_deck_lights
+  mode: single
 - id: sunset_inside
   alias: Sunset (Inside)
   description: Turn the inside lights on
@@ -166,17 +140,18 @@
   alias: Motion Downstairs (On)
   description: ''
   trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+  - type: turned_on
     platform: device
-    type: motion
+    device_id: f13a4550b1fd40ab88980ac5a502ef43
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    domain: binary_sensor
   condition: []
   action:
   - data:
-      brightness: 255
+      input_id: input_boolean.motion_initiated_downstairs_backlight
+      light_id: light.downstairs_backlight
     entity_id: light.downstairs_backlight
-    service: light.turn_on
+    service: script.motion_activate_light
   mode: single
 - id: '1598343761383'
   alias: Motion Downstairs (Off)
@@ -184,14 +159,16 @@
   trigger:
   - device_id: f13a4550b1fd40ab88980ac5a502ef43
     domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
     platform: device
-    type: no_motion
+    type: not_occupied
   condition: []
   action:
-  - data: {}
+  - data:
+      input_id: input_boolean.motion_initiated_downstairs_backlight
+      light_id: light.downstairs_backlight
     entity_id: light.downstairs_backlight
-    service: light.turn_off
+    service: script.motion_deactivate_light
   mode: single
 - id: '1598876039789'
   alias: Bedroom Off When Charging
@@ -200,10 +177,7 @@
   - entity_id: sensor.pixel_4_xl_battery_state
     platform: state
     to: charging
-  condition:
-  - after: '20:00'
-    before: '1:00'
-    condition: time
+  condition: []
   action:
   - data: {}
     entity_id: light.bedroom_backlight
@@ -217,11 +191,192 @@
     platform: state
     to: discharging
   condition:
-  - after: '20:00'
+  - after: '22:00'
     before: '1:00'
     condition: time
   action:
   - data: {}
     entity_id: light.bedroom_backlight
     service: light.turn_on
+  mode: single
+- id: '1599128583178'
+  alias: Bedroom On When TV Off
+  description: ''
+  trigger:
+  - entity_id: media_player.sony_bravia_tv
+    platform: state
+    to: 'off'
+  condition:
+  - after: sunset
+    condition: sun
+  action:
+  - data:
+      rgb_color:
+      - 255
+      - 0
+      - 50
+    entity_id: light.bedroom_backlight
+    service: light.turn_on
+  mode: single
+- id: '1599272385549'
+  alias: Motion Deck (Nighttime On)
+  description: ''
+  trigger:
+  - device_id: ffe2c6e7d5484e95a451560a4b45010f
+    domain: binary_sensor
+    entity_id: binary_sensor.motion_deck_ias_zone
+    platform: device
+    type: motion
+  condition:
+  - after: sunset
+    condition: sun
+  action:
+  - data:
+      input_id: input_boolean.motion_initiated_deck_backlight
+      light_id: light.deck_backlight
+    entity_id: light.deck_backlight
+    service: script.motion_activate_light
+  mode: single
+- id: '1599272428117'
+  alias: Motion Deck (Off)
+  description: ''
+  trigger:
+  - device_id: ffe2c6e7d5484e95a451560a4b45010f
+    domain: binary_sensor
+    entity_id: binary_sensor.motion_deck_ias_zone
+    platform: device
+    type: no_motion
+  condition: []
+  action:
+  - data:
+      input_id: input_boolean.motion_initiated_deck_backlight
+      light_id: light.deck_backlight
+    entity_id: light.deck_backlight
+    service: script.motion_deactivate_light
+  mode: single
+- id: '1599272812268'
+  alias: Motion Bedroom (Daytime On)
+  description: ''
+  trigger:
+  - device_id: 9c96b7a9fb05467ba9af91b21fcfe099
+    domain: binary_sensor
+    entity_id: binary_sensor.bedroom_motion_ias_zone
+    platform: device
+    type: motion
+  condition:
+  - condition: state
+    entity_id: sensor.pixel_4_xl_battery_state
+    state: discharging
+  - condition: state
+    entity_id: sensor.pixel_4_xl_do_not_disturb_sensor
+    state: 'off'
+  action:
+  - data:
+      input_id: input_boolean.motion_initiated_bedroom_backlight
+      light_id: light.bedroom_backlight
+    entity_id: light.bedroom_backlight
+    service: script.motion_activate_light
+  mode: single
+- id: '1599272924547'
+  alias: Motion Bedroom (Off)
+  description: ''
+  trigger:
+  - device_id: 9c96b7a9fb05467ba9af91b21fcfe099
+    domain: binary_sensor
+    entity_id: binary_sensor.bedroom_motion_occupancy
+    platform: device
+    type: not_occupied
+  condition: []
+  action:
+  - data:
+      input_id: input_boolean.motion_initiated_bedroom_backlight
+      light_id: light.bedroom_backlight
+    entity_id: light.bedroom_backlight
+    service: script.motion_deactivate_light
+  mode: single
+- id: '1599275137297'
+  alias: Motion Bedroom (Nighttime On)
+  description: ''
+  trigger:
+  - device_id: 9c96b7a9fb05467ba9af91b21fcfe099
+    domain: binary_sensor
+    entity_id: binary_sensor.bedroom_motion_ias_zone
+    platform: device
+    type: motion
+  condition:
+  - condition: state
+    entity_id: sensor.pixel_4_xl_do_not_disturb_sensor
+    state: priority_only
+  - condition: state
+    entity_id: light.bedroom_backlight
+    state: 'off'
+  action:
+  - data:
+      brightness: 1
+      rgb_color:
+      - 0
+      - 0
+      - 10
+    entity_id: light.bedroom_backlight
+    service: light.turn_on
+  - timeout: 0:00:10
+    wait_template: ''
+  - data: {}
+    entity_id: light.bedroom_backlight
+    service: light.turn_off
+  mode: single
+- id: '1599419616192'
+  alias: Motion Deck (Fairy Morning)
+  description: ''
+  trigger:
+  - device_id: ffe2c6e7d5484e95a451560a4b45010f
+    domain: binary_sensor
+    entity_id: binary_sensor.motion_deck_ias_zone
+    platform: device
+    type: motion
+  condition:
+  - condition: state
+    entity_id: input_boolean.deck_lights
+    state: 'off'
+  - before: sunrise
+    condition: sun
+  action:
+  - data: {}
+    entity_id: input_boolean.deck_lights
+    service: input_boolean.turn_on
+  mode: single
+- id: '1610023667268'
+  alias: Shut it down (at night)
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00
+  condition: []
+  action:
+  - service: script.shut_it_down
+    data: {}
+  mode: single
+- id: '1610253981867'
+  alias: Luminescence (Deck)
+  description: ''
+  trigger:
+  - type: illuminance
+    platform: device
+    device_id: ffe2c6e7d5484e95a451560a4b45010f
+    entity_id: sensor.motion_deck_illuminance
+    domain: sensor
+    below: 150
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition:
+  - condition: time
+    after: '16:00'
+  action:
+  - service: script.turn_on_deck_lights
+    data: {}
+  - service: notify.notify
+    data:
+      message: Deck lights on now
   mode: single
