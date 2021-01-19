@@ -1,0 +1,22 @@
+version: '3'
+services:
+  doods:
+    container_name: doods
+    image: snowzach/doods:latest
+    restart: always
+    network_mode: host
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/raspberrypi4-homeassistant:stable
+    volumes:
+      - /home/homeassistant/.homeassistant:/config
+      - /home/homeassistant/.homeassistant/www:/media
+      - /home/homeassistant/.homeassistant:/ssl
+    devices:
+      # - /dev/ttyUSB0:/dev/ttyUSB0
+      # - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyACM0:/dev/ttyACM0
+    environment:
+      - TZ=Australia/Brisname
+    restart: always
+    network_mode: host
