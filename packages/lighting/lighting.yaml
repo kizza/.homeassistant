@@ -10,6 +10,9 @@ light:
        !secret downstairs_magic_led:
          name: Downstairs Backlight
          mode: "rgb"
+       !secret kitchen_magic_led:
+         name: Kitchen Backlight
+         mode: "rgb"
 
 #
 # Colours used in effects
@@ -63,6 +66,10 @@ input_boolean:
      initial: on
    include_frame_backlight:
      name: Frame Backlight
+     icon: mdi:lightbulb-outline
+     initial: on
+   include_kitchen_backlight:
+     name: Kitchen Backlight
      icon: mdi:lightbulb-outline
      initial: on
    include_deck_backlight:

@@ -8,6 +8,9 @@ shut_it_down:
     entity_id: light.tv_backlight
     data: {}
   - service: light.turn_off
+    entity_id: light.kitchen_backlight
+    data: {}
+  - service: light.turn_off
     entity_id: light.frame_backlight
     data: {}
   - service: light.turn_off

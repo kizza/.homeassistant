@@ -8,6 +8,7 @@ all_leds:
   entities:
   - light.tv_backlight
   - light.frame_backlight
+  - light.kitchen_backlight
   - light.deck_backlight
   - light.bedroom_backlight
   - light.downstairs_backlight

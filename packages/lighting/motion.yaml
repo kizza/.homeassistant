@@ -6,6 +6,10 @@ input_boolean:
      name: Motion Lit (Deck)
      initial: off
 
+   motion_initiated_kitchen_backlight:
+     name: Motion Lit (Kitchen)
+     initial: off
+
    motion_initiated_bedroom_backlight:
      name: Motion Lit (Bedroom)
      initial: off
