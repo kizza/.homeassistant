@@ -2,7 +2,12 @@ shut_it_down:
   alias: Shut it down
   description: Turn off tv and lights
   sequence:
-  - service: script.turn_big_tv_off
+  - service: media_player.turn_off
+    entity_id: media_player.sony_bravia_tv
+    data: {}
+  - service: media_player.turn_off
+    entity_id: media_player.big_tv
+    data: {}
   - service: my_platform.stop_effect
   - service: light.turn_off
     entity_id: light.tv_backlight
