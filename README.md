@@ -31,3 +31,9 @@ sudo pip3 install docker-compose
 ```
 docker compose up -d
 ```
+
+## Update homeassistant
+
+```
+docker compose pull home-assistant
+```

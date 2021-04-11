@@ -5,3 +5,23 @@ camera:
     still_image_url: !secret sauron_still_image
     stream_source: !secret sauron_stream_source
 
+image_processing:
+  - platform: doods
+    scan_interval: 1000
+    url: "http://localhost:8080"
+    detector: default
+    file_out:
+      - "/media/{{ camera_entity.split('.')[1] }}_latest.jpg"
+    source:
+      - entity_id: camera.sauron
+    confidence: 50
+    labels:
+      - name: person
+        confidence: 40
+        area:
+          # Exclude top 10% of image
+          top: 0.1
+          # Exclude right 5% of image
+          right: 0.95
+      - car
+      - truck
