@@ -95,9 +95,9 @@ class Bulb(Queue):
         # except ConnectionError as ex:
             _LOGGER.error(f'ERROR: Could not {description} {self.name}\n{ex} after {attempts} attempts')
             self.failed_action(description, attempts)
-            if attempts <= 5:
+            if attempts <= 10:
                 print("Running attempt again")
-                await asyncio.sleep(10)
+                await asyncio.sleep(1)
                 await self.wrap_and_catch(fun, description, attempts + 1)
         else:
             self.successful_action(description, attempts)
