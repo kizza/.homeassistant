@@ -1,11 +1,11 @@
 #
 # Living room remote
 #
-remote:
-  - platform: broadlink
-    name: Living Room Remote
-    mac: !secret living_room_remote_mac
-    host: !secret living_room_remote_host
+# remote:
+#   - platform: broadlink
+#     name: Living Room Remote
+#     mac: !secret living_room_remote_mac
+#     host: !secret living_room_remote_host
 
 #
 # Notifications on tv
