@@ -16,12 +16,18 @@ google_assistant:
   project_id: !secret google_assistant_project_id
   service_account: !include ../google-service-account.json
   exposed_domains:
-    - sensor
-    - media_player
-    - group
-    - light
     - script
     - scene
+  entity_config:
+    light.tv_backlight:
+      room: Family room
+    light.frame_backlight:
+      room: Family room
+    media_player.sony_bravia_tv:
+      name: The TV
+      room: Family room
+      aliases:
+        - Sony TV
 
 #
 # Speedtest.net
