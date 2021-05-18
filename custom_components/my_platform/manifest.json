@@ -1,6 +1,7 @@
 {
   "domain": "my_platform",
   "name": "My platform name",
+  "version": "1.0",
   "config_flow": true,
   "documentation": "https://www.example.com",
   "dependencies": [],
