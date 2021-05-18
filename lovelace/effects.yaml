@@ -6,6 +6,7 @@ cards:
   - type: entities
     entities:
       - input_boolean.include_tv_backlight
+      - input_boolean.include_kitchen_backlight
       - input_boolean.include_frame_backlight
       - input_boolean.include_deck_backlight
       - input_boolean.include_bedroom_backlight

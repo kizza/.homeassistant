@@ -20,6 +20,7 @@ def light_states(hass):
 
     return {
         'tv': get_light_state('tv_backlight'),
+        'kitchen': get_light_state('kitchen_backlight'),
         'frame': get_light_state('frame_backlight'),
         'deck': get_light_state('deck_backlight'),
         'bedroom': get_light_state('bedroom_backlight'),
