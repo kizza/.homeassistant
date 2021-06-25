@@ -1,4 +1,3 @@
-console.log("IN HERE");
 class RainbowCard extends HTMLElement {
   set hass(hass) {
     if (!this.rainbow) {
@@ -11,9 +10,14 @@ class RainbowCard extends HTMLElement {
 
     if (!this.card) {
       const card = document.createElement("ha-card");
-      card.shadowRoot.host.style.color = "#000";
       this.card = card;
       this.appendChild(card);
+      if (this.card.shadowRoot && this.card.shadowRoot.host) {
+        console.log("Updating shadow root");
+        this.card.shadowRoot.host.style.color = "#000";
+      } else {
+        console.log("Could not find shadow root");
+      }
 
       this.setBackground = rgb => (card.shadowRoot.host.style.background = rgb);
       this.setTitle = title => {
@@ -61,7 +65,7 @@ class RainbowCard extends HTMLElement {
     };
 
     this.setRainbows = state => {
-      const { colours, states } = state
+      const {colours, states} = state
       const lights = Object.keys(states)
 
       this.rainbow.innerHTML = colours

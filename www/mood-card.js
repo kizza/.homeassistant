@@ -2,9 +2,14 @@ class MoodCard extends HTMLElement {
   set hass(hass) {
     if (!this.card) {
       const card = document.createElement("ha-card");
-      card.shadowRoot.host.style.color = "#000";
       this.card = card;
       this.appendChild(card);
+      if (this.card.shadowRoot && this.card.shadowRoot.host) {
+        console.log("Mood card: Updating shadow root");
+        this.card.shadowRoot.host.style.color = "#000";
+      } else {
+        console.log("Mood card: Could not find shadow root");
+      }
 
       this.setBackground = rgb => (card.shadowRoot.host.style.background = rgb);
       this.setTitle = title => {
