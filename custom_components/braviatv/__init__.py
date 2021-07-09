@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = [MEDIA_PLAYER_DOMAIN, REMOTE_DOMAIN]
 # CUSTOM SCAN INTERVAL HERE
-SCAN_INTERVAL = timedelta(seconds=300)
+SCAN_INTERVAL = timedelta(seconds=600)
 
 
 async def async_setup_entry(hass, config_entry):
@@ -98,7 +98,7 @@ class BraviaTVCoordinator(DataUpdateCoordinator[None]):
             name=DOMAIN,
             update_interval=SCAN_INTERVAL,
             request_refresh_debouncer=Debouncer(
-                hass, _LOGGER, cooldown=1.0, immediate=False
+                hass, _LOGGER, cooldown=60.0, immediate=False
             ),
         )
 
@@ -129,6 +129,7 @@ class BraviaTVCoordinator(DataUpdateCoordinator[None]):
 
     def _refresh_channels(self):
         """Refresh source and channels list."""
+        _LOGGER.warning("Hi there!! Refreshing channels")
         if not self.source_list:
             self.content_mapping = self.braviarc.load_source_list()
             self.source_list = []
@@ -141,6 +142,9 @@ class BraviaTVCoordinator(DataUpdateCoordinator[None]):
 
     def _refresh_playing_info(self):
         """Refresh playing information."""
+        # Dont do this
+        return
+
         playing_info = self.braviarc.get_playing_info()
         program_name = playing_info.get("programTitle")
         self.channel_name = playing_info.get("title")
