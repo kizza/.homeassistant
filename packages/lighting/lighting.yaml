@@ -75,7 +75,7 @@ input_boolean:
    include_deck_backlight:
      name: Deck Backlight
      icon: mdi:lightbulb-outline
-     initial: on
+     initial: off
    include_bedroom_backlight:
      name: Bedroom Backlight
      icon: mdi:lightbulb-outline
