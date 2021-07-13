@@ -17,6 +17,6 @@ services:
       # - /dev/ttyUSB1:/dev/ttyUSB1
       - /dev/ttyACM0:/dev/ttyACM0
     environment:
-      - TZ=Australia/Brisname
+      - TZ=Australia/Brisbane
     restart: always
     network_mode: host
