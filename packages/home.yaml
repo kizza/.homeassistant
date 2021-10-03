@@ -40,6 +40,13 @@ google_assistant:
 #     - download
 #     - upload
 
+# Add as input text (so we can use within lovelace ui)
+# (it is too long)
+# input_text:
+#   local_bearer_token:
+#     name: Local Bearer Token
+#     initial: !secret local_bearer_token
+
 #
 # Sound on boot
 #

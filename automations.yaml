@@ -11,17 +11,6 @@
   - data:
       entity_id: light.tv_backlight
     service: my_platform.flash
-- id: '1581755155463'
-  alias: When i'm home
-  description: ''
-  trigger:
-  - entity_id: person.keiran
-    platform: state
-    to: home
-  condition: []
-  action:
-  - data: {}
-    service: script.theme_green
 - id: '1582716177875'
   alias: TV Flash (Hallway)
   description: ''
@@ -137,7 +126,7 @@
       message: You are away
     service: notify.notify
 - id: '1598343715757'
-  alias: Motion Downstairs (On)
+  alias: Motion Kitchen (On)
   description: ''
   trigger:
   - type: turned_on
@@ -148,26 +137,31 @@
   condition: []
   action:
   - data:
-      input_id: input_boolean.motion_initiated_downstairs_backlight
-      light_id: light.downstairs_backlight
-    entity_id: light.downstairs_backlight
+      input_id: input_boolean.motion_initiated_kitchen_backlight
+      light_id: light.kitchen_backlight
+      entity_id: light.kitchen_backlight
     service: script.motion_activate_light
   mode: single
 - id: '1598343761383'
-  alias: Motion Downstairs (Off)
+  alias: Motion Kitchen (Off)
   description: ''
   trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_occupancy
+  - type: turned_off
     platform: device
-    type: not_occupied
+    device_id: f13a4550b1fd40ab88980ac5a502ef43
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
   condition: []
   action:
   - data:
-      input_id: input_boolean.motion_initiated_downstairs_backlight
-      light_id: light.downstairs_backlight
-    entity_id: light.downstairs_backlight
+      input_id: input_boolean.motion_initiated_kitchen_backlight
+      light_id: light.kitchen_backlight
+      entity_id: light.kitchen_backlight
     service: script.motion_deactivate_light
   mode: single
 - id: '1598876039789'
@@ -238,20 +232,20 @@
     service: script.motion_activate_light
   mode: single
 - id: '1599272428117'
-  alias: Motion Deck (Off)
+  alias: Motion Downstairs (Off)
   description: ''
   trigger:
-  - device_id: ffe2c6e7d5484e95a451560a4b45010f
-    domain: binary_sensor
-    entity_id: binary_sensor.motion_deck_ias_zone
+  - type: not_occupied
     platform: device
-    type: no_motion
+    device_id: ffe2c6e7d5484e95a451560a4b45010f
+    entity_id: binary_sensor.motion_deck_occupancy
+    domain: binary_sensor
   condition: []
   action:
   - data:
-      input_id: input_boolean.motion_initiated_deck_backlight
-      light_id: light.deck_backlight
-    entity_id: light.deck_backlight
+      input_id: input_boolean.motion_initiated_downstairs_backlight
+      light_id: light.downstairs_backlight
+      entity_id: light.downstairs_backlight
     service: script.motion_deactivate_light
   mode: single
 - id: '1599272812268'
@@ -365,7 +359,7 @@
     device_id: ffe2c6e7d5484e95a451560a4b45010f
     entity_id: sensor.motion_deck_illuminance
     domain: sensor
-    below: 150
+    below: 130
     for:
       hours: 0
       minutes: 10
@@ -379,4 +373,57 @@
   - service: notify.notify
     data:
       message: Deck lights on now
+  mode: single
+- id: '1611488529907'
+  alias: I am home (detect wifi loss)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.pixel_4_xl_wifi_connection
+    for: 00:03:00
+    to: <not connected>
+  condition: []
+  action:
+  - service: notify.notify
+    data:
+      message: No wifi (you have left
+  - service: input_boolean.turn_on
+    data: {}
+    entity_id: input_boolean.my_phone_lost_wifi
+  mode: single
+- id: '1611489114146'
+  alias: I am home (legit)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.pixel_4_xl_wifi_connection
+    to: Police Surveillance Van
+  condition:
+  - condition: state
+    entity_id: input_boolean.my_phone_lost_wifi
+    state: 'on'
+  action:
+  - service: notify.notify
+    data:
+      message: You are really 🏠
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.my_phone_lost_wifi
+  mode: single
+- id: '1618126891968'
+  alias: Motion Downstairs (On)
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: ffe2c6e7d5484e95a451560a4b45010f
+    entity_id: binary_sensor.motion_deck_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - data:
+      input_id: input_boolean.motion_initiated_downstairs_backlight
+      light_id: light.downstairs_backlight
+      entity_id: light.downstairs_backlight
+    service: script.motion_activate_light
   mode: single

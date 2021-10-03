@@ -1,0 +1,224 @@
+- id: '1598957788444'
+  name: Oasis
+  entities:
+    light.deck_backlight:
+      brightness: 205
+      effect_list:
+      - blue_fade
+      - blue_strobe
+      - colorjump
+      - colorloop
+      - colorstrobe
+      - cyan_fade
+      - cyan_strobe
+      - gb_cross_fade
+      - green_fade
+      - green_strobe
+      - purple_fade
+      - purple_strobe
+      - rb_cross_fade
+      - red_fade
+      - red_strobe
+      - rg_cross_fade
+      - white_fade
+      - white_strobe
+      - yellow_fade
+      - yellow_strobe
+      - random
+      friendly_name: Deck Backlight
+      hs_color:
+      - 149.561
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 125
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.164
+      - 0.595
+    light.frame_backlight:
+      brightness: 255
+      effect_list:
+      - seven_color_cross_fade
+      - red_gradual_change
+      - green_gradual_change
+      - blue_gradual_change
+      - yellow_gradual_change
+      - cyan_gradual_change
+      - purple_gradual_change
+      - white_gradual_change
+      - red_green_cross_fade
+      - red_blue_cross_fade
+      - green_blue_cross_fade
+      - seven_color_stobe_flash
+      - red_strobe_flash
+      - green_strobe_flash
+      - blue_strobe_flash
+      - yellow_strobe_flash
+      - cyan_strobe_flash
+      - purple_strobe_flash
+      - white_strobe_flash
+      - seven_color_jumping_change
+      friendly_name: Frame Backlight
+      hs_color:
+      - 269.882
+      - 100
+      rgb_color:
+      - 126
+      - 0
+      - 255
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.216
+      - 0.077
+    light.tv_backlight:
+      brightness: 255
+      effect_list:
+      - seven_color_cross_fade
+      - red_gradual_change
+      - green_gradual_change
+      - blue_gradual_change
+      - yellow_gradual_change
+      - cyan_gradual_change
+      - purple_gradual_change
+      - white_gradual_change
+      - red_green_cross_fade
+      - red_blue_cross_fade
+      - green_blue_cross_fade
+      - seven_color_stobe_flash
+      - red_strobe_flash
+      - green_strobe_flash
+      - blue_strobe_flash
+      - yellow_strobe_flash
+      - cyan_strobe_flash
+      - purple_strobe_flash
+      - white_strobe_flash
+      - seven_color_jumping_change
+      friendly_name: TV Backlight
+      hs_color:
+      - 14.824
+      - 100
+      rgb_color:
+      - 255
+      - 63
+      - 0
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.677
+      - 0.319
+- id: '1598958507077'
+  name: Greens
+  entities:
+    light.deck_backlight:
+      brightness: 205
+      effect_list:
+      - blue_fade
+      - blue_strobe
+      - colorjump
+      - colorloop
+      - colorstrobe
+      - cyan_fade
+      - cyan_strobe
+      - gb_cross_fade
+      - green_fade
+      - green_strobe
+      - purple_fade
+      - purple_strobe
+      - rb_cross_fade
+      - red_fade
+      - red_strobe
+      - rg_cross_fade
+      - white_fade
+      - white_strobe
+      - yellow_fade
+      - yellow_strobe
+      - random
+      friendly_name: Deck Backlight
+      hs_color:
+      - 120
+      - 86.341
+      rgb_color:
+      - 34
+      - 255
+      - 34
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.18
+      - 0.725
+    light.frame_backlight:
+      brightness: 255
+      effect_list:
+      - seven_color_cross_fade
+      - red_gradual_change
+      - green_gradual_change
+      - blue_gradual_change
+      - yellow_gradual_change
+      - cyan_gradual_change
+      - purple_gradual_change
+      - white_gradual_change
+      - red_green_cross_fade
+      - red_blue_cross_fade
+      - green_blue_cross_fade
+      - seven_color_stobe_flash
+      - red_strobe_flash
+      - green_strobe_flash
+      - blue_strobe_flash
+      - yellow_strobe_flash
+      - cyan_strobe_flash
+      - purple_strobe_flash
+      - white_strobe_flash
+      - seven_color_jumping_change
+      friendly_name: Frame Backlight
+      hs_color:
+      - 180
+      - 100
+      rgb_color:
+      - 0
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.151
+      - 0.343
+    light.tv_backlight:
+      brightness: 255
+      effect_list:
+      - seven_color_cross_fade
+      - red_gradual_change
+      - green_gradual_change
+      - blue_gradual_change
+      - yellow_gradual_change
+      - cyan_gradual_change
+      - purple_gradual_change
+      - white_gradual_change
+      - red_green_cross_fade
+      - red_blue_cross_fade
+      - green_blue_cross_fade
+      - seven_color_stobe_flash
+      - red_strobe_flash
+      - green_strobe_flash
+      - blue_strobe_flash
+      - yellow_strobe_flash
+      - cyan_strobe_flash
+      - purple_strobe_flash
+      - white_strobe_flash
+      - seven_color_jumping_change
+      friendly_name: TV Backlight
+      hs_color:
+      - 195.068
+      - 85.882
+      rgb_color:
+      - 36
+      - 200
+      - 255
+      state: 'on'
+      supported_features: 21
+      xy_color:
+      - 0.152
+      - 0.254
