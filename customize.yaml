@@ -1,0 +1,18 @@
+light.tv_backlight:
+  icon: mdi:lightbulb-on-outline
+input_boolean.colour_sun:
+  icon: mdi:white-balance-sunny
+input_boolean.colour_purple:
+  icon: mdi:auto-fix
+input_boolean.colour_white:
+  icon: mdi:snowflake
+input_boolean.colour_mint:
+  icon: mdi:leaf
+input_boolean.colour_blue:
+  icon: mdi:water
+input_boolean.colour_sky:
+  icon: mdi:apple-icloud
+input_boolean.colour_pink:
+  icon: mdi:heart
+input_boolean.colour_red:
+  icon: mdi:alarm-light-outline
