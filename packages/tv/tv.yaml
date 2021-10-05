@@ -23,7 +23,7 @@ switch:
     switches:
       # Toggle the tv power
       big_tv_power:
-        value_template: "{{ is_state('media_player.sony_bravia_tv', 'on') }}"
+        value_template: "{{ is_state('remote.sony_bravia_tv', 'on') }}"
         turn_on:
           service: media_player.turn_on
           data:
@@ -33,7 +33,7 @@ switch:
           data:
             entity_id: media_player.sony_bravia_tv
         icon_template: >-
-          {% if is_state('media_player.sony_bravia_tv', 'on') %}
+          {% if is_state('remote.sony_bravia_tv', 'on') %}
             mdi:television-classic
           {% else %}
             mdi:television-classic-off
