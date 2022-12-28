@@ -5,8 +5,11 @@
 .gitignore
 *.DS_Store
 *.db
+*.db-shm
+*.db-wal
 *.json
 *.log
+*.log.*
 *.pem
 *.pyc
 *.swp
