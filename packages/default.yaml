@@ -10,12 +10,14 @@ scene: !include ../scenes.yaml
 script: !include ../scripts.yaml
 logger:
   default: warning
-  logs:
-    homeassistant.components.braviatv: debug
-    bravia_tv: debug
+  # logs:
+    # This works for tv
+    # homeassistant.components.braviatv: debug
+    # homeassistant.components.androidtv: debug
+    # pybravia: debug
+
     # custom_components.my_platform: debug
     # custom_components.tv_service: debug
-    # homeassistant.components.androidtv: debug
     # homeassistant.components.flux_led: debug
     # flux_led: debug
     # androidtv.adb_manager: debug

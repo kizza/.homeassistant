@@ -10,13 +10,13 @@
 #
 # Notifications on tv
 #
-notify:
-  - platform: nfandroidtv
-    name: Android TV (notify)
-    host: !secret android_tv_host
-    color: black
-    fontsize: medium
-    transparency: 50%
+# notify:
+#   - platform: nfandroidtv
+#     name: Android TV (notify)
+#     host: !secret android_tv_host
+#     color: black
+#     fontsize: medium
+#     transparency: 50%
 
 switch:
   - platform: template

@@ -1,52 +1,52 @@
-#
-# Simple scripts to set light mood
-#
-theme_red:
-  alias: Theme red
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: [255, 0, 0]
-theme_green:
-  alias: Theme green
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: [0, 255, 0]
-theme_blue:
-  alias: Theme blue
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: 'blue'
-theme_purple:
-  alias: Theme purple
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: 'purple'
-theme_sky:
-  alias: Theme sky
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: 'sky'
-theme_sun:
-  alias: Theme sun
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: [255, 63, 0]
-theme_white:
-  alias: Theme white
-  description: ''
-  sequence:
-  - service: my_platform.theme
-    data:
-      rgb_color: 'white'
+##
+## Simple scripts to set light mood
+##
+#theme_red:
+#  alias: Theme red
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: [255, 0, 0]
+#theme_green:
+#  alias: Theme green
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: [0, 255, 0]
+#theme_blue:
+#  alias: Theme blue
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: 'blue'
+#theme_purple:
+#  alias: Theme purple
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: 'purple'
+#theme_sky:
+#  alias: Theme sky
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: 'sky'
+#theme_sun:
+#  alias: Theme sun
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: [255, 63, 0]
+#theme_white:
+#  alias: Theme white
+#  description: ''
+#  sequence:
+#  - service: my_platform.theme
+#    data:
+#      rgb_color: 'white'
