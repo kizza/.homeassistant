@@ -1,10 +1,14 @@
-default_config:
-
 homeassistant:
+  external_url: !secret external_url
+  internal_url: !secret internal_url
+  auth_providers:
+    - type: homeassistant
+
   packages:
     deck: !include packages/deck/fairy_lights.yaml
     default: !include packages/default.yaml
     home: !include packages/home.yaml
+    network: !include packages/network.yaml
     lighting: !include packages/lighting/lighting.yaml
     effects: !include packages/lighting/effects.yaml
     motion: !include packages/lighting/motion.yaml

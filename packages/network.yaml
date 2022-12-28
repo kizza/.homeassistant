@@ -1,0 +1,32 @@
+#
+# SSL
+#
+http:
+  server_port: !secret server_port
+  ip_ban_enabled: true
+  login_attempts_threshold: 10
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+
+duckdns:
+  domain: !secret duckdns_subdomain
+  access_token: !secret duckdns_access_token
+
+#
+# Speedtest.net
+#
+# speedtestdotnet:
+#   scan_interval:
+#     hours: 12
+#   monitored_conditions:
+#     - ping
+#     - download
+#     - upload
+
+# Add as input text (so we can use within lovelace ui)
+# (it is too long)
+# input_text:
+#   local_bearer_token:
+#     name: Local Bearer Token
+#     initial: !secret local_bearer_token
+
