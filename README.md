@@ -37,3 +37,16 @@ docker-compose up -d
 ```
 docker-compose pull homeassistant
 ```
+
+## Installing certificate
+
+Create a self signed certificate from letsencrypt
+```
+certbot-auto certonly --standalone --preferred-challenges http-01 --email your@email.com -d custom.duckdns.org
+```
+
+Copy the required files to your homeassistant
+```
+sudo cp /etc/letsencrypt/live/custom.duckdns.org/fullchain.pem fullchain.pem
+sudo cp /etc/letsencrypt/live/custom.duckdns.org/privkey.pem privkey.pem
+```
