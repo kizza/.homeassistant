@@ -1,0 +1,50 @@
+blueprint:
+  name: Idempotent Motion Light
+  description: >-
+    This blueprint will illuminate a light from motion, only if the light wasn't already on.
+    I use it for motion glow wins during the afternoon, but with several lights on by default at night.
+  domain: automation
+  input:
+    motion_sensor:
+      name: Motion Sensor or Sensor Group
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: motion
+    target_light:
+      name: The light to use
+      selector:
+        entity:
+          domain: light
+    turn_off_delay:
+      name: Motion Sensor turn off delay
+      description: "Time after the sensor no longer detects motion to set the occupancy to clear. (Default = 5s)"
+      default: 60
+      selector:
+        number:
+          mode: box
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+
+trigger:
+  - platform: state
+    entity_id: !input motion_sensor
+
+condition:
+  - condition: state
+    entity_id: !input target_light
+    state: "off"
+
+action:
+  - service: light.turn_on
+    entity_id: !input target_light
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: !input turn_off_delay
+      milliseconds: 0
+  - service: light.turn_off
+    entity_id: !input target_light
+
+mode: single
