@@ -27,18 +27,26 @@ blueprint:
           max: 3600
           unit_of_measurement: seconds
 
+variables:
+  target_light: !input target_light
+
 trigger:
   - platform: state
     entity_id: !input motion_sensor
+    to: "on"
 
 condition:
-  - condition: state
-    entity_id: !input target_light
-    state: "off"
+  - condition: template
+    value_template: "{% if not is_state(target_light, 'on') %}true{% endif %}"
 
 action:
   - service: light.turn_on
     entity_id: !input target_light
+  - wait_for_trigger:
+      platform: state
+      entity_id: !input motion_sensor
+      from: "on"
+      to: "off"
   - delay:
       hours: 0
       minutes: 0
@@ -47,4 +55,4 @@ action:
   - service: light.turn_off
     entity_id: !input target_light
 
-mode: single
+mode: restart
