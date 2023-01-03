@@ -1,7 +1,7 @@
 path: default_view
 title: Home
 badges:
-  - entity: binary_sensor.updater
+  - entity: binary_sensor.home_assistant_versions_update_available
   - entity: person.keiran
   - entity: media_player.big_tv_android
   - entity: sun.sun
@@ -17,3 +17,4 @@ cards:
   # - !include home/internet.yaml
   - !include home/wake_up.yaml
   - !include home/automations.yaml
+    entity: weather.forecast_home
