@@ -2,6 +2,7 @@
 # An * ensures that everything will be ignored.
 
 # Blacklist
+.HA_VERSION
 .gitignore
 *.DS_Store
 *.db
