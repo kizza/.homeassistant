@@ -4,7 +4,9 @@
   type: js
 - url: /local/mood-card.js?v=0.0.3
   type: js
-- url: /local/button-card.js?v=0.11
+- url: /local/button-card.js
   type: module
-- url: /local/mini-graph-card.js
+- url: /local/mini-graph-card-bundle.js?v=0.11.0
+  type: module
+- url: /local/mushroom.js
   type: module

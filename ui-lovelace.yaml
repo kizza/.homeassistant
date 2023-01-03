@@ -1,5 +1,4 @@
 title: Home
-resources: !include lovelace/resources.yaml
 views:
   - !include lovelace/home.yaml
   - !include lovelace/more.yaml

@@ -3,3 +3,4 @@ frontend:
 
 lovelace:
   mode: yaml
+  resources: !include ../../lovelace/resources.yaml
