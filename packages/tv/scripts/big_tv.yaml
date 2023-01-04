@@ -10,11 +10,9 @@ turn_big_tv_on_off:
   # Pure remote command
   alias: Turn big TV on or off
   sequence:
-  - service: remote.send_command
-    data:
-      entity_id: remote.living_room_remote
-      device: big_tv
-      command: power
+  - service: media_player.toggle
+    target:
+      entity_id: media_player.sony_bravia_tv
 turn_big_tv_on:
   alias: Turn big TV on
   sequence:
@@ -24,22 +22,16 @@ turn_big_tv_off:
   alias: Turn big TV off
   sequence:
   - service: media_player.turn_off
-    entity_id: media_player.big_tv_android
+    entity_id: media_player.sony_bravia_tv
 turn_big_tv_volume_up:
   alias: Turn big TV volume up
   sequence:
-  - service: remote.send_command
-    data:
-      entity_id: remote.living_room_remote
-      device: big_tv
-      command: volume_up
-      num_repeats: 5
+  - service: media_player.volume_up
+    target:
+      entity_id: media_player.sony_bravia_tv
 turn_big_tv_volume_down:
   alias: Turn big TV volume down
   sequence:
-  - service: remote.send_command
-    data:
-      entity_id: remote.living_room_remote
-      device: big_tv
-      command: volume_down
-      num_repeats: 5
+  - service: media_player.volume_down
+    target:
+      entity_id: media_player.sony_bravia_tv

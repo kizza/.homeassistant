@@ -58,6 +58,16 @@ switch:
             mdi:volume-high
           {% endif %}
 
+template:
+  - binary_sensor:
+    - name: "Big TV On"
+      state: >-
+        {% if states('media_player.big_tv_android') in ['playing', 'paused', 'idle', 'standby'] -%}
+          on
+        {%- else -%}
+          off
+        {%- endif %}
+
 #
 # TV scripts
 #
