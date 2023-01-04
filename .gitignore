@@ -20,6 +20,7 @@
 .storage
 .cloud
 .google.token
+image/
 tts/
 core
 
