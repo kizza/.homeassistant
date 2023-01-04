@@ -36,7 +36,7 @@ Gruvbox Dark:
   # Custom per lightness
   x-header-colour: "var(--gruvbox-bg-0h)"
   x-header-text-colour: "var(--x-text-colour)"
-  x-divider-colour: "var(--header-colour)"
+  x-divider-colour: "var(--gruvbox-bg-2)"
 
   #
   # VARIABLES (Identical below here)
@@ -83,6 +83,7 @@ Gruvbox Dark:
   label-badge-grey: "var(--gruvbox-fg-3)"
 
   # Cards */
+  ha-card-border-color: "var(--divider-color)"
   paper-card-background-color: "var(--x-card-background-colour)"
   card-background-color: "var(--x-card-background-colour)"
 
@@ -154,6 +155,7 @@ Gruvbox Dark:
   mdc-theme-on-primary: "var(--x-background-colour)"
   mdc-theme-secondary: "var(--gruvbox-orange-bright)"                 # FAB button
   mdc-theme-on-secondary: "var(--x-background-colour)"
+  mdc-text-field-fill-color: "hsl(42deg 100% 97%)"
   paper-tabs-selection-bar-color: "yellow"
   material-primary-color: "red"
   mdc-theme-background: "var(--x-background-colour)"

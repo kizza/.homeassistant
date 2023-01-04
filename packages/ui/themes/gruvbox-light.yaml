@@ -96,6 +96,7 @@ Gruvbox Light:
   label-badge-grey: "var(--gruvbox-fg-3)"
 
   # Cards */
+  ha-card-border-color: "var(--divider-color)"
   paper-card-background-color: "var(--x-card-background-colour)"
   card-background-color: "var(--x-card-background-colour)"
 
