@@ -9,12 +9,5 @@ cards:
   - !include home/lights.yaml
   - !include home/tv.yaml
   - !include home/actions.yaml
-  - !include home/moods.yaml
-  - !include home/effects.yaml
-  - !include home/climate.yaml
   - type: weather-forecast
-    entity: weather.home
-  # - !include home/internet.yaml
-  - !include home/wake_up.yaml
-  - !include home/automations.yaml
     entity: weather.forecast_home

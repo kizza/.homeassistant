@@ -2,5 +2,6 @@ title: Home
 views:
   - !include lovelace/home.yaml
   - !include lovelace/more.yaml
-  - !include lovelace/effects.yaml
-  - !include lovelace/scripts.yaml
+  - !include lovelace/archived.yaml
+  # - !include lovelace/effects.yaml
+  # - !include lovelace/scripts.yaml

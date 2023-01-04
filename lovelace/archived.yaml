@@ -1,0 +1,13 @@
+path: archived_view
+title: Archived
+badges:
+  - entity: person.keiran
+  - entity: media_player.big_tv_android
+cards:
+  - !include archived/moods.yaml
+  - !include archived/effects.yaml
+  - !include archived/climate.yaml
+  # - !include home/internet.yaml
+  # - !include home/wake_up.yaml
+  - !include home/automations.yaml
+
