@@ -112,3 +112,31 @@
   - data:
       message: You are away
     service: notify.notify
+- id: set_theme
+  alias: Set theme
+  description: Set theme from the sun (dark and light mode)
+  trigger:
+  - platform: state
+    entity_id: sun.sun
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: above_horizon
+      sequence:
+      - service: frontend.set_theme
+        data:
+          name: Gruvbox Light
+          mode: light
+    - conditions:
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+      sequence:
+      - service: frontend.set_theme
+        data:
+          name: Gruvbox Dark
+          mode: dark
+  mode: single
