@@ -28,3 +28,127 @@ shut_it_down:
     entity_id: light.downstairs_backlight
     data: {}
   - service: script.turn_off_deck_lights
+x8_boostiq:
+  alias: x8_boostIQ
+  sequence:
+  - service: vacuum.send_command
+    data:
+      command: boostIQ
+    target:
+      entity_id: vacuum.alfred
+  mode: single
+x8_autoclean:
+  alias: x8_autoClean
+  sequence:
+  - service: vacuum.send_command
+    data:
+      command: autoClean
+    target:
+      entity_id: vacuum.alfred
+  mode: single
+x8_autoreturn:
+  alias: x8_autoReturn
+  sequence:
+  - service: vacuum.send_command
+    data:
+      command: autoReturn
+    target:
+      entity_id: vacuum.alfred
+  mode: single
+x8_donotdisturb:
+  alias: x8_doNotDisturb
+  sequence:
+  - service: vacuum.send_command
+    data:
+      command: doNotDisturb
+    target:
+      entity_id: vacuum.alfred
+  mode: single
+x8_dock:
+  alias: x8_dock
+  sequence:
+  - service: vacuum.return_to_base
+    target:
+      entity_id: vacuum.alfred
+    data: {}
+  mode: single
+movie_mode:
+  alias: Movie Mode
+  sequence:
+  - service: flux_led.set_custom_effect
+    data:
+      speed_pct: 1
+      transition: gradual
+      colors:
+      - - 138
+        - 43
+        - 226
+      - - 255
+        - 160
+        - 122
+      - - 175
+        - 238
+        - 238
+      - - 46
+        - 139
+        - 87
+      - - 148
+        - 0
+        - 211
+      - - 255
+        - 69
+        - 0
+    target:
+      device_id:
+      - a3559ca8162291fa87c296083e794858
+  - service: flux_led.set_custom_effect
+    data:
+      speed_pct: 1
+      transition: gradual
+      colors:
+      - - 138
+        - 43
+        - 226
+      - - 255
+        - 160
+        - 122
+      - - 175
+        - 238
+        - 238
+      - - 46
+        - 139
+        - 87
+      - - 148
+        - 0
+        - 211
+      - - 255
+        - 69
+        - 0
+    target:
+      entity_id: light.tv_backlight
+  mode: single
+  icon: mdi:movie-filter
+x8_autoroomclean:
+  alias: x8_autoRoomClean
+  sequence:
+  - service: vacuum.send_command
+    data:
+      command: roomClean
+      params:
+        roomIds:
+        - 2
+        - 8
+        - 1
+        - 5
+        - 7
+    target:
+      entity_id: vacuum.alfred
+  mode: single
+  icon: mdi:broom
+shut_it_down_via_google:
+  alias: Shut it down via google
+  sequence:
+  - service: google_assistant_sdk.send_text_command
+    data:
+      command: Turn everything off
+  mode: single

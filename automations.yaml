@@ -25,36 +25,6 @@
   - data:
       entity_id: light.tv_backlight
     service: my_platform.flash
-- id: '1582965436301'
-  alias: Vocalise motion (stairs)
-  description: ''
-  trigger:
-  - device_id: f13a4550b1fd40ab88980ac5a502ef43
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_59a96004_ias_zone
-    platform: device
-    type: motion
-  condition: []
-  action:
-  - data:
-      entity_id: media_player.family_room_speaker
-      message: Stairwell motion
-    service: tts.google_translate_say
-- id: '1582965581669'
-  alias: Vocalise motion (hallway)
-  description: ''
-  trigger:
-  - device_id: 092b05bd1a724ad89655b58e59165506
-    domain: binary_sensor
-    entity_id: binary_sensor.lumi_extra_motion
-    platform: device
-    type: motion
-  condition: []
-  action:
-  - data:
-      entity_id: media_player.family_room_speaker
-      message: Hallway motion
-    service: tts.google_translate_say
 - id: '1583041142241'
   alias: Motion Hallway (Notify)
   description: Notify if the kids come out :)
@@ -72,21 +42,6 @@
       message: Detected hallway motion
       title: Motion detected
     service: notify.android_tv_notify
-  mode: single
-- id: sunset_deck
-  alias: Sunset (Deck)
-  description: Turn the deck lights on
-  trigger:
-  - event: sunset
-    offset: -00:30:00
-    platform: sun
-  condition: []
-  action:
-  - data:
-      message: The sun has set
-    service: notify.notify
-  - data: {}
-    service: script.turn_on_deck_lights
   mode: single
 - id: '1583666364573'
   alias: Notify when home
@@ -112,6 +67,25 @@
   - data:
       message: You are away
     service: notify.notify
+- id: '1672273056237'
+  alias: Idempotent Motion (downstairs)
+  description: ''
+  use_blueprint:
+    path: homeassistant/idempotent_motion_light.yaml
+    input:
+      motion_sensor: binary_sensor.downstairs_motion
+      target_light: light.controller_rgbw_ir_d6fef6
+      turn_off_delay: 120
+- id: '1672279245895'
+  alias: Idempotent Motion (kitchen)
+  description: ''
+  use_blueprint:
+    path: homeassistant/idempotent_motion_light.yaml
+    input:
+      motion_sensor: binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2
+      target_light: light.controller_rgb_ir_4012b2
+      turn_off_delay: 240
+      include_in_movie_mode: true
 - id: set_theme
   alias: Set theme
   description: Set theme from the sun (dark and light mode)
@@ -129,7 +103,6 @@
       - service: frontend.set_theme
         data:
           name: Gruvbox Light
-          mode: light
     - conditions:
       - condition: state
         entity_id: sun.sun
@@ -138,5 +111,485 @@
       - service: frontend.set_theme
         data:
           name: Gruvbox Dark
-          mode: dark
+  mode: single
+- id: '1672811705407'
+  alias: 'Zone: Keiran'
+  description: Whether home or away
+  trigger:
+  - platform: state
+    entity_id:
+    - person.keiran
+    to: not_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  - platform: state
+    entity_id:
+    - person.keiran
+    to: home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_4_xl
+    data:
+      message: You are now {{ states('person.keiran') }}
+  mode: single
+- id: '1672811793421'
+  alias: 'Zone: Susanna'
+  description: Whether home or away
+  trigger:
+  - platform: state
+    entity_id:
+    - person.susanna
+    to: not_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  - platform: state
+    entity_id:
+    - person.susanna
+    to: home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_4_xl
+    data:
+      message: Susanna is now {{ states('person.susanna') }}
+  mode: single
+- id: '1672812415397'
+  alias: 'Zone: Family'
+  description: Whether home or away
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.family
+    to: not_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  - platform: state
+    entity_id:
+    - sensor.family
+    to: home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+  condition: []
+  action:
+  - service: notify.mobile_app_pixel_4_xl
+    data:
+      message: Family is now {{ states('sensor.family') }}
+  mode: single
+- id: '1672817209769'
+  alias: Run the vacuum?
+  description: Checks if we're away, then asks if it should run
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.family
+    to: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition: []
+  action:
+  - alias: Set up variables for the actions
+    variables:
+      action_open: '{{ ''OPEN_'' ~ context.id }}'
+      action_close: '{{ ''CLOSE_'' ~ context.id }}'
+  - alias: Ask if alfred should run
+    service: notify.mobile_app_pixel_4_xl
+    data:
+      message: You're all away. Do you want to let alfred know?
+      data:
+        actions:
+        - action: '{{ action_open }}'
+          title: 'Yes'
+        - action: '{{ action_close }}'
+          title: 'No'
+  - alias: Wait for a response
+    wait_for_trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_open }}'
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: '{{ action_close }}'
+  - alias: Perform the action
+    choose:
+    - conditions: '{{ wait.trigger.event.data.action == action_open }}'
+      sequence:
+      - service: script.x8_autoroomclean
+        data: {}
+    - conditions: '{{ wait.trigger.event.data.action == action_close }}'
+      sequence:
+      - service: notify.mobile_app_pixel_4_xl
+        data:
+          message: Ok, won't tell alfred then
+  mode: restart
+- id: '1672825488501'
+  alias: Security movement (any)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.any_motion
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sensor.family
+    state: away
+  action:
+  - service: notify.mobile_app_pixel_4_xl
+    data:
+      title: Movement detected!?
+      message: 'There was movement detected while it appears everyone is out '
+  mode: single
+- id: '1672893232648'
+  alias: Movie Mode (On)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.movie_mode
+    to: 'on'
+  condition: []
+  action:
+  - service: script.movie_mode
+    data: {}
+  mode: single
+- id: '1672893496777'
+  alias: Movie Mode (Off)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.movie_mode
+    to: 'off'
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - service: light.turn_on
+    data:
+      transition: 20
+      color_name: coral
+    target:
+      device_id:
+      - a3559ca8162291fa87c296083e794858
+  mode: single
+- id: '1672896957894'
+  alias: Movie Mode (trigger on)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.big_tv_android
+    to: playing
+  condition:
+  - condition: sun
+    after: sunset
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.movie_mode
+  mode: single
+- id: '1672897038140'
+  alias: Movie Mode (trigger off)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.big_tv_android
+    from: playing
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.movie_mode
+  mode: single
+- id: '1674085090677'
+  alias: Sauron Motion Eye (Detected)
+  description: ''
+  trigger:
+  - platform: event
+    event_type: motioneye.motion_detected
+  condition: []
+  action:
+  - data_template:
+      title: Sauron Motion
+      message: Sauron saw something at {{ now().strftime('%I:%M:%S%p').lower() }}\n
+        changed_pixels:{{ trigger.event.data.changed_pixels }} ({{ trigger.event.data.motion_width
+        }} x {{ trigger.event.data.motion_height }})
+      data:
+        image: /api/camera_proxy/camera.sauron
+        clickAction: app://com.jairaj.janglegmail.motioneye
+        group: motion
+    service: notify.mobile_app_pixel_4_xl
+  - service: image_processing.scan
+    data: {}
+    target:
+      entity_id: image_processing.doods_sauron
+  mode: single
+- id: '1674219520932'
+  alias: Downstairs Bathroom
+  description: Turn on with motion
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_4
+    to: 'on'
+  - platform: state
+    entity_id:
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_4
+    to: 'off'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == ''on'' }}'
+      sequence:
+      - service: switch.turn_on
+        data: {}
+        target:
+          device_id: 17900a31bbb03be6c31126ae2cf03d92
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state == ''off'' }}'
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 2
+          seconds: 0
+          milliseconds: 0
+      - service: switch.turn_off
+        data: {}
+        target:
+          device_id: 17900a31bbb03be6c31126ae2cf03d92
+  mode: restart
+- id: '1674292226958'
+  alias: Downstairs Extra Motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_5
+      light_target:
+        device_id: 7150f5eb4b6a2b6c2162c769437626de
+- id: '1674372126732'
+  alias: Downstairs Air Condition
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.downstairs_air_con
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.downstairs_air_con
+        state: 'on'
+      sequence:
+      - service: remote.send_command
+        data:
+          device: mitsubishi
+          command: 'on'
+        target:
+          device_id: a0736c78bd44765c732ad83e730103a8
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.downstairs_air_con
+        state: 'off'
+      sequence:
+      - service: remote.send_command
+        data:
+          device: mitsubishi
+          command: 'off'
+        target:
+          device_id: a0736c78bd44765c732ad83e730103a8
+  mode: single
+- id: '1674394643438'
+  alias: Run vacuum test
+  description: Checks if we're away, then asks if it should run
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.family
+    to: not_home
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  - platform: state
+    entity_id:
+    - person.keiran
+    to: not_home
+  - platform: state
+    entity_id:
+    - person.susanna
+    to: not_home
+  condition:
+  - condition: state
+    entity_id: sensor.family
+    state: not_home
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  action:
+  - service: notify.mobile_app_pixel_4_xl
+    data:
+      message: Both not home for 10 minutes!
+  mode: single
+  variables:
+    action_open: '{{ ''OPEN_'' ~ context.id }}'
+    action_close: '{{ ''CLOSE_'' ~ context.id }}'
+- id: '1674515061465'
+  alias: Idempotent Motion (kitchen test)
+  description: ''
+  use_blueprint:
+    path: homeassistant/idempotent_motion_light.yaml
+    input:
+      motion_sensor: binary_sensor.simulate_motion
+      target_light: light.controller_rgb_ir_4012b2
+      turn_off_delay: 5
+      include_in_movie_mode: true
+- id: '1674561089826'
+  alias: Family Room Fan
+  description: Set the fan based on temperature (and humidity)
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.upstairs_climate_temperature
+  - platform: state
+    entity_id:
+    - sensor.upstairs_climate_humidity
+  - platform: time
+    at: 07:00:00
+  condition:
+  - condition: time
+    before: 00:00:00
+    after: 07:00:00
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  - condition: template
+    value_template: '{{ states(''sensor.family'') != ''not_home'' }}'
+  action:
+  - service: fan.set_percentage
+    target:
+      entity_id: fan.family_room_fan
+    data:
+      percentage: '{{ states(''sensor.fan_speed'') | int }}'
+  mode: restart
+- id: '1674599172595'
+  alias: Family has left
+  description: Turn the fan off
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.family
+    to: not_home
+  condition: []
+  action:
+  - service: fan.turn_off
+    data: {}
+    target:
+      entity_id: fan.family_room_fan
+  - service: remote.send_command
+    data:
+      device: mitsubishi
+      command: 'off'
+    target:
+      device_id: a0736c78bd44765c732ad83e730103a8
+  mode: single
+- id: '1674603419145'
+  alias: Someone got home
+  description: Turn the fan on
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.family
+    from: not_home
+  condition: []
+  action:
+  - service: automation.trigger
+    data: {}
+    target:
+      entity_id: automation.family_room_fan_speed
+  mode: single
+- id: '1674701045342'
+  alias: Fix TV volume
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: '20'
+  condition: []
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.3
+    target:
+      entity_id: media_player.big_tv_android
+  mode: single
+- id: '1674719799071'
+  alias: Test motion automation
+  description: ''
+  use_blueprint:
+    path: homeassistant/idempotent_motion_light.yaml
+    input:
+      motion_sensor: binary_sensor.simulate_motion
+      target_light: light.controller_rgbw_ir_d6fef6
+      turn_off_delay: 5
+- id: '1676951547132'
+  alias: Magic Button Behaviour
+  description: ''
+  use_blueprint:
+    path: sonoff_zigbee_button.yaml
+    input:
+      button_id: daf12fc43474c0e5573551c5e36ed53b
+      press_action:
+      - service: script.shut_it_down_via_google
+        data: {}
+      hold_action:
+      - service: google_assistant_sdk.send_text_command
+        data:
+          command: Light it up
+- id: '1686779353482'
+  alias: Heater up the room
+  description: Turn the heater on in the morning
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.upstairs_climate_temperature
+    below: 18
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      device_id: c615f9f164c006677856e448cf98831d
   mode: single

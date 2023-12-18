@@ -1,12 +1,20 @@
-- url: /local/wake-up-card.js?v=0.0.3
-  type: js
-- url: /local/rainbow-card.js?v=0.0.8
-  type: js
-- url: /local/mood-card.js?v=0.0.3
-  type: js
+# - url: /local/wake-up-card.js?v=0.0.3
+#   type: js
+# - url: /local/rainbow-card.js?v=0.0.8
+#   type: js
+# - url: /local/mood-card.js?v=0.0.3
+#   type: js
+- url: /local/magic-home-party.js?v=0.1.0
+  type: module
 - url: /local/button-card.js
   type: module
 - url: /local/mini-graph-card-bundle.js?v=0.11.0
   type: module
 - url: /local/mushroom.js
+  type: module
+- url: /local/vacuum-card.js
+  type: module
+- url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
+  type: module
+- url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module

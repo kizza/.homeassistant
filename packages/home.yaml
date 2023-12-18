@@ -18,6 +18,16 @@ google_assistant:
       aliases:
         - Sony TV
 
+template:
+  - sensor:
+    - name: "Family"
+      state: >-
+        {% if states('person.keiran') == states('person.susanna') -%}
+          {{states('person.keiran')}}
+        {%- else -%}
+          mixed
+        {%- endif %}
+
 #
 # Sound on boot
 #
@@ -39,10 +49,9 @@ automation:
     alias: Notify on hass update
     trigger:
       - platform: state
-        entity_id: binary_sensor.updater
-        from: 'off'
+        entity_id: binary_sensor.home_assistant_versions_update_available
         to: 'on'
     action:
       - service: notify.notify
         data:
-          message: 'There is a new Home Assistant release available.'
+          message: A new Home Assistant release is available ({{ states('sensor.home_assistant_versions') }})

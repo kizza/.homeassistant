@@ -1,4 +1,8 @@
 Gruvbox Light:
+  #
+  # Gruvbox palette
+  #
+
   # Background
   gruvbox-bg-0h: "hsl(51, 78%, 91%)"
   gruvbox-bg-0s: "hsl(46, 67%, 84%)"
@@ -33,26 +37,16 @@ Gruvbox Light:
   gruvbox-aqua-bright: "hsl(144, 30%, 37%)"
   gruvbox-orange-bright: "hsl(19, 96%, 35%)"
 
-  # Custom per lightness
+  #
+  # Custom for light/dark
+  #
+
   x-header-colour: "var(--gruvbox-fg-4)"
   x-header-text-colour: "var(--gruvbox-bg-0h)"
   x-divider-colour: "var(--gruvbox-bg-1)"
 
   #
-  # VARIABLES (Identical below here)
-  #
-
-  background-colour: "var(--gruvbox-bg-0)"
-  card-background-colour: "var(--gruvbox-bg-1)"
-  text-colour: "var(--gruvbox-fg-2)"
-  secondary-text-colour: "var(--gruvbox-bg-5)"
-  disabled-text-colour: "var(--gruvbox-fg-3)"
-  icon-colour: "var(--gruvbox-blue-bright)"
-  icon-colour-on: "var(--gruvbox-yellow-bright)"
-  icon-colour-disabled: "#beae93"                                     # "var(--gruvbox-fg-3)"
-
-  #
-  # VARIABLES
+  # VARIABLES (Identical below here for light and dark)
   #
 
   x-background-colour: "var(--gruvbox-bg-0)"
@@ -70,7 +64,6 @@ Gruvbox Light:
 
   # Hardcoded */
   primary-color: "hsl(333, 34%, 54%)"                                 # Used for links var(--gruvbox-purple)
-
 
   # Header */
   app-header-text-color: "var(--x-header-text-colour)"
@@ -168,6 +161,8 @@ Gruvbox Light:
   mdc-theme-on-primary: "var(--x-background-colour)"
   mdc-theme-secondary: "var(--gruvbox-orange-bright)"                 # FAB button
   mdc-theme-on-secondary: "var(--x-background-colour)"
+  mdc-text-field-label-ink-color: "var(--gruvbox-fg-4)"
+  mdc-text-field-hover-line-color: "var(--gruvbox-fg-3)"
   paper-tabs-selection-bar-color: "yellow"
   material-primary-color: "red"
   mdc-theme-background: "var(--x-background-colour)"
@@ -190,8 +185,3 @@ Gruvbox Light:
   dark-theme-disabled-color: "var(--x-disabled-text-colour)"
   dark-theme-divider-color: orange
   default-primary-color: "var(--primary-color)"
-  # gb-primary-color: 3, 169, 244
-  # gb-accent-color: 255, 152, 0
-  # rgb-primary-text-color: 33, 33, 33
-  # rgb-secondary-text-color: 114, 114, 114
-  # rgb-text-primary-color

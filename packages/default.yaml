@@ -16,6 +16,9 @@ logger:
     # homeassistant.components.androidtv: debug
     # pybravia: debug
 
+    # custom_components.robovac.vacuum: debug
+    # custom_components.robovac.tuyalocalapi: debug
+
     # custom_components.my_platform: debug
     # custom_components.tv_service: debug
     # homeassistant.components.flux_led: debug

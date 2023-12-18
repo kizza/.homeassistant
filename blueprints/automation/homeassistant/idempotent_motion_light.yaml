@@ -10,7 +10,7 @@ blueprint:
       selector:
         entity:
           domain: binary_sensor
-          device_class: motion
+          # device_class: motion
     target_light:
       name: The light to use
       selector:
@@ -26,33 +26,92 @@ blueprint:
           min: 0
           max: 3600
           unit_of_measurement: seconds
+    include_in_movie_mode:
+      name: Include in movie mode?
+      description: "Light will return to movie mode (rather than turn off)"
+      default: false
+      selector:
+        boolean:
 
 variables:
   target_light: !input target_light
+  include_in_movie_mode: !input include_in_movie_mode
 
 trigger:
   - platform: state
     entity_id: !input motion_sensor
+    from: "off"
     to: "on"
+  - platform: state
+    entity_id: !input motion_sensor
+    from: "on"
+    to: "off"
 
-condition:
-  - condition: template
-    value_template: "{% if not is_state(target_light, 'on') %}true{% endif %}"
+# Run if light is not on, or if in "movie mode"
+# condition:
+  # - or:
+  #   # Light is already on (and being turned off)
+  #   - condition:
+  #     - condition: template
+  #       value_template: "{{ trigger.to_state.state == 'off' }}"
+  #     - condition: template
+  #       value_template: "{% if is_state(target_light, 'on') %}true{% endif %}"
+
+  #   # Or if off..
+  #   - condition:
+  #     # Is being turned on...
+  #     - condition: template
+  #       value_template: "{{ trigger.to_state.state == 'on' }}"
+  #     - condition:
+  #       - or:
+  #         # light is already off (and being turned on)
+  #         - condition: template
+  #           value_template: "{% if not is_state(target_light, 'on') %}true{% endif %}"
+  #         # or is movie mode...
+  #         - condition:
+  #           - condition: state
+  #             entity_id: input_boolean.movie_mode
+  #             state: "on"
+  #           # ...and light is within movie mode
+  #           - condition: template
+  #             value_template: "{% if include_in_movie_mode %}true{% endif %}"
 
 action:
-  - service: light.turn_on
-    entity_id: !input target_light
-  - wait_for_trigger:
-      platform: state
-      entity_id: !input motion_sensor
-      from: "on"
-      to: "off"
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: !input turn_off_delay
-      milliseconds: 0
-  - service: light.turn_off
-    entity_id: !input target_light
+  - choose:
+    # Trigger to state == "on"
+    - conditions:
+      - condition: template
+        value_template: "{{ trigger.to_state.state == 'on' }}"
+      sequence:
+      - service: light.turn_on
+        entity_id: !input target_light
+        data:
+          transition: 5
+          color_name: coral
+
+    # Trigger to state == "off"
+    - conditions:
+      - condition: template
+        value_template: "{{ trigger.to_state.state == 'off' }}"
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: !input turn_off_delay
+          milliseconds: 0
+      - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.movie_mode
+              state: "on"
+            - condition: template
+              value_template: "{% if include_in_movie_mode %}true{% endif %}"
+          sequence:
+            - service: script.movie_mode
+        default:
+          - service: light.turn_off
+            entity_id: !input target_light
+            data:
+              transition: 5
 
 mode: restart

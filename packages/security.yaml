@@ -7,11 +7,13 @@ camera:
 
 image_processing:
   - platform: doods
-    scan_interval: 1000
+    scan_interval: 3600
     url: "http://localhost:8080"
     detector: default
     file_out:
-      - "/media/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/config/www/doods/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/config/www/doods/person_detection_feed.jpg"
+      - "/config/www/doods/snapshots/{{ now().strftime('%Y-%m-%d') }}/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y-%m-%d_%H:%M:%S') }}.jpg"
     source:
       - entity_id: camera.sauron
     confidence: 50
@@ -25,3 +27,39 @@ image_processing:
           right: 0.95
       - car
       - truck
+
+# A construct for motioneye motion detection events to model
+input_boolean:
+   sauron_motion:
+     name: Sauron Motion
+     initial: off
+template:
+  - binary_sensor:
+    - name: Sauron Motion
+      device_class: motion
+      state: >-
+        {% if is_state('input_boolean.sauron_motion', 'on') -%}
+          on
+        {%- else -%}
+          off
+        {%- endif %}
+automation:
+  - id: 'sauron_motion_sensor'
+    alias: Sauron Motion Sensor
+    description: 'Maintain a motion sensor from motioneye motion_detected event'
+    trigger:
+    - platform: event
+      event_type: motioneye.motion_detected
+    condition: []
+    action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.sauron_motion
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 10
+        milliseconds: 0
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.sauron_motion

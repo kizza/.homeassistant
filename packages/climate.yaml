@@ -1,0 +1,43 @@
+smartir:
+  check_updates: false
+
+climate:
+  - platform: smartir
+    name: Downstairs Air Conditioning
+    unique_id: downstairs_ac
+    device_code: 1122
+    controller_data: remote.mini_3
+    temperature_sensor: sensor.lumi_lumi_sensor_motion_aq2_device_temperature_5
+    power_sensor: input_boolean.downstairs_air_con
+
+fan:
+  - platform: smartir
+    name: Family room fan
+    unique_id: family_room_fan
+    device_code: 1030
+    controller_data: remote.rm_pro
+    power_sensor: input_boolean.family_room_fan
+
+template:
+  - sensor:
+    - name: "Fan Speed"
+      state: >-
+        {% set temperature = states('sensor.upstairs_climate_temperature') | float %}
+        {% set humidity = states('sensor.upstairs_climate_humidity') | float %}
+        {% set humidity_factor = ((humidity - 70) / 10) | int %}
+        {% set feels_like = temperature + max(0, humidity_factor) %}
+        {% if feels_like >= 30 -%}
+          100
+        {%- elif feels_like > 28 -%}
+          75
+        {%- elif feels_like > 26 -%}
+          50
+        {%- elif feels_like > 24 -%}
+          20
+        {%- elif feels_like > 23 -%}
+          10
+        {%- elif feels_like > 90 -%}
+          10
+        {%- else -%}
+          0
+        {%- endif %}
