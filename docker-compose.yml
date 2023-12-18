@@ -1,10 +1,14 @@
 version: '3'
 services:
-  # doods:
-  #   container_name: doods
-  #   image: snowzach/doods:latest
-  #   restart: always
-  #   network_mode: host
+  doods:
+    container_name: doods
+    image: snowzach/doods:latest
+    restart: always
+    network_mode: host
+    # container_name: doods2
+    # ports:
+    #   - "8080:8080"
+    # privileged: true
   homeassistant:
     container_name: home-assistant
     image: homeassistant/raspberrypi4-homeassistant:stable
@@ -21,3 +25,28 @@ services:
     restart: always
     privileged: true
     network_mode: host
+
+  motioneye:
+    container_name: motioneye
+    image: ccrisan/motioneye:master-armhf
+    restart: unless-stopped
+    volumes:
+      - /srv/motioneye:/var/lib/motioneye
+    ports:
+      - '8765:8765/tcp'
+      - '8081:8081/tcp'
+
+  adguardhome:
+    container_name: adguardhome
+    image: adguard/adguardhome
+    restart: unless-stopped
+    volumes:
+      - /srv/adguard/work:/opt/adguardhome/work
+      - /srv/adguard/conf:/opt/adguardhome/conf
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '80:80/tcp'
+      - '443:443/tcp'
+      - '443:443/udp'
+      - '3000:3000/tcp'
