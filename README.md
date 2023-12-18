@@ -38,15 +38,7 @@ docker-compose up -d
 docker-compose pull homeassistant
 ```
 
-## Installing certificate
+## Remote access
 
-Create a self signed certificate from letsencrypt
-```
-certbot-auto certonly --standalone --preferred-challenges http-01 --email your@email.com -d custom.duckdns.org
-```
-
-Copy the required files to your homeassistant
-```
-sudo cp /etc/letsencrypt/live/custom.duckdns.org/fullchain.pem fullchain.pem
-sudo cp /etc/letsencrypt/live/custom.duckdns.org/privkey.pem privkey.pem
-```
+Using tunnel from cloudflare informed by [this post](https://pimylifeup.com/raspberry-pi-cloudflare-tunnel/).
+Creating a tunnel via the dashboard however, connecting via the code snippet presented, and installing the origin certificate from cloudflare.

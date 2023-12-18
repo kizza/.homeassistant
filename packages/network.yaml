@@ -7,10 +7,11 @@ http:
   login_attempts_threshold: 10
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
-
-duckdns:
-  domain: !secret duckdns_subdomain
-  access_token: !secret duckdns_access_token
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret proxy
+    - !secret remote_proxy_v4
+    - !secret remote_proxy_v6
 
 #
 # Speedtest.net
