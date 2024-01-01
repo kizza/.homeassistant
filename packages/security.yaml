@@ -1,9 +1,4 @@
 stream:
-camera:
-  - platform: generic
-    name: Sauron
-    still_image_url: !secret sauron_still_image
-    stream_source: !secret sauron_stream_source
 
 image_processing:
   - platform: doods
