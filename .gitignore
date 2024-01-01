@@ -27,6 +27,8 @@ core
 www/doods
 www/community
 custom_components/hacs
+custom_components/govee_lan
+custom_components/tapo
 
 # Specific yamls to ignore
 ip_bans.yaml
