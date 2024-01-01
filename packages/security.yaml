@@ -1,27 +1,27 @@
 stream:
 
-image_processing:
-  - platform: doods
-    scan_interval: 3600
-    url: "http://localhost:8080"
-    detector: default
-    file_out:
-      - "/config/www/doods/{{ camera_entity.split('.')[1] }}_latest.jpg"
-      - "/config/www/doods/person_detection_feed.jpg"
-      - "/config/www/doods/snapshots/{{ now().strftime('%Y-%m-%d') }}/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y-%m-%d_%H:%M:%S') }}.jpg"
-    source:
-      - entity_id: camera.sauron
-    confidence: 50
-    labels:
-      - name: person
-        confidence: 40
-        area:
-          # Exclude top 10% of image
-          top: 0.1
-          # Exclude right 5% of image
-          right: 0.95
-      - car
-      - truck
+# image_processing:
+#   - platform: doods
+#     scan_interval: 3600
+#     url: "http://localhost:8080"
+#     detector: default
+#     file_out:
+#       - "/config/www/doods/{{ camera_entity.split('.')[1] }}_latest.jpg"
+#       - "/config/www/doods/person_detection_feed.jpg"
+#       - "/config/www/doods/snapshots/{{ now().strftime('%Y-%m-%d') }}/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y-%m-%d_%H:%M:%S') }}.jpg"
+#     source:
+#       - entity_id: camera.sauron
+#     confidence: 50
+#     labels:
+#       - name: person
+#         confidence: 40
+#         area:
+#           # Exclude top 10% of image
+#           top: 0.1
+#           # Exclude right 5% of image
+#           right: 0.95
+#       - car
+#       - truck
 
 # A construct for motioneye motion detection events to model
 input_boolean:

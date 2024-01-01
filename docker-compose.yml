@@ -1,10 +1,10 @@
 version: '3'
 services:
-  doods:
-    container_name: doods
-    image: snowzach/doods:latest
-    restart: always
-    network_mode: host
+  # doods:
+  #   container_name: doods
+  #   image: snowzach/doods:latest
+  #   restart: always
+  #   network_mode: host
     # container_name: doods2
     # ports:
     #   - "8080:8080"
