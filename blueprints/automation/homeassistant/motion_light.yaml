@@ -1,6 +1,6 @@
 blueprint:
   name: Motion-activated Light
-  description: Turn on a light when motion is detected.
+  description: Turn on a light when motion is detected, and off when no longer detected (if not already on).
   domain: automation
   source_url: https://github.com/home-assistant/core/blob/dev/homeassistant/components/automation/blueprints/motion_light.yaml
   input:
@@ -37,6 +37,13 @@ trigger:
   from: "off"
   to: "on"
 
+# condition:
+#   alias: "If not already on"
+#   not:
+#     - condition: state
+#       entity_id: !input light_target
+#       state: "on"
+
 action:
   - alias: "Turn on the light"
     service: light.turn_on
@@ -47,6 +54,7 @@ action:
       entity_id: !input motion_entity
       from: "on"
       to: "off"
+      for: '00:05:00' # Incase it drops off
   - alias: "Wait the number of seconds that has been set"
     delay: !input no_motion_wait
   - alias: "Turn off the light"
