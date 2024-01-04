@@ -1,6 +1,5 @@
 #!/bin/bash
 wget http://www.github.com/custom-cards/button-card/releases/latest/download/button-card.js -O www/button-card.js
 wget https://github.com/kalkih/mini-graph-card/releases/download/v0.11.0/mini-graph-card-bundle.js -O www/mini-graph-card-bundle.js
-wget https://github.com/piitaya/lovelace-mushroom/releases/download/v2.4.1/mushroom.js -O www/mushroom.js
 wget https://github.com/denysdovhan/vacuum-card/releases/latest/download/vacuum-card.js -O www/vacuum-card.js
 wget https://github.com/kizza/magic-home-party-card/releases/latest/download/magic-home-party.js -O www/magic-home-party.js
