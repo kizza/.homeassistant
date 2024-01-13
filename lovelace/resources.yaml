@@ -1,20 +1,18 @@
-# - url: /local/wake-up-card.js?v=0.0.3
-#   type: js
-# - url: /local/rainbow-card.js?v=0.0.8
-#   type: js
-# - url: /local/mood-card.js?v=0.0.3
-#   type: js
 - url: /local/magic-home-party.js?v=0.1.0
   type: module
-- url: /local/button-card.js
-  type: module
-- url: /local/mini-graph-card-bundle.js?v=0.11.0
-  type: module
-- url: /local/vacuum-card.js
-  type: module
 - url: /hacsfiles/lovelace-mushroom/mushroom.js
+  type: module
+- url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
   type: module
 - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
 - url: /hacsfiles/lovelace-horizon-card/lovelace-horizon-card.js
+  type: module
+- url: /hacsfiles/button-card/button-card.js
+  type: module
+- url: /hacsfiles/mushroom-strategy/mushroom-strategy.js
+  type: module
+- url: /hacsfiles/Bubble-Card/bubble-card.js
+  type: module
+- url: /hacsfiles/vacuum-card/vacuum-card.js
   type: module
