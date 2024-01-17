@@ -1,0 +1,60 @@
+blueprint:
+  name: Battery Saver Plug
+  description: Turn a plug on-or-off to maintain a battery level
+  domain: automation
+  input:
+    plug_entity:
+      name: Plug
+      selector:
+        entity:
+          domain: switch
+          device_class: outlet
+    battery_entity:
+      name: Battery
+      selector:
+        entity:
+          domain: sensor
+          device_class: battery
+    maximum_charge:
+      name: Maximum charge
+      description: Charge to stop charging at
+      default: 80
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: percent
+    minimum_charge:
+      name: Minimum charge
+      description: Charge to start charging at
+      default: 20
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: percent
+
+trigger:
+  platform: state
+  entity_id: !input battery_entity
+
+action:
+  - if:
+      - alias: Batter as above maximum charge
+        condition: numeric_state
+        entity_id: !input battery_entity
+        above: !input maximum_charge
+    then:
+      - service: switch.turn_off
+        target:
+          entity_id: !input plug_entity
+    else:
+      - if:
+          - alias: Battery is below minimum charge
+            condition: numeric_state
+            entity_id: !input battery_entity
+            below: !input minimum_charge
+        then:
+          - service: switch.turn_on
+            target:
+              entity_id: !input plug_entity
