@@ -28,10 +28,10 @@ turn_big_tv_volume_up:
   sequence:
   - service: media_player.volume_up
     target:
-      entity_id: media_player.big_tv_android
+      entity_id: media_player.bose_smart_soundbar
 turn_big_tv_volume_down:
   alias: Turn big TV volume down
   sequence:
   - service: media_player.volume_down
     target:
-      entity_id: media_player.big_tv_android
+      entity_id: media_player.bose_smart_soundbar
