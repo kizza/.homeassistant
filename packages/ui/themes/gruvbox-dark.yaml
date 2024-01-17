@@ -165,7 +165,8 @@ Gruvbox Dark:
   mdc-theme-on-primary: "var(--x-background-colour)"
   mdc-theme-secondary: "var(--gruvbox-orange-bright)"                 # FAB button
   mdc-theme-on-secondary: "var(--x-background-colour)"
-  mdc-text-field-fill-color: "hsl(42deg 100% 97%)"
+  mdc-text-field-ink-color: "var(--gruvbox-fg-1)"
+  mdc-text-field-fill-color: "hsl(42deg 4% 19%)" # "hsl(42deg 100% 97%)"
   mdc-text-field-label-ink-color: "var(--gruvbox-fg-4)"
   mdc-text-field-hover-line-color: "var(--gruvbox-fg-3)"
   paper-tabs-selection-bar-color: "yellow"
