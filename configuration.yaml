@@ -11,6 +11,7 @@ homeassistant:
     climate: !include packages/climate.yaml
     network: !include packages/network.yaml
     lighting: !include packages/lighting/lighting.yaml
+    power: !include packages/power.yaml
     effects: !include packages/lighting/effects.yaml
     # my_platform: !include packages/my_platform.yaml
     # presence: !include packages/presence.yaml

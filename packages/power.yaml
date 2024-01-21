@@ -1,0 +1,12 @@
+template:
+  binary_sensor:
+    - name: "Dishwasher running"
+      unique_id: "dishwasher_running"
+      icon: mdi:dishwasher
+      device_class: running
+      state: "{{ states('sensor.dishwasher_power')|float(0) > 20 }}"
+      delay_off:
+        minutes: 2
+      delay_on:
+        minutes: 1
+
